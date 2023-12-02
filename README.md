@@ -32,9 +32,10 @@ VScode插件
 code running
 c++
 
-創建 .vscode 資料夾
+設置 .vscode 資料夾
 
-
+.vscode.sample把.sample去掉
+檢查環境是否可用，不可用就除錯
 
 
 
