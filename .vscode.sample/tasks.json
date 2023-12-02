@@ -13,6 +13,7 @@
                 "-lsfml-graphics",
                 "-lsfml-window",
                 "-lsfml-system",
+                "-lsfml-audio",
                 "-static-libstdc++",
                 "-static-libgcc"
             ],
@@ -37,6 +38,7 @@
                 "-lsfml-graphics",
                 "-lsfml-window",
                 "-lsfml-system",
+                "-lsfml-audio",
                 "-static-libstdc++",
                 "-static-libgcc"
             ],
