@@ -3,13 +3,12 @@
 #include <vector>
 
 // 定義遊戲狀態
-enum class Player { None, O, X };
+enum class Player { None, O, X, Draw };
 Player currentPlayer = Player::O;
 Player board[3][3] = {{Player::None, Player::None, Player::None}, 
                       {Player::None, Player::None, Player::None}, 
                       {Player::None, Player::None, Player::None}};
 
-// 檢查勝利條件
 Player checkWin() {
     // 檢查橫排
     for (int i = 0; i < 3; i++) {
@@ -29,7 +28,15 @@ Player checkWin() {
     if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != Player::None)
         return board[0][2];
 
-    return Player::None;
+    // 檢查平手
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (board[i][j] == Player::None)
+                return Player::None;  // 還有空格，遊戲還未結束
+        }
+    }
+
+    return Player::Draw;  // 沒有空格，且沒有玩家勝利，遊戲平手
 }
 void drawO(sf::RenderWindow &window, int row, int col) {
     sf::CircleShape circle(40);
@@ -102,7 +109,18 @@ int main() {
         // 檢查勝利
         Player winner = checkWin();
         if (winner != Player::None) {
-            std::cout << (winner == Player::O ? "O wins!" : "X wins!") << std::endl;
+            switch(winner) {
+                case Player::O:
+                    std::cout << "O wins!" << std::endl;
+                    break;
+                case Player::X:
+                    std::cout << "X wins!" << std::endl;
+                    break;
+                default:
+                    std::cout << "Draw!" << std::endl;
+                    break;
+
+            }
             break;
         }
     }
