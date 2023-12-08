@@ -7,11 +7,14 @@ oop final project
 [MSYS2](https://www.msys2.org/)
 
 ```shell
+pacman -Syu
+pacman -Sy
 pacman -S mingw-w64-x86_64-toolchain
-pacman -S mingw32/mingw-w64-i686-sfml
+pacman -S mingw-w64-x86_64-sfml
 pacman -Syu
 pacman -Sy
 ```
+
 加入系統變數  
 對windows右鍵
 ![Alt text](image.png)
