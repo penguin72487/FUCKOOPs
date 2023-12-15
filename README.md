@@ -32,7 +32,7 @@ gdb --version
 ```
 
 VScode插件
-code running
+code running 記得設定讀工作區，而不是全域的
 c++
 
 設置 .vscode 資料夾
