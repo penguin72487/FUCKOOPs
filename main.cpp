@@ -6,8 +6,8 @@
 enum class Player { None, O, X, Draw };
 Player currentPlayer = Player::O;
 Player board[3][3] = {{Player::None, Player::None, Player::None}, 
-                      {Player::None, Player::None, Player::None}, 
-                      {Player::None, Player::None, Player::None}};
+                    {Player::None, Player::None, Player::None}, 
+                    {Player::None, Player::None, Player::None}};
 
 Player checkWin() {
     // 檢查橫排
@@ -61,14 +61,32 @@ void drawX(sf::RenderWindow &window, int row, int col) {
     window.draw(line2);
 }
 int main() {
-    sf::RenderWindow window(sf::VideoMode(300, 300), "Tic-Tac-Toe");
-    sf::RectangleShape line1(sf::Vector2f(300, 5)), line2(sf::Vector2f(300, 5)),
-                        line3(sf::Vector2f(5, 300)), line4(sf::Vector2f(5, 300));
+    sf::RenderWindow window(sf::VideoMode(1024, 1024), "Tic-Tac-Toe",sf::Style::Close | sf::Style::Titlebar); //設定視窗大小 1024*1024 並固定
 
-    line1.setPosition(0, 100);
-    line2.setPosition(0, 200);
-    line3.setPosition(100, 0);
-    line4.setPosition(200, 0);
+    // 獲取視窗的大小
+    sf::Vector2u windowSize = window.getSize();
+
+    // 計算線條的長度和寬度
+    float lineLength = windowSize.x ; 
+    float lineWidth = windowSize.y * 0.01; // 1% 的視窗高度
+    sf::RectangleShape line1(sf::Vector2f(lineLength, lineWidth)), line2(sf::Vector2f(lineLength, lineWidth)),
+                    line3(sf::Vector2f(lineWidth, lineLength)), line4(sf::Vector2f(lineWidth, lineLength));
+
+    // 計算線條的位置
+    float line1PositionX = windowSize.x / 2 - lineLength / 2;
+    float line1PositionY = windowSize.y / 3 - lineWidth / 2;
+    float line2PositionX = windowSize.x / 2 - lineLength / 2;
+    float line2PositionY = 2 * windowSize.y / 3 - lineWidth / 2;
+    float line3PositionX = windowSize.x / 3 - lineWidth / 2;
+    float line3PositionY = windowSize.y / 2 - lineLength / 2;
+    float line4PositionX = 2 * windowSize.x / 3 - lineWidth / 2;
+    float line4PositionY = windowSize.y / 2 - lineLength / 2;
+
+    // 設置線條的位置
+    line1.setPosition(line1PositionX, line1PositionY);
+    line2.setPosition(line2PositionX, line2PositionY);
+    line3.setPosition(line3PositionX, line3PositionY);
+    line4.setPosition(line4PositionX, line4PositionY);
 
     while (window.isOpen()) {
         sf::Event event;
