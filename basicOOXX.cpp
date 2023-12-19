@@ -37,29 +37,28 @@ Player checkWin() {
 
     return Player::Draw;  // 沒有空格，且沒有玩家勝利，遊戲平手
 }
-// 已被取代
-// void drawO(sf::RenderWindow &window, int row, int col) {
-//     sf::CircleShape circle(150);  // 放大圈圈的大小
-//     circle.setPosition(col * 341+25, row * 341+25);  // 調整圈圈的位置
-//     circle.setFillColor(sf::Color::Red);
-//     circle.setOutlineColor(sf::Color::White);
-//     circle.setOutlineThickness(5);
-//     window.draw(circle);
-// }
+void drawO(sf::RenderWindow &window, int row, int col) {
+    sf::CircleShape circle(150);  // 放大圈圈的大小
+    circle.setPosition(col * 341+25, row * 341+25);  // 調整圈圈的位置
+    circle.setFillColor(sf::Color::Red);
+    circle.setOutlineColor(sf::Color::White);
+    circle.setOutlineThickness(5);
+    window.draw(circle);
+}
 
-// void drawX(sf::RenderWindow &window, int row, int col) {
-//     sf::RectangleShape line1(sf::Vector2f(300, 15)), line2(sf::Vector2f(300, 15));  // 放大叉叉的大小
-//     line1.setOrigin(150, 7.5);
-//     line2.setOrigin(150, 7.5);
-//     line1.setPosition(col * 341 + 170, row * 341 + 170);  // 調整叉叉的位置
-//     line2.setPosition(col * 341 + 170, row * 341 + 170);  // 調整叉叉的位置
-//     line1.rotate(45);
-//     line2.rotate(-45);
-//     line1.setFillColor(sf::Color::Blue);
-//     line2.setFillColor(sf::Color::Blue);
-//     window.draw(line1);
-//     window.draw(line2);
-// }
+void drawX(sf::RenderWindow &window, int row, int col) {
+    sf::RectangleShape line1(sf::Vector2f(300, 15)), line2(sf::Vector2f(300, 15));  // 放大叉叉的大小
+    line1.setOrigin(150, 7.5);
+    line2.setOrigin(150, 7.5);
+    line1.setPosition(col * 341 + 170, row * 341 + 170);  // 調整叉叉的位置
+    line2.setPosition(col * 341 + 170, row * 341 + 170);  // 調整叉叉的位置
+    line1.rotate(45);
+    line2.rotate(-45);
+    line1.setFillColor(sf::Color::Blue);
+    line2.setFillColor(sf::Color::Blue);
+    window.draw(line1);
+    window.draw(line2);
+}
 void resetGame() {
     currentPlayer = Player::O;
     for (int i = 0; i < 3; i++) {
