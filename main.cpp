@@ -6,8 +6,8 @@
 enum class Player { None, O, X, Draw };
 Player currentPlayer = Player::O;
 Player board[3][3] = {{Player::None, Player::None, Player::None}, 
-                      {Player::None, Player::None, Player::None}, 
-                      {Player::None, Player::None, Player::None}};
+                    {Player::None, Player::None, Player::None}, 
+                    {Player::None, Player::None, Player::None}};
 
 Player checkWin() {
     // 檢查橫排
@@ -39,8 +39,8 @@ Player checkWin() {
     return Player::Draw;  // 沒有空格，且沒有玩家勝利，遊戲平手
 }
 void drawO(sf::RenderWindow &window, int row, int col) {
-    sf::CircleShape circle(40);
-    circle.setPosition(col * 100+12, row * 100+12);
+    sf::CircleShape circle(150);  // 放大圈圈的大小
+    circle.setPosition(col * 341+25, row * 341+25);  // 調整圈圈的位置
     circle.setFillColor(sf::Color::Red);
     circle.setOutlineColor(sf::Color::White);
     circle.setOutlineThickness(5);
@@ -48,11 +48,11 @@ void drawO(sf::RenderWindow &window, int row, int col) {
 }
 
 void drawX(sf::RenderWindow &window, int row, int col) {
-    sf::RectangleShape line1(sf::Vector2f(100, 5)), line2(sf::Vector2f(100, 5));
-    line1.setOrigin(50, 2.5);
-    line2.setOrigin(50, 2.5);
-    line1.setPosition(col * 100 + 50, row * 100 + 50);
-    line2.setPosition(col * 100 + 50, row * 100 + 50);
+    sf::RectangleShape line1(sf::Vector2f(300, 15)), line2(sf::Vector2f(300, 15));  // 放大叉叉的大小
+    line1.setOrigin(150, 7.5);
+    line2.setOrigin(150, 7.5);
+    line1.setPosition(col * 341 + 170, row * 341 + 170);  // 調整叉叉的位置
+    line2.setPosition(col * 341 + 170, row * 341 + 170);  // 調整叉叉的位置
     line1.rotate(45);
     line2.rotate(-45);
     line1.setFillColor(sf::Color::Blue);
@@ -61,14 +61,32 @@ void drawX(sf::RenderWindow &window, int row, int col) {
     window.draw(line2);
 }
 int main() {
-    sf::RenderWindow window(sf::VideoMode(300, 300), "Tic-Tac-Toe");
-    sf::RectangleShape line1(sf::Vector2f(300, 5)), line2(sf::Vector2f(300, 5)),
-                        line3(sf::Vector2f(5, 300)), line4(sf::Vector2f(5, 300));
+    sf::RenderWindow window(sf::VideoMode(1024, 1024), "Tic-Tac-Toe",sf::Style::Close | sf::Style::Titlebar); //設定視窗大小 1024*1024 並固定
 
-    line1.setPosition(0, 100);
-    line2.setPosition(0, 200);
-    line3.setPosition(100, 0);
-    line4.setPosition(200, 0);
+    // 獲取視窗的大小
+    sf::Vector2u windowSize = window.getSize();
+
+    // 計算線條的長度和寬度
+    float lineLength = windowSize.x ; 
+    float lineWidth = windowSize.y * 0.01; // 1% 的視窗高度
+    sf::RectangleShape line1(sf::Vector2f(lineLength, lineWidth)), line2(sf::Vector2f(lineLength, lineWidth)),
+                    line3(sf::Vector2f(lineWidth, lineLength)), line4(sf::Vector2f(lineWidth, lineLength));
+
+    // 計算線條的位置
+    float line1PositionX = windowSize.x / 2 - lineLength / 2;
+    float line1PositionY = windowSize.y / 3 - lineWidth / 2;
+    float line2PositionX = windowSize.x / 2 - lineLength / 2;
+    float line2PositionY = 2 * windowSize.y / 3 - lineWidth / 2;
+    float line3PositionX = windowSize.x / 3 - lineWidth / 2;
+    float line3PositionY = windowSize.y / 2 - lineLength / 2;
+    float line4PositionX = 2 * windowSize.x / 3 - lineWidth / 2;
+    float line4PositionY = windowSize.y / 2 - lineLength / 2;
+
+    // 設置線條的位置
+    line1.setPosition(line1PositionX, line1PositionY);
+    line2.setPosition(line2PositionX, line2PositionY);
+    line3.setPosition(line3PositionX, line3PositionY);
+    line4.setPosition(line4PositionX, line4PositionY);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -77,8 +95,8 @@ int main() {
                 window.close();
 
             if (event.type == sf::Event::MouseButtonPressed) {
-                int row = event.mouseButton.y / 100;
-                int col = event.mouseButton.x / 100;
+                int row = event.mouseButton.y / 341;  // 調整滑鼠點擊的位置計算
+                int col = event.mouseButton.x / 341;  // 調整滑鼠點擊的位置計算
                 if (board[row][col] == Player::None) {
                     board[row][col] = currentPlayer;
                     currentPlayer = currentPlayer == Player::O ? Player::X : Player::O;
