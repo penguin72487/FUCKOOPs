@@ -40,7 +40,7 @@ Player checkWin() {
 }
 void drawO(sf::RenderWindow &window, int row, int col) {
     sf::CircleShape circle(40);
-    circle.setPosition(col * 113+12, row * 113+12);
+    circle.setPosition(col * 100+12, row * 100+12);
     circle.setFillColor(sf::Color::Red);
     circle.setOutlineColor(sf::Color::White);
     circle.setOutlineThickness(5);
@@ -51,8 +51,8 @@ void drawX(sf::RenderWindow &window, int row, int col) {
     sf::RectangleShape line1(sf::Vector2f(100, 5)), line2(sf::Vector2f(100, 5));
     line1.setOrigin(50, 2.5);
     line2.setOrigin(50, 2.5);
-    line1.setPosition((col*2+1) * 1024/18, (row*2+1) * 1024/18);
-    line2.setPosition((col*2+1) * 1024/18, (row*2+1) * 1024/18);
+    line1.setPosition(col * 100 + 50, row * 100 + 50);
+    line2.setPosition(col * 100 + 50, row * 100 + 50);
     line1.rotate(45);
     line2.rotate(-45);
     line1.setFillColor(sf::Color::Blue);
@@ -120,8 +120,8 @@ int main() {
                 window.close();
 
             if (event.type == sf::Event::MouseButtonPressed) {
-                int row = event.mouseButton.y / 113;
-                int col = event.mouseButton.x / 113;
+                int row = event.mouseButton.y / 100;
+                int col = event.mouseButton.x / 100;
                 if (board[row][col] == Player::None) {
                     board[row][col] = currentPlayer;
                     currentPlayer = currentPlayer == Player::O ? Player::X : Player::O;
@@ -169,8 +169,12 @@ int main() {
                     break;
 
             }
-            break;
+            // break;
         }
+        if (checkWin() != Player::None) {
+            resetGame();
+        }
+
     }
 
     return 0;
