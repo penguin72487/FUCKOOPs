@@ -82,8 +82,12 @@ int main() {
                     break;
 
             }
-            break;
+            // break;
         }
+        if (checkWin() != Player::None) {
+            resetGame();
+        }
+
     }
 
     return 0;

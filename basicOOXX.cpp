@@ -59,3 +59,11 @@ void drawX(sf::RenderWindow &window, int row, int col) {
     window.draw(line1);
     window.draw(line2);
 }
+void resetGame() {
+    currentPlayer = Player::O;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            board[i][j] = Player::None;
+        }
+    }
+}
