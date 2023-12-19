@@ -40,7 +40,7 @@ Player checkWin() {
 }
 void drawO(sf::RenderWindow &window, int row, int col) {
     sf::CircleShape circle(40);
-    circle.setPosition(col * 100+12, row * 100+12);
+    circle.setPosition(col * 113+12, row * 113+12);
     circle.setFillColor(sf::Color::Red);
     circle.setOutlineColor(sf::Color::White);
     circle.setOutlineThickness(5);
@@ -51,8 +51,8 @@ void drawX(sf::RenderWindow &window, int row, int col) {
     sf::RectangleShape line1(sf::Vector2f(100, 5)), line2(sf::Vector2f(100, 5));
     line1.setOrigin(50, 2.5);
     line2.setOrigin(50, 2.5);
-    line1.setPosition(col * 100 + 50, row * 100 + 50);
-    line2.setPosition(col * 100 + 50, row * 100 + 50);
+    line1.setPosition((col*2+1) * 1024/18, (row*2+1) * 1024/18);
+    line2.setPosition((col*2+1) * 1024/18, (row*2+1) * 1024/18);
     line1.rotate(45);
     line2.rotate(-45);
     line1.setFillColor(sf::Color::Blue);
@@ -64,29 +64,54 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1024, 1024), "Tic-Tac-Toe",sf::Style::Close | sf::Style::Titlebar); //設定視窗大小 1024*1024 並固定
 
     // 獲取視窗的大小
-    sf::Vector2u windowSize = window.getSize();
+    // sf::Vector2u windowSize = window.getSize();
+    
+    sf::Texture bg;
+    sf::Texture o;
+    sf::Texture x;
+    // 載入圖片
+    if (!bg.loadFromFile("png/game/game-bg-all.png")){
+        std::cout << "Failed to load background image" << std::endl;
+        return -1;
+    }
+    if(!o.loadFromFile("png/game/o.png")){
+        std::cout << "Failed to load O image" << std::endl;
+        return -1;
+    }
+    if(!x.loadFromFile("png/game/x.png")){
+        std::cout << "Failed to load X image" << std::endl;
+        return -1;
+    }
+    // 創建一個 sf::Sprite 物件，並將 texture 設定為其紋理
+    sf::Sprite background(bg);
+    sf::Sprite oSprite(o);
+    sf::Sprite xSprite(x);
 
-    // 計算線條的長度和寬度
-    float lineLength = windowSize.x ; 
-    float lineWidth = windowSize.y * 0.01; // 1% 的視窗高度
-    sf::RectangleShape line1(sf::Vector2f(lineLength, lineWidth)), line2(sf::Vector2f(lineLength, lineWidth)),
-                    line3(sf::Vector2f(lineWidth, lineLength)), line4(sf::Vector2f(lineWidth, lineLength));
+    // 在視窗中繪製背景
+    
 
-    // 計算線條的位置
-    float line1PositionX = windowSize.x / 2 - lineLength / 2;
-    float line1PositionY = windowSize.y / 3 - lineWidth / 2;
-    float line2PositionX = windowSize.x / 2 - lineLength / 2;
-    float line2PositionY = 2 * windowSize.y / 3 - lineWidth / 2;
-    float line3PositionX = windowSize.x / 3 - lineWidth / 2;
-    float line3PositionY = windowSize.y / 2 - lineLength / 2;
-    float line4PositionX = 2 * windowSize.x / 3 - lineWidth / 2;
-    float line4PositionY = windowSize.y / 2 - lineLength / 2;
 
-    // 設置線條的位置
-    line1.setPosition(line1PositionX, line1PositionY);
-    line2.setPosition(line2PositionX, line2PositionY);
-    line3.setPosition(line3PositionX, line3PositionY);
-    line4.setPosition(line4PositionX, line4PositionY);
+    // // 計算線條的長度和寬度
+    // float lineLength = col ; 
+    // float lineWidth = row * 0.01; // 1% 的視窗高度
+    // sf::RectangleShape line1(sf::Vector2f(lineLength, lineWidth)), line2(sf::Vector2f(lineLength, lineWidth)),
+    //                 line3(sf::Vector2f(lineWidth, lineLength)), line4(sf::Vector2f(lineWidth, lineLength));
+
+    // // 計算線條的位置
+    // float line1PositionX = col / 2 - lineLength / 2;
+    // float line1PositionY = row / 3 - lineWidth / 2;
+    // float line2PositionX = col / 2 - lineLength / 2;
+    // float line2PositionY = 2 * row / 3 - lineWidth / 2;
+    // float line3PositionX = col / 3 - lineWidth / 2;
+    // float line3PositionY = row / 2 - lineLength / 2;
+    // float line4PositionX = 2 * col / 3 - lineWidth / 2;
+    // float line4PositionY = row / 2 - lineLength / 2;
+
+    // // 設置線條的位置
+    // line1.setPosition(line1PositionX, line1PositionY);
+    // line2.setPosition(line2PositionX, line2PositionY);
+    // line3.setPosition(line3PositionX, line3PositionY);
+    // line4.setPosition(line4PositionX, line4PositionY);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -95,8 +120,8 @@ int main() {
                 window.close();
 
             if (event.type == sf::Event::MouseButtonPressed) {
-                int row = event.mouseButton.y / 100;
-                int col = event.mouseButton.x / 100;
+                int row = event.mouseButton.y / 113;
+                int col = event.mouseButton.x / 113;
                 if (board[row][col] == Player::None) {
                     board[row][col] = currentPlayer;
                     currentPlayer = currentPlayer == Player::O ? Player::X : Player::O;
@@ -105,19 +130,24 @@ int main() {
         }
 
         window.clear();
-        window.draw(line1);
-        window.draw(line2);
-        window.draw(line3);
-        window.draw(line4);
+        window.draw(background);
+        // window.draw(line1);
+        // window.draw(line2);
+        // window.draw(line3);
+        // window.draw(line4);
 
         // 繪製 O 和 X
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == Player::O) {
-                    drawO(window, i, j);
+                    oSprite.setPosition(j * 113, i * 113);
+                    window.draw(oSprite);
+                    // drawO(window, i, j);
                 }
                 if (board[i][j] == Player::X) {
-                    drawX(window, i, j);
+                    xSprite.setPosition(j * 113, i * 113);
+                    window.draw(xSprite);
+                    // drawX(window, i, j);
                 }
             }
         }
