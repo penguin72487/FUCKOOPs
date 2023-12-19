@@ -39,8 +39,8 @@ Player checkWin() {
     return Player::Draw;  // 沒有空格，且沒有玩家勝利，遊戲平手
 }
 void drawO(sf::RenderWindow &window, int row, int col) {
-    sf::CircleShape circle(40);
-    circle.setPosition(col * 100+12, row * 100+12);
+    sf::CircleShape circle(150);  // 放大圈圈的大小
+    circle.setPosition(col * 341+25, row * 341+25);  // 調整圈圈的位置
     circle.setFillColor(sf::Color::Red);
     circle.setOutlineColor(sf::Color::White);
     circle.setOutlineThickness(5);
@@ -48,11 +48,11 @@ void drawO(sf::RenderWindow &window, int row, int col) {
 }
 
 void drawX(sf::RenderWindow &window, int row, int col) {
-    sf::RectangleShape line1(sf::Vector2f(100, 5)), line2(sf::Vector2f(100, 5));
-    line1.setOrigin(50, 2.5);
-    line2.setOrigin(50, 2.5);
-    line1.setPosition(col * 100 + 50, row * 100 + 50);
-    line2.setPosition(col * 100 + 50, row * 100 + 50);
+    sf::RectangleShape line1(sf::Vector2f(300, 15)), line2(sf::Vector2f(300, 15));  // 放大叉叉的大小
+    line1.setOrigin(150, 7.5);
+    line2.setOrigin(150, 7.5);
+    line1.setPosition(col * 341 + 170, row * 341 + 170);  // 調整叉叉的位置
+    line2.setPosition(col * 341 + 170, row * 341 + 170);  // 調整叉叉的位置
     line1.rotate(45);
     line2.rotate(-45);
     line1.setFillColor(sf::Color::Blue);
@@ -95,8 +95,8 @@ int main() {
                 window.close();
 
             if (event.type == sf::Event::MouseButtonPressed) {
-                int row = event.mouseButton.y / 100;
-                int col = event.mouseButton.x / 100;
+                int row = event.mouseButton.y / 341;  // 調整滑鼠點擊的位置計算
+                int col = event.mouseButton.x / 341;  // 調整滑鼠點擊的位置計算
                 if (board[row][col] == Player::None) {
                     board[row][col] = currentPlayer;
                     currentPlayer = currentPlayer == Player::O ? Player::X : Player::O;
