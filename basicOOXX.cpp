@@ -1,41 +1,35 @@
-// 定義遊戲狀態
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+
 enum class Player { None, O, X, Draw };
+
 Player currentPlayer = Player::O;
-Player board[3][3] = {{Player::None, Player::None, Player::None}, 
-                    {Player::None, Player::None, Player::None}, 
-                    {Player::None, Player::None, Player::None}};
+std::vector<std::vector<Player>> board(3, std::vector<Player>(3, Player::None));
+
+bool isLineWin(Player a, Player b, Player c) {
+    return (a == b) && (b == c) && (a != Player::None);
+}
 
 Player checkWin() {
-    // 檢查橫排
+    // 檢查所有行和列
     for (int i = 0; i < 3; i++) {
-        if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != Player::None)
-            return board[i][0];
-    }
-
-    // 檢查豎排
-    for (int i = 0; i < 3; i++) {
-        if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != Player::None)
-            return board[0][i];
+        if (isLineWin(board[i][0], board[i][1], board[i][2])) return board[i][0];
+        if (isLineWin(board[0][i], board[1][i], board[2][i])) return board[0][i];
     }
 
     // 檢查對角線
-    if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != Player::None)
-        return board[0][0];
-    if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != Player::None)
-        return board[0][2];
+    if (isLineWin(board[0][0], board[1][1], board[2][2])) return board[0][0];
+    if (isLineWin(board[0][2], board[1][1], board[2][0])) return board[0][2];
 
     // 檢查平手
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (board[i][j] == Player::None)
-                return Player::None;  // 還有空格，遊戲還未結束
+    for (auto &row : board) {
+        for (auto cell : row) {
+            if (cell == Player::None) return Player::None;
         }
     }
 
-    return Player::Draw;  // 沒有空格，且沒有玩家勝利，遊戲平手
+    return Player::Draw;
 }
 void drawO(sf::RenderWindow &window, int row, int col) {
     sf::CircleShape circle(150);  // 放大圈圈的大小
@@ -61,9 +55,7 @@ void drawX(sf::RenderWindow &window, int row, int col) {
 }
 void resetGame() {
     currentPlayer = Player::O;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            board[i][j] = Player::None;
-        }
+    for (auto &row : board) {
+        std::fill(row.begin(), row.end(), Player::None);
     }
 }
