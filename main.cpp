@@ -9,8 +9,8 @@ int main() {
     // 獲取視窗的大小
     sf::Vector2u windowSize = window.getSize();
 
-    // 計算線條的長度和寬度
-    float lineLength = windowSize.x ; 
+    // 計算格線的長度和寬度
+    float lineLength = windowSize.x*0.9;/*11111111111*/ 
     float lineWidth = windowSize.y * 0.01; // 1% 的視窗高度
     sf::RectangleShape line1(sf::Vector2f(lineLength, lineWidth)), line2(sf::Vector2f(lineLength, lineWidth)),
                     line3(sf::Vector2f(lineWidth, lineLength)), line4(sf::Vector2f(lineWidth, lineLength));
@@ -31,6 +31,11 @@ int main() {
     line3.setPosition(line3PositionX, line3PositionY);
     line4.setPosition(line4PositionX, line4PositionY);
 
+    line1.setFillColor(sf::Color(128,128,128));
+    line2.setFillColor(sf::Color(128,128,128));
+    line3.setFillColor(sf::Color(128,128,128));
+    line4.setFillColor(sf::Color(128,128,128));
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -47,7 +52,7 @@ int main() {
             }
         }
 
-        window.clear();
+        window.clear(sf::Color::White);
         window.draw(line1);
         window.draw(line2);
         window.draw(line3);
