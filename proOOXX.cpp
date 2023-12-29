@@ -12,15 +12,15 @@ int main() {
     sf::Texture o;
     sf::Texture x;
     // 載入圖片
-    if (!bg.loadFromFile("png/game/game-bg-all.png")){
+    if (!bg.loadFromFile("png/game/ui/ProOOXX-line.png")){
         std::cout << "Failed to load background image" << std::endl;
         return -1;
     }
-    if(!o.loadFromFile("png/game/o.png")){
+    if(!o.loadFromFile("png/game/O/o1.png")){
         std::cout << "Failed to load O image" << std::endl;
         return -1;
     }
-    if(!x.loadFromFile("png/game/x.png")){
+    if(!x.loadFromFile("png/game/X/x1.png")){
         std::cout << "Failed to load X image" << std::endl;
         return -1;
     }
