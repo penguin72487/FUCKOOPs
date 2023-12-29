@@ -37,7 +37,7 @@ class Basic : public Game {
                     line.setFillColor(sf::Color(128, 128, 128));
                 }
         }
-        void start() override// aka gameProcess
+        int gameProcess() override// aka gameProcess
         {
             while (window.isOpen()) {
                     sf::Event event;
@@ -57,65 +57,68 @@ class Basic : public Game {
                     }
 
                     // 繪製遊戲界面
-                    window.clear(sf::Color::White);
-                    for (auto &line : lines) {
-                        window.draw(line);
-                    }
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            if (board[i][j] == 1) {
-                                drawO(window, i, j);
-                            }
-                            if (board[i][j] == 2) {
-                                drawX(window, i, j);
-                            }
-                        }
-                    }
-                    window.display();
+                    render();
 
                     // 檢查勝利狀況
-                    int winner = checkWin();
+                    int winner = victory_Condition();
                     if (winner != 0) {
                         std::string resultMessage = winner == 1 ? "O wins!\n" : (winner == 2 ? "X wins!\n" : "Draw!\n");
                         std::cout << resultMessage;
-                        resetGame();
+                        return winner;
+                        // resetGame();
                     }
                 }
+            return 0;
         }
-        void victory_Condition() override;
-        void render() override;
-        void update() override;
-        void click_Event() override;
-        void restart() override;
-        void settimeLimit(int) override;
-        void setinterfaceColor(std::string) override;
-        void whooseTurn() override;
+        int victory_Condition() override{
+                        // 檢查所有行和列
+                for (int i = 0; i < 3; i++) {
+                    if (isLineWin(board[i][0], board[i][1], board[i][2])) return board[i][0];
+                    if (isLineWin(board[0][i], board[1][i], board[2][i])) return board[0][i];
+                }
+
+                // 檢查對角線
+                if (isLineWin(board[0][0], board[1][1], board[2][2])) return board[0][0];
+                if (isLineWin(board[0][2], board[1][1], board[2][0])) return board[0][2];
+
+                // 檢查平手
+                for (auto &row : board) {
+                    for (auto cell : row) {
+                        if (cell == 0) return 0;
+                    }
+                }
+
+                return 3;
+        };
+        void render() override{
+                window.clear(sf::Color::White);
+                for (auto &line : lines) {
+                    window.draw(line);
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (board[i][j] == 1) {
+                            drawO(window, i, j);
+                        }
+                        if (board[i][j] == 2) {
+                            drawX(window, i, j);
+                        }
+                    }
+                }
+                window.display();
+        };
+        void update() override{};
+        void click_Event() override{};
+        void restart() override{};
+        void settimeLimit(int) override{};
+        void setinterfaceColor(std::string) override{};
+        void whooseTurn() override{};
 
         // polymorphism for different game mode
     protected:
         std::vector<std::vector<int>> board;// 0:None 1:O 2:X
         bool isLineWin(int a, int b, int c) {
             return (a == b) && (b == c) && (a != 0);
-        }
-        int checkWin() {
-            // 檢查所有行和列
-            for (int i = 0; i < 3; i++) {
-                if (isLineWin(board[i][0], board[i][1], board[i][2])) return board[i][0];
-                if (isLineWin(board[0][i], board[1][i], board[2][i])) return board[0][i];
-            }
-
-            // 檢查對角線
-            if (isLineWin(board[0][0], board[1][1], board[2][2])) return board[0][0];
-            if (isLineWin(board[0][2], board[1][1], board[2][0])) return board[0][2];
-
-            // 檢查平手
-            for (auto &row : board) {
-                for (auto cell : row) {
-                    if (cell == 0) return 0;
-                }
-            }
-
-            return 3;
         }
         void drawO(sf::RenderWindow &window, int row, int col) {
             sf::CircleShape circle(150);  // 放大圈圈的大小

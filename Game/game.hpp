@@ -5,11 +5,11 @@
 class Game{
 
 public:
-    Game();
-    ~Game();
+    Game(){};// constructor
+    virtual ~Game(){};
     virtual void init() = 0;
-    virtual void start() = 0;
-    virtual void victory_Condition() = 0;
+    virtual int gameProcess() = 0;
+    virtual int victory_Condition() = 0;
     virtual void render() = 0;
     virtual void update() = 0;
     // virtual void draw() = 0;
