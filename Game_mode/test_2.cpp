@@ -3,107 +3,48 @@
 
 class UIElement {
 public:
+    UIElement(sf::Font& font, sf::RenderWindow& window, const std::string& defaultText);
+    virtual ~UIElement() = default;
     virtual void handleEvent(const sf::Event& event) = 0;
-    virtual void update(sf::RenderWindow& window) = 0;
-};
+    virtual void update() = 0;
+    virtual void draw() = 0;
 
-class CountdownTimer {
-public:
-    CountdownTimer(sf::Font& font, sf::RenderWindow& window);
-    void start(int seconds);
-
-private:
-    sf::Text timerText;
+protected:
+    sf::Text text;
     sf::RenderWindow& window;
 };
 
-CountdownTimer::CountdownTimer(sf::Font& font, sf::RenderWindow& window) : window(window) {
-    timerText.setFont(font);
-    timerText.setCharacterSize(40);
-    timerText.setFillColor(sf::Color::White);
-}
-
-void CountdownTimer::start(int seconds) {
-    sf::Clock clock;
-
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-        }
-
-        sf::Time elapsed = clock.getElapsedTime();
-        int secondsLeft = seconds - static_cast<int>(elapsed.asSeconds());
-
-        if (secondsLeft >= 0) {
-            timerText.setString(std::to_string(secondsLeft));
-        } else {
-            timerText.setString("Time's up!");
-            // Countdown ends, return to "Enter Time" state
-            window.clear();
-            window.display();
-            break;
-        }
-
-        window.clear();
-        window.draw(timerText);
-        window.display();
-    }
+UIElement::UIElement(sf::Font& font, sf::RenderWindow& window, const std::string& defaultText)
+    : window(window) {
+    text.setFont(font);
+    text.setCharacterSize(20);
+    text.setFillColor(sf::Color::White);
+    text.setString(defaultText);
 }
 
 class TextInput : public UIElement {
 public:
-    TextInput(sf::Font& font, sf::RenderWindow& window);
+    using UIElement::UIElement;
     void handleEvent(const sf::Event& event) override;
     void update() override;
-    const std::string& getText() const;
-    bool isInputSucceed() const;
-    bool isCountingDown() const;
-    void reset();
-    void update(sf::RenderWindow& window) override {
-        window.draw(text);
-    }
+    void draw() override;
+    std::string getInputString() const;
 
 private:
     std::string inputString;
-    bool inputSucceed;
-    bool countingDown;
-    sf::Text text;
+    bool inputSucceed = false;
 };
-
-TextInput::TextInput(sf::Font& font, sf::RenderWindow& window) : inputSucceed(false), countingDown(false) {
-    text.setFont(font);
-    text.setCharacterSize(20);
-    text.setPosition(10, 50);
-    text.setString("Enter Time: ");
-}
 
 void TextInput::handleEvent(const sf::Event& event) {
     if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::Return) {
-            if (!inputSucceed && !countingDown) {
-                std::cout << "Input successful: " << inputString << std::endl;
-                inputSucceed = true;
-                text.setString("Input successful: " + inputString);
-                countingDown = true;
-            } else {
-                inputSucceed = false;
-                countingDown = false;
-                text.setString("Enter Time: ");
+        if (event.key.code == sf::Keyboard::Backspace) {
+            // Backspace key pressed
+            if (!inputSucceed && !inputString.empty()) {
+                inputString.pop_back();
+                text.setString("Enter Time: " + inputString);
             }
         }
-        else if (event.key.code == sf::Keyboard::Backspace) {
-            if (!inputSucceed) {
-                if (!inputString.empty()) {
-                    inputString.pop_back();
-                    text.setString("Enter Time: " + inputString);
-                }
-            }
-        }
-    }
-    else if (event.type == sf::Event::TextEntered) {
+    } else if (event.type == sf::Event::TextEntered) {
         if (event.text.unicode >= 48 && event.text.unicode <= 57) {
             // Only accept numeric input
             inputString += static_cast<char>(event.text.unicode);
@@ -113,26 +54,58 @@ void TextInput::handleEvent(const sf::Event& event) {
 }
 
 void TextInput::update() {
+    // Additional logic for TextInput update if needed
+}
+
+void TextInput::draw() {
     window.draw(text);
 }
 
-const std::string& TextInput::getText() const {
+std::string TextInput::getInputString() const {
     return inputString;
 }
 
-bool TextInput::isInputSucceed() const {
-    return inputSucceed;
+class CountdownTimer : public UIElement {
+public:
+    using UIElement::UIElement;
+    void handleEvent(const sf::Event& event) override;
+    void update() override;
+    void draw() override;
+    void start(int seconds);
+
+private:
+    sf::Clock clock;
+    int totalSeconds; // Renamed from 'seconds' to 'totalSeconds'
+    int secondsLeft;
+    bool countdownInProgress = false;
+};
+
+void CountdownTimer::handleEvent(const sf::Event& event) {
+    // Handle specific events for CountdownTimer if needed
 }
 
-bool TextInput::isCountingDown() const {
-    return countingDown;
+void CountdownTimer::update() {
+    if (countdownInProgress) {
+        sf::Time elapsed = clock.getElapsedTime();
+        secondsLeft = totalSeconds  - static_cast<int>(elapsed.asSeconds());
+
+        if (secondsLeft >= 0) {
+            text.setString(std::to_string(secondsLeft));
+        } else {
+            text.setString("Time's up!");
+            // Additional logic for countdown completion
+            countdownInProgress = false;
+        }
+    }
 }
 
-void TextInput::reset() {
-    inputString.clear();
-    inputSucceed = false;
-    countingDown = false;
-    text.setString("Enter Time: ");
+void CountdownTimer::draw() {
+    window.draw(text);
+}
+
+void CountdownTimer::start(int seconds) {
+    this->totalSeconds  = seconds;
+    countdownInProgress = true;
 }
 
 int main() {
@@ -144,34 +117,25 @@ int main() {
         return -1;
     }
 
-    std::unique_ptr<UIElement> uiElement = std::make_unique<TextInput>(font, window);
-    CountdownTimer countdownTimer(font, window);
+    TextInput textInput(font, window, "Enter Time:");
+    CountdownTimer countdownTimer(font, window, "");
+
+    UIElement* currentElement = &textInput;
 
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
+            } else {
+                currentElement->handleEvent(event);
             }
-
-            uiElement->handleEvent(event);
         }
+
+        currentElement->update();
 
         window.clear();
-        uiElement->update();
-
-        if (dynamic_cast<TextInput*>(uiElement.get())->isInputSucceed() &&
-            !dynamic_cast<TextInput*>(uiElement.get())->isCountingDown()) {
-            try {
-                countdownTimer.start(std::stoi(dynamic_cast<TextInput*>(uiElement.get())->getText()));
-                dynamic_cast<TextInput*>(uiElement.get())->reset();  // 重置輸入狀態
-            } catch (const std::invalid_argument& e) {
-                std::cerr << "Invalid input: " << e.what() << std::endl;
-                // Handle the invalid input error
-                dynamic_cast<TextInput*>(uiElement.get())->reset();  // 重置輸入狀態
-            }
-        }
-
+        currentElement->draw();
         window.display();
     }
 
