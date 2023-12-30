@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-
 class Button {
 public:
     sf::RectangleShape shape;
@@ -56,6 +55,7 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+                window.close();
 
             // check if buttons are clicked
             if (illustrateButton.isClicked(event)) {
@@ -89,6 +89,14 @@ int main() {
         window.draw(developerButton.shape);
         window.draw(developerButton.text);
         window.display();
+}
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+>>>>>>> 6823b258505da60362886350c25fe54ea50f6167
     }
 
     return 0;
