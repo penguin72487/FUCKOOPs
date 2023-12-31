@@ -2,22 +2,17 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
-class UIManager;
-enum class Screen {
-    MAIN_MENU,
-    SETTINGS_MENU,
-    GAME_SELECTION_MENU,
-    GAME_INTERFACE,
-    RESULT_SCREEN,
-    EXIT
-
-};
-// class SettingsMenu;
-// class GameInterface;
-// class ResultScreen;
-
 class UIComponent {
 public:
+    enum class Screen {
+        MAIN_MENU,
+        SETTINGS_MENU,
+        GAME_SELECTION_MENU,
+        GAME_INTERFACE,
+        RESULT_SCREEN,
+        EXIT
+
+    };
     virtual Screen render() = 0;
     sf::Font font;
     sf::Color color = sf::Color(79, 126, 146);
@@ -165,7 +160,8 @@ private:
     GameInterface gameInterface;
     ResultScreen resultScreen;
     // std::vector<UIComponent*> screens;
-    Screen currentScreen;
+
+    UIComponent::Screen currentScreen;
     
 
 
@@ -182,28 +178,28 @@ public:
             renderScreen();
         }
     }
-    void changeScreen(Screen screen) {
+    void changeScreen(UIComponent::Screen screen) {
         currentScreen = screen;
     }
     void renderScreen(){
         currentScreen = mainMenu.render();
         switch (currentScreen) {
-            case Screen::MAIN_MENU:
+            case UIComponent::Screen::MAIN_MENU:
                 mainMenu.render();
                 break;
-            case Screen::SETTINGS_MENU:
+            case UIComponent::Screen::SETTINGS_MENU:
                 settingsMenu.render();
                 break;
-            case Screen::GAME_SELECTION_MENU:
+            case UIComponent::Screen::GAME_SELECTION_MENU:
                 gameSelectionMenu.render();
                 break;
-            case Screen::GAME_INTERFACE:
+            case UIComponent::Screen::GAME_INTERFACE:
                 gameInterface.render();
                 break;
-            case Screen::RESULT_SCREEN:
+            case UIComponent::Screen::RESULT_SCREEN:
                 resultScreen.render();
                 break;
-            case Screen::EXIT:
+            case UIComponent::Screen::EXIT:
                 window.close();
                 break;
             default:
