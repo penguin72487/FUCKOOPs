@@ -2,6 +2,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
+
+// UI組件的基類，提供共用的UI功能和屬性
 class UIComponent {
 public:
     enum class Screen {
@@ -11,116 +13,121 @@ public:
         GAME_INTERFACE,
         RESULT_SCREEN,
         EXIT
-
     };
+<<<<<<< HEAD
     virtual Screen render() = 0;
     sf::Font font;
     sf::Color color = sf::Color(224, 171, 114);//79,126,146
     sf::Image icon;
     sf::RenderWindow& window;
+=======
+>>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
 
-    UIComponent(sf::RenderWindow& win) : window(win){
-        if (!font.loadFromFile("TaipeiSansTCBeta-Regular.ttf")) {
-            // handle error
-            std::cout << "font load fail\n";
-        }
-    }
+    virtual Screen render() = 0;
     virtual ~UIComponent() {}
 
-    // 其他通用 UI 功能
+protected:
+    sf::RenderWindow& window;
+    sf::Font font;
+    sf::Color color;
+    sf::Image icon;
+
+
+    UIComponent(sf::RenderWindow& win) : window(win), color(sf::Color(79, 126, 146)) {
+        if (!font.loadFromFile("TaipeiSansTCBeta-Regular.ttf")) {
+            std::cout << "Font load failed\n";
+        }
+        if (!icon.loadFromFile("OOXX.png")) {
+            std::cout << "Icon load failed\n";
+        }
+    }
 };
 
+// 主菜單類
 class MainMenu : public UIComponent {
 private:
     sf::Text title;
-    Button illustrateButton;
-    Button settingButton;
-    Button startGameButton;
-    Button exitGameButton;
-    Button developerButton;
+    Button illustrateButton, settingButton, startGameButton, exitGameButton, developerButton;
     sf::Texture pic;
     sf::Sprite picture;
 
-    public:
-        MainMenu(sf::RenderWindow& window) : UIComponent(window), 
-                                              illustrateButton(57, 650, 200, 70, "ILLUSTRATE", font),
-                                              settingButton(57, 500, 200, 70, "SETTING", font),
-                                              startGameButton(57, 350, 200, 70, "STARTGAME", font),
-                                              exitGameButton(57, 800, 200, 70, "EXIT", font),
-                                              developerButton(1150, 900, 200, 70, "DEVELOPER", font) {
-            title = sf::Text("TIC-TAC-TOC", font, 170);
-            title.setFillColor(sf::Color(255, 255, 255));
-            title.setPosition(57, 57);
-            if (!icon.loadFromFile("OOXX.png")) {
-                // 圖示載入失敗
-                std::cout << "icon load fail\n";
-            }
-            window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+public:
+    MainMenu(sf::RenderWindow& window) : UIComponent(window), 
+        illustrateButton(57, 650, 200, 70, "ILLUSTRATE", font),
+        settingButton(57, 500, 200, 70, "SETTING", font),
+        startGameButton(57, 350, 200, 70, "START GAME", font),
+        exitGameButton(57, 800, 200, 70, "EXIT", font),
+        developerButton(1150, 900, 200, 70, "DEVELOPER", font) {
 
-            if (!pic.loadFromFile("OOXX.png")) {
-                // 紋理載入失敗
-                std::cout << "pic load fail\n";
-            }
-            picture.setTexture(pic);
-            picture.setScale(1.2,1.2);
-            picture.setPosition(540,314);
-            
-            color = sf::Color(224, 171, 114);
+        title = sf::Text("TIC-TAC-TOC", font, 170);
+        title.setFillColor(sf::Color::White);
+        title.setPosition(57, 57);
+
+        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+        if (!pic.loadFromFile("OOXX.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        picture.setTexture(pic);
+        picture.setScale(1.2, 1.2);
+        picture.setPosition(540, 314);
+
+        color = sf::Color(224, 171, 114);
     }
 
     Screen render() override {
         while (window.isOpen()) {
-                window.clear(color);
-                // draw title and buttons
-                window.draw(title);
-                window.draw(picture);
-                window.draw(illustrateButton.shape);
-                window.draw(illustrateButton.text);
-                window.draw(settingButton.shape);
-                window.draw(settingButton.text);
-                window.draw(startGameButton.shape);
-                window.draw(startGameButton.text);
-                window.draw(exitGameButton.shape);
-                window.draw(exitGameButton.text);
-                window.draw(developerButton.shape);
-                window.draw(developerButton.text);
-                window.display();
-                sf::Event event;
-                while (window.pollEvent(event)) {
-                    if (event.type == sf::Event::Closed)
-                        window.close();
+            window.clear(color);
+            // Draw title and buttons
+            window.draw(title);
+            window.draw(picture);
+            window.draw(illustrateButton.shape);
+            window.draw(illustrateButton.text);
+            window.draw(settingButton.shape);
+            window.draw(settingButton.text);
+            window.draw(startGameButton.shape);
+            window.draw(startGameButton.text);
+            window.draw(exitGameButton.shape);
+            window.draw(exitGameButton.text);
+            window.draw(developerButton.shape);
+            window.draw(developerButton.text);
+            window.display();
 
-                    // check if buttons are clicked
-                    if (illustrateButton.isClicked(event)) {
-                        // do something
-                    }
-                    if (settingButton.isClicked(event)) {
-                        return Screen::SETTINGS_MENU;
-                    }
-                    if (startGameButton.isClicked(event)) {
-                        return Screen::GAME_SELECTION_MENU;
-                    }
-                    if (exitGameButton.isClicked(event)) {
-                        return Screen::EXIT;
-                    }
-                    if (developerButton.isClicked(event)) {
-                        // do something
-                    }
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+
+                // Handle button clicks
+                if (illustrateButton.isClicked(event)) {
+                    // Implement action
                 }
-
-
+                if (settingButton.isClicked(event)) {
+                    return Screen::SETTINGS_MENU;
+                }
+                if (startGameButton.isClicked(event)) {
+                    return Screen::GAME_SELECTION_MENU;
+                }
+                if (exitGameButton.isClicked(event)) {
+                    return Screen::EXIT;
+                }
+                if (developerButton.isClicked(event)) {
+                    // Implement action
+                }
+            }
         }
         return Screen::EXIT;
     }
 };
 
-// 設置菜單
+// 設置菜單類
 class SettingsMenu : public UIComponent {
 private:
     sf::Text colorset;
     sf::Text timeset;
     Button MenuButton;
 public:
+<<<<<<< HEAD
     SettingsMenu(sf::RenderWindow& window) : UIComponent(window),MenuButton(57, 36, 160, 70, "MENU", font) {
         colorset = sf::Text("SETTING COLOR", font, 50);
         colorset.setFillColor(sf::Color(255, 255, 255));
@@ -129,16 +136,47 @@ public:
         timeset = sf::Text("SETTING TIME", font, 50);
         timeset.setFillColor(sf::Color(255, 255, 255));
         timeset.setPosition(50, 622);
+=======
+    sf::Text colorset, timeset;
+    Button menuButton;
+>>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
 
+    SettingsMenu(sf::RenderWindow& window) : UIComponent(window),
+        menuButton(57, 36, 160, 70, "MENU", font) {
+
+        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+        colorset = sf::Text("SETTING COLOR", font, 50);
+        colorset.setFillColor(sf::Color::White);
+        colorset.setPosition(50, 377);    
+
+        timeset = sf::Text("SETTING TIME", font, 50);
+        timeset.setFillColor(sf::Color::White);
+        timeset.setPosition(50, 622);
+
+        color = sf::Color(224, 171, 114);
     }
+
     Screen render() override {
+<<<<<<< HEAD
         std::cout << "Settings Menu: [Settings Options]" << std::endl;
         while (window.isOpen()) {
+=======
+        while (window.isOpen()) {
+            window.clear(color);
+            // Draw text and button
+            window.draw(colorset);
+            window.draw(timeset);
+            window.draw(menuButton.shape);
+            window.display();
+
+>>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
             sf::Event event;
             while (window.pollEvent(event)) {
                 if (event.type == sf::Event::Closed)
                     window.close();
 
+<<<<<<< HEAD
                 // check if buttons are clicked
                 if (MenuButton.isClicked(event)) {
                     return Screen::MAIN_MENU;
@@ -154,13 +192,18 @@ public:
             window.display();
 
 
+=======
+                if (menuButton.isClicked(event)) {
+                    return Screen::MAIN_MENU;
+                }
+            }
+>>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
         }
         return Screen::MAIN_MENU;
     }
-    // 其他設置功能
 };
 
-// 遊戲選擇菜單
+// 遊戲選擇菜單類
 class GameSelectionMenu : public UIComponent {
 private:
     sf::Text basictext;
@@ -170,6 +213,7 @@ private:
     Button AdvanceButton;
 
 public:
+<<<<<<< HEAD
     GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window),
                                                 MenuButton(57, 36, 160, 70, "MENU", font),
                                                 BasicButton(333, 164, 734, 348, "", font),
@@ -218,9 +262,61 @@ public:
 
         }
         return Screen::MAIN_MENU;
+=======
+    Button menuButton, basicButton, advanceButton;
+    sf::Text basicText, advanceText;
+
+    GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window),
+        menuButton(57, 36, 160, 70, "MENU", font),
+        basicButton(333, 164, 734, 348, "", font),
+        advanceButton(333, 586, 734, 347, "", font) {
+
+        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+        basicText = sf::Text("BASIC\n3*3", font, 65);
+        basicText.setFillColor(sf::Color::Black);
+        basicText.setPosition(722, 262);
+
+        advanceText = sf::Text("ADVANCE\n9*9", font, 65);
+        advanceText.setFillColor(sf::Color::Black);
+        advanceText.setPosition(722, 683);
+
+        color = sf::Color(224, 171, 114);
     }
-    // 其他遊戲選擇功能
+
+    Screen render() override {
+        while (window.isOpen()) {
+            window.clear(color);
+            // Draw buttons and text
+            window.draw(menuButton.shape);
+            window.draw(menuButton.text);
+            window.draw(basicButton.shape);
+            window.draw(advanceButton.shape);
+            window.draw(basicText);
+            window.draw(advanceText);
+            window.display();
+
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+
+                if (menuButton.isClicked(event)) {
+                    return Screen::MAIN_MENU;
+                }
+                if (basicButton.isClicked(event)) {
+                    return Screen::GAME_INTERFACE;
+                }
+                if (advanceButton.isClicked(event)) {
+                    return Screen::GAME_INTERFACE;
+                }
+            }
+        }
+        return Screen::GAME_INTERFACE;
+>>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
+    }
 };
+
 
 // 遊戲介面
 class GameInterface : public UIComponent {
