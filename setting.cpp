@@ -8,7 +8,7 @@ public:
     Button(float x, float y, float width, float height, std::string buttonText, sf::Font& font) {
         shape.setPosition(sf::Vector2f(x, y));
         shape.setSize(sf::Vector2f(width, height));
-        shape.setOutlineColor(sf::Color(0, 0, 0));
+        shape.setOutlineColor(sf::Color(224, 171, 114));
         shape.setOutlineThickness(2);
         shape.setFillColor(sf::Color(173, 216, 230));
 
@@ -35,7 +35,7 @@ public:
 };
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(1400, 1024), "TIC-TAC-TOC");
+    sf::RenderWindow window(sf::VideoMode(1400, 1024), "SETTING");
     sf::Font font;
     if (!font.loadFromFile("TaipeiSansTCBeta-Regular.ttf")) {
         // handle error
@@ -51,26 +51,15 @@ int main() {
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // create title
-    sf::Text title("TIC-TAC-TOC!!!", font, 170);
-    title.setFillColor(sf::Color(255, 255, 255));
-    title.setPosition(57, 57);
+    sf::Text colorset("SETTING COLOR", font, 50);
+    colorset.setFillColor(sf::Color(255, 255, 255));
+    colorset.setPosition(50, 377);    
+    
+    sf::Text timeset("SETTING TIME", font, 50);
+    timeset.setFillColor(sf::Color(255, 255, 255));
+    timeset.setPosition(50, 622);
 
-    sf::Texture pic;
-    if (!pic.loadFromFile("OOXX.png")) {
-        // 紋理載入失敗
-        return EXIT_FAILURE;
-    }
-
-    sf::Sprite picture(pic);
-    picture.setScale(1.2,1.2);
-    picture.setPosition(540,314);
-
-    // create buttons
-    Button illustrateButton(57, 650, 160, 70, "ILLUSTRATE", font);
-    Button settingButton(57, 500, 160, 70, "SETTING", font);
-    Button startGameButton(57, 350, 160, 70, "STARTGAME", font);
-    Button exitGameButton(57, 800, 160, 70, "EXIT", font);
-    Button developerButton(1200, 900, 160, 70, "DEVELOPER", font);
+    Button MenuButton(57, 36, 160, 70, "MENU", font);
 
     sf::Color color(224, 171, 114);
 
@@ -81,39 +70,21 @@ int main() {
                 window.close();
 
             // check if buttons are clicked
-            if (illustrateButton.isClicked(event)) {
-                // do something
-            }
-            if (settingButton.isClicked(event)) {
-                // do something
-            }
-            if (startGameButton.isClicked(event)) {
-                // do something
-            }
-            if (exitGameButton.isClicked(event)) {
-                window.close();
-            }
-            if (developerButton.isClicked(event)) {
+            if (MenuButton.isClicked(event)) {
                 // do something
             }
         }
 
         window.clear(color);
         // draw title and buttons
-        window.draw(title);
-        window.draw(picture);
-        window.draw(illustrateButton.shape);
-        window.draw(illustrateButton.text);
-        window.draw(settingButton.shape);
-        window.draw(settingButton.text);
-        window.draw(startGameButton.shape);
-        window.draw(startGameButton.text);
-        window.draw(exitGameButton.shape);
-        window.draw(exitGameButton.text);
-        window.draw(developerButton.shape);
-        window.draw(developerButton.text);
+        window.draw(colorset);
+        window.draw(timeset);
+        window.draw(MenuButton.shape);
+        window.draw(MenuButton.text);
         window.display();
-    }
 
+
+    }
+    
     return 0;
 }
