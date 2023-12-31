@@ -178,26 +178,23 @@ public:
             renderScreen();
         }
     }
-    void changeScreen(UIComponent::Screen screen) {
-        currentScreen = screen;
-    }
     void renderScreen(){
         currentScreen = mainMenu.render();
         switch (currentScreen) {
             case UIComponent::Screen::MAIN_MENU:
-                mainMenu.render();
+                currentScreen =mainMenu.render();
                 break;
             case UIComponent::Screen::SETTINGS_MENU:
-                settingsMenu.render();
+                currentScreen =settingsMenu.render();
                 break;
             case UIComponent::Screen::GAME_SELECTION_MENU:
-                gameSelectionMenu.render();
+                currentScreen=gameSelectionMenu.render();
                 break;
             case UIComponent::Screen::GAME_INTERFACE:
-                gameInterface.render();
+                currentScreen=gameInterface.render();
                 break;
             case UIComponent::Screen::RESULT_SCREEN:
-                resultScreen.render();
+                currentScreen = resultScreen.render();
                 break;
             case UIComponent::Screen::EXIT:
                 window.close();
