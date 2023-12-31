@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
 
@@ -38,10 +41,20 @@ protected:
 // 主菜單類
 class MainMenu : public UIComponent {
 private:
+    enum class Show
+    {
+        Picture,
+        ILLUSTRATE,
+        DEVELOPER
+    };
     sf::Text title;
     Button illustrateButton, settingButton, startGameButton, exitGameButton, developerButton;
     sf::Texture pic;
     sf::Sprite picture;
+    Show show = Show::Picture;
+    sf::Text illustrateText;
+    sf::Text developerText;
+
 
 public:
     MainMenu(sf::RenderWindow& window) : UIComponent(window), 
@@ -63,14 +76,40 @@ public:
         picture.setTexture(pic);
         picture.setScale(1.2, 1.2);
         picture.setPosition(540, 314);
+        
+        //load illustrate
+        std::ifstream file("illustrate.txt");
+        std::string str;
+        std::stringstream ss;
+        while (std::getline(file, str)) {
+            ss << str << "\n";
+        }
+        illustrateText = sf::Text(ss.str(), font, 30);
+        illustrateText.setFillColor(sf::Color(255, 255, 255));
+        illustrateText.setPosition(300, 200);
+        //load developer
+        std::wifstream wfile("developer.txt");
+        // wfile.imbue(std::locale("")); // 使用系统默认的locale
+        std::wstring wstr;
+        std::wstringstream wss;
+        while (std::getline(wfile, wstr)) {
+            std::wcout << wstr << std::endl;
+            wss << wstr << L"\n";
+        }
+        // 转换wstring到string，这取决于您如何处理字符串和显示
+
+        developerText = sf::Text("",font, 30);
+        std::wcout << wss.str() << std::endl;
+        developerText.setString(wss.str());        
+        developerText.setFillColor(sf::Color(255, 255, 255));
+        developerText.setPosition(300, 200);
     }
 
     Screen render() override {
         while (window.isOpen()) {
             window.clear(color);
             // Draw title and buttons
-            window.draw(title);
-            window.draw(picture);
+            window.draw(title);            
             window.draw(illustrateButton.shape);
             window.draw(illustrateButton.text);
             window.draw(settingButton.shape);
@@ -81,7 +120,20 @@ public:
             window.draw(exitGameButton.text);
             window.draw(developerButton.shape);
             window.draw(developerButton.text);
+            
+            switch(show){
+                case Show::Picture:
+                    window.draw(picture);
+                    break;
+                case Show::ILLUSTRATE:
+                    window.draw(illustrateText);
+                    break;
+                case Show::DEVELOPER:
+                    window.draw(developerText);
+                    break;
+            }
             window.display();
+
 
             sf::Event event;
             while (window.pollEvent(event)) {
@@ -90,19 +142,19 @@ public:
 
                 // Handle button clicks
                 if (illustrateButton.isClicked(event)) {
-                    // Implement action
+                    show = Show::ILLUSTRATE;
                 }
-                if (settingButton.isClicked(event)) {
+                else if (settingButton.isClicked(event)) {
                     return Screen::SETTINGS_MENU;
                 }
-                if (startGameButton.isClicked(event)) {
+                else if (startGameButton.isClicked(event)) {
                     return Screen::GAME_SELECTION_MENU;
                 }
-                if (exitGameButton.isClicked(event)) {
+                else if (exitGameButton.isClicked(event)) {
                     return Screen::EXIT;
                 }
-                if (developerButton.isClicked(event)) {
-                    // Implement action
+                else if (developerButton.isClicked(event)) {
+                    show = Show::DEVELOPER;
                 }
             }
         }
