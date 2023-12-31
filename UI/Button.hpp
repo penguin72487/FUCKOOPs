@@ -1,7 +1,8 @@
 // Button.cpp
 // #include "Button.h"
 #include <SFML/Graphics.hpp>
-
+#ifndef BUTTON_HPP
+#define BUTTON_HPP
 class Button {
 public:
     sf::RectangleShape shape;
@@ -35,3 +36,4 @@ public:
         return false;
     }
 };
+#endif

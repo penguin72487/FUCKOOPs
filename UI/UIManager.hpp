@@ -16,11 +16,13 @@ public:
     virtual Screen render() = 0;
     sf::Font font;
     sf::Color color = sf::Color(79, 126, 146);
+    sf::Image icon;
     sf::RenderWindow& window;
 
     UIComponent(sf::RenderWindow& win) : window(win){
         if (!font.loadFromFile("TaipeiSansTCBeta-Regular.ttf")) {
             // handle error
+            std::cout << "font load fail\n";
         }
     }
     virtual ~UIComponent() {}
@@ -36,16 +38,34 @@ private:
     Button startGameButton;
     Button exitGameButton;
     Button developerButton;
+    sf::Texture pic;
+    sf::Sprite picture;
 
-public:
-    MainMenu(sf::RenderWindow& window) : UIComponent(window), 
-                                      illustrateButton(650, 20, 130, 50, "Illustrate", font),
-                                      settingButton(650, 90, 130, 50, "Setting", font),
-                                      startGameButton(350, 600, 130, 50, "StartGame", font),
-                                      exitGameButton(350, 670, 130, 50, "Exit", font),
-                                      developerButton(650, 830, 130, 50, "Developer", font) {
-        title = sf::Text("TIC-TAC-TOC", font, 50);
-        title.setPosition(800 / 2 - title.getGlobalBounds().width / 2, 50);
+    public:
+        MainMenu(sf::RenderWindow& window) : UIComponent(window), 
+                                              illustrateButton(57, 650, 200, 70, "ILLUSTRATE", font),
+                                              settingButton(57, 500, 200, 70, "SETTING", font),
+                                              startGameButton(57, 350, 200, 70, "STARTGAME", font),
+                                              exitGameButton(57, 800, 200, 70, "EXIT", font),
+                                              developerButton(1150, 900, 200, 70, "DEVELOPER", font) {
+            title = sf::Text("TIC-TAC-TOC", font, 170);
+            title.setFillColor(sf::Color(255, 255, 255));
+            title.setPosition(57, 57);
+            if (!icon.loadFromFile("OOXX.png")) {
+                // 圖示載入失敗
+                std::cout << "icon load fail\n";
+            }
+            window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+            if (!pic.loadFromFile("OOXX.png")) {
+                // 紋理載入失敗
+                std::cout << "pic load fail\n";
+            }
+            picture.setTexture(pic);
+            picture.setScale(1.2,1.2);
+            picture.setPosition(540,314);
+            
+            color = sf::Color(224, 171, 114);
     }
 
     Screen render() override {
@@ -53,6 +73,7 @@ public:
                 window.clear(color);
                 // draw title and buttons
                 window.draw(title);
+                window.draw(picture);
                 window.draw(illustrateButton.shape);
                 window.draw(illustrateButton.text);
                 window.draw(settingButton.shape);
@@ -110,9 +131,12 @@ public:
 class GameSelectionMenu : public UIComponent {
 public:
     GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window) {
-
+        if (!icon.loadFromFile("OOXX.png")) {
+        // 圖示載入失敗
+        std::cout << "icon load fail\n";
+        }
     }
-
+    sf::Image icon;
     Screen render() override {
         std::cout << "Game Selection Menu: [List of Games]" << std::endl;
         return Screen::MAIN_MENU;
@@ -167,7 +191,7 @@ private:
 
 public:
 
-    UIManager():window(sf::VideoMode(800, 900), "TIC-TAC-TOC"), mainMenu(window), settingsMenu(window),gameSelectionMenu(window), gameInterface(window), resultScreen(window) {
+    UIManager():window(sf::VideoMode(1400, 1024), "TIC-TAC-TOC"), mainMenu(window), settingsMenu(window),gameSelectionMenu(window), gameInterface(window), resultScreen(window) {
         // 初始化 UI 管理器
         // sf::RenderWindow window(sf::VideoMode(800, 900), "TIC-TAC-TOC");
         

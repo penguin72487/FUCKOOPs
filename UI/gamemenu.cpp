@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
-
+#include<iostream>
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1400, 1024), "SETTING");
@@ -43,12 +43,16 @@ int main() {
             // check if buttons are clicked
             if (MenuButton.isClicked(event)) {
                 // do something
+                std::cout << "MenuButton" << std::endl;
             }
             if (BasicButton.isClicked(event)) {
+
                 // do something
+                std::cout << "BasicButton" << std::endl;
             }
             if (AdvanceButton.isClicked(event)) {
                 // do something
+                std::cout << "AdvanceButton" << std::endl;
             }
         }
 
