@@ -11,18 +11,10 @@ public:
         SETTINGS_MENU,
         GAME_SELECTION_MENU,
         GAME_INTERFACE,
+        GAME_END_SCREEN,
         RESULT_SCREEN,
         EXIT
     };
-<<<<<<< HEAD
-    virtual Screen render() = 0;
-    sf::Font font;
-    sf::Color color = sf::Color(224, 171, 114);//79,126,146
-    sf::Image icon;
-    sf::RenderWindow& window;
-=======
->>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
-
     virtual Screen render() = 0;
     virtual ~UIComponent() {}
 
@@ -33,13 +25,14 @@ protected:
     sf::Image icon;
 
 
-    UIComponent(sf::RenderWindow& win) : window(win), color(sf::Color(79, 126, 146)) {
+    UIComponent(sf::RenderWindow& win) : window(win), color(sf::Color(224, 171, 114)) {
         if (!font.loadFromFile("TaipeiSansTCBeta-Regular.ttf")) {
             std::cout << "Font load failed\n";
         }
         if (!icon.loadFromFile("OOXX.png")) {
             std::cout << "Icon load failed\n";
         }
+        color = sf::Color(224, 171, 114);
     }
 };
 
@@ -71,8 +64,6 @@ public:
         picture.setTexture(pic);
         picture.setScale(1.2, 1.2);
         picture.setPosition(540, 314);
-
-        color = sf::Color(224, 171, 114);
     }
 
     Screen render() override {
@@ -127,7 +118,6 @@ private:
     sf::Text timeset;
     Button MenuButton;
 public:
-<<<<<<< HEAD
     SettingsMenu(sf::RenderWindow& window) : UIComponent(window),MenuButton(57, 36, 160, 70, "MENU", font) {
         colorset = sf::Text("SETTING COLOR", font, 50);
         colorset.setFillColor(sf::Color(255, 255, 255));
@@ -136,47 +126,15 @@ public:
         timeset = sf::Text("SETTING TIME", font, 50);
         timeset.setFillColor(sf::Color(255, 255, 255));
         timeset.setPosition(50, 622);
-=======
-    sf::Text colorset, timeset;
-    Button menuButton;
->>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
-
-    SettingsMenu(sf::RenderWindow& window) : UIComponent(window),
-        menuButton(57, 36, 160, 70, "MENU", font) {
-
-        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-        colorset = sf::Text("SETTING COLOR", font, 50);
-        colorset.setFillColor(sf::Color::White);
-        colorset.setPosition(50, 377);    
-
-        timeset = sf::Text("SETTING TIME", font, 50);
-        timeset.setFillColor(sf::Color::White);
-        timeset.setPosition(50, 622);
-
-        color = sf::Color(224, 171, 114);
     }
-
     Screen render() override {
-<<<<<<< HEAD
         std::cout << "Settings Menu: [Settings Options]" << std::endl;
         while (window.isOpen()) {
-=======
-        while (window.isOpen()) {
-            window.clear(color);
-            // Draw text and button
-            window.draw(colorset);
-            window.draw(timeset);
-            window.draw(menuButton.shape);
-            window.display();
-
->>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
             sf::Event event;
             while (window.pollEvent(event)) {
                 if (event.type == sf::Event::Closed)
                     window.close();
 
-<<<<<<< HEAD
                 // check if buttons are clicked
                 if (MenuButton.isClicked(event)) {
                     return Screen::MAIN_MENU;
@@ -192,12 +150,6 @@ public:
             window.display();
 
 
-=======
-                if (menuButton.isClicked(event)) {
-                    return Screen::MAIN_MENU;
-                }
-            }
->>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
         }
         return Screen::MAIN_MENU;
     }
@@ -213,7 +165,6 @@ private:
     Button AdvanceButton;
 
 public:
-<<<<<<< HEAD
     GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window),
                                                 MenuButton(57, 36, 160, 70, "MENU", font),
                                                 BasicButton(333, 164, 734, 348, "", font),
@@ -250,9 +201,10 @@ public:
 
                     // check if buttons are clicked
                     if (BasicButton.isClicked(event)) {
-                        // do something
+                        return Screen::GAME_INTERFACE;
                     }
                     if (AdvanceButton.isClicked(event)) {
+                        return Screen::GAME_INTERFACE;
                     }
                     if (MenuButton.isClicked(event)) {
                         return Screen::MAIN_MENU;
@@ -262,38 +214,33 @@ public:
 
         }
         return Screen::MAIN_MENU;
-=======
-    Button menuButton, basicButton, advanceButton;
-    sf::Text basicText, advanceText;
-
-    GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window),
-        menuButton(57, 36, 160, 70, "MENU", font),
-        basicButton(333, 164, 734, 348, "", font),
-        advanceButton(333, 586, 734, 347, "", font) {
-
-        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-        basicText = sf::Text("BASIC\n3*3", font, 65);
-        basicText.setFillColor(sf::Color::Black);
-        basicText.setPosition(722, 262);
-
-        advanceText = sf::Text("ADVANCE\n9*9", font, 65);
-        advanceText.setFillColor(sf::Color::Black);
-        advanceText.setPosition(722, 683);
-
-        color = sf::Color(224, 171, 114);
     }
+};
 
+
+// 遊戲介面
+class GameInterface : public UIComponent {
+private:
+    Button MenuButton;
+    Button RestartButton;
+    Button board;//棋盤
+
+public:
+    GameInterface(sf::RenderWindow& window) : UIComponent(window),MenuButton(57, 36, 160, 70, "MENU", font),
+    RestartButton(57, 900, 160, 70, "RESTART", font),board(333, 164, 734, 734, "", font)
+    {
+
+    }
     Screen render() override {
         while (window.isOpen()) {
             window.clear(color);
-            // Draw buttons and text
-            window.draw(menuButton.shape);
-            window.draw(menuButton.text);
-            window.draw(basicButton.shape);
-            window.draw(advanceButton.shape);
-            window.draw(basicText);
-            window.draw(advanceText);
+            // draw title and buttons
+            window.draw(MenuButton.shape);
+            window.draw(MenuButton.text);
+            window.draw(RestartButton.shape);
+            window.draw(RestartButton.text);
+            window.draw(board.shape);
+            window.draw(board.text);
             window.display();
 
             sf::Event event;
@@ -301,32 +248,21 @@ public:
                 if (event.type == sf::Event::Closed)
                     window.close();
 
-                if (menuButton.isClicked(event)) {
+                // check if buttons are clicked
+                if (MenuButton.isClicked(event)) {
                     return Screen::MAIN_MENU;
                 }
-                if (basicButton.isClicked(event)) {
+                if (RestartButton.isClicked(event)) {
                     return Screen::GAME_INTERFACE;
                 }
-                if (advanceButton.isClicked(event)) {
-                    return Screen::GAME_INTERFACE;
+                if(board.isClicked(event)){
+                    //棋盤被點擊
+                    return Screen::GAME_END_SCREEN;
                 }
             }
         }
-        return Screen::GAME_INTERFACE;
->>>>>>> 12b5ce6856bc09da6d9eefa484241d5e78ad0556
-    }
-};
 
-
-// 遊戲介面
-class GameInterface : public UIComponent {
-public:
-    GameInterface(sf::RenderWindow& window) : UIComponent(window) {
-
-    }
-    Screen render() override {
-        std::cout << "Game Interface: [Gameplay Elements]" << std::endl;
-        return Screen::MAIN_MENU;
+        return Screen::EXIT;
     }
     // 其他遊戲功能
 };
@@ -334,7 +270,7 @@ public:
 //結束畫面
 class GameEndScreen : public UIComponent {
 private:
-    sf::Text s1;
+    sf::Text winMessege;
     Button AgainButton;
     Button ResultButton;
     Button BackButton;
@@ -342,12 +278,12 @@ public:
     GameEndScreen(sf::RenderWindow& window) : UIComponent(window),AgainButton(560, 512, 280, 85, "Again", font)
     ,ResultButton(560, 687, 280, 85, "Result", font),BackButton(560, 862, 280, 85, "Menu", font) {
         
-        s1 = sf::Text("Player__ Win!!", font, 80);
-        s1.setFillColor(sf::Color(255, 255, 255));
-        s1.setPosition(420, 83); 
+        winMessege = sf::Text("Player__ Win!!", font, 80);
+        winMessege.setFillColor(sf::Color(255, 255, 255));
+        winMessege.setPosition(420, 83); 
     }
     Screen render() override {
-        std::cout << "Game End: [Gameplay Elements]" << std::endl;
+        // std::cout << "Game End: [Gameplay Elements]" << std::endl;
         while (window.isOpen()) {
             sf::Event event;
             while (window.pollEvent(event)) {
@@ -368,7 +304,7 @@ public:
 
             window.clear(color);
             // draw title and buttons
-            window.draw(s1);
+            window.draw(winMessege);
             window.draw(AgainButton.shape);
             window.draw(AgainButton.text);
             window.draw(ResultButton.shape);
@@ -385,28 +321,28 @@ public:
 // 結算畫面
 class ResultScreen : public UIComponent {
 private:
-    sf::Text s1;
-    sf::Text s2;
-    sf::Text s3;
-    sf::Text s4;
+    sf::Text playerCongratulationText;
+    sf::Text gamePlayedText;
+    sf::Text player1StatsText;
+    sf::Text player2StatsText;
     Button BackButton;
 public:
     ResultScreen(sf::RenderWindow& window) : UIComponent(window),BackButton(490, 914, 420, 85, "menu", font){
-        s1 = sf::Text ("Congratuation Player__!!", font, 80);
-        s1.setFillColor(sf::Color(255, 255, 255));
-        s1.setPosition(234, 60); 
+        playerCongratulationText = sf::Text ("Congratuation Player__!!", font, 80);
+        playerCongratulationText.setFillColor(sf::Color(255, 255, 255));
+        playerCongratulationText.setPosition(234, 60); 
 
-        s2 = sf::Text ("You have played __", font, 65);
-        s2.setFillColor(sf::Color(255, 255, 255));
-        s2.setPosition(110, 206);
+        gamePlayedText = sf::Text ("You have played __", font, 65);
+        gamePlayedText.setFillColor(sf::Color(255, 255, 255));
+        gamePlayedText.setPosition(110, 206);
 
-        s3 = sf::Text ("Player1\nwin:__(__)%\nlose:__(__)%", font, 65);
-        s3.setFillColor(sf::Color(255, 255, 255));
-        s3.setPosition(110, 359);
+        player1StatsText = sf::Text ("Player1\nwin:__(__)%\nlose:__(__)%", font, 65);
+        player1StatsText.setFillColor(sf::Color(255, 255, 255));
+        player1StatsText.setPosition(110, 359);
 
-        s4 = sf::Text ("Player1\nwin:__(__)%\nlose:__(__)%", font, 65);
-        s4.setFillColor(sf::Color(255, 255, 255));
-        s4.setPosition(110,650);
+        player2StatsText = sf::Text ("Player1\nwin:__(__)%\nlose:__(__)%", font, 65);
+        player2StatsText.setFillColor(sf::Color(255, 255, 255));
+        player2StatsText.setPosition(110,650);
     }
     Screen render() override {
         std::cout << "Result Screen: [Results and Scores]" << std::endl;
@@ -424,10 +360,10 @@ public:
 
             window.clear(color);
             // draw title and buttons
-            window.draw(s1);
-            window.draw(s2);
-            window.draw(s3);
-            window.draw(s4);
+            window.draw(playerCongratulationText);
+            window.draw(gamePlayedText);
+            window.draw(player1StatsText);
+            window.draw(player2StatsText);
             window.draw(BackButton.shape);
             window.draw(BackButton.text);
             window.display();
@@ -449,6 +385,7 @@ private:
     SettingsMenu settingsMenu;
     GameSelectionMenu gameSelectionMenu;
     GameInterface gameInterface;
+    GameEndScreen gameEndScreen;
     ResultScreen resultScreen;
     // std::vector<UIComponent*> screens;
 
@@ -458,7 +395,8 @@ private:
 
 public:
 
-    UIManager():window(sf::VideoMode(1400, 1024), "TIC-TAC-TOC"), mainMenu(window), settingsMenu(window),gameSelectionMenu(window), gameInterface(window), resultScreen(window) {
+    UIManager():window(sf::VideoMode(1400, 1024), "TIC-TAC-TOC"), 
+        mainMenu(window), settingsMenu(window), gameSelectionMenu(window), gameInterface(window), gameEndScreen(window), resultScreen(window) {
         // 初始化 UI 管理器
         // sf::RenderWindow window(sf::VideoMode(800, 900), "TIC-TAC-TOC");
         currentScreen = mainMenu.render();
@@ -482,6 +420,9 @@ public:
                 break;
             case UIComponent::Screen::GAME_INTERFACE:
                 currentScreen=gameInterface.render();
+                break;
+            case UIComponent::Screen::GAME_END_SCREEN:
+                currentScreen = gameEndScreen.render();
                 break;
             case UIComponent::Screen::RESULT_SCREEN:
                 currentScreen = resultScreen.render();
