@@ -208,117 +208,23 @@ public:
     }
 };
 
-// 遊戲選擇菜單類
-class GameSelectionMenu : public UIComponent {
-private:
-    sf::Text basictext;
-    sf::Text advancetext;
-    Button MenuButton;
-    Button BasicButton;
-    Button AdvanceButton;
+// 設置菜單
+// class SettingsMenu : public UIComponent {
+// public:
+//     void render() override {
+//         std::cout << "Settings Menu: [Settings Options]" << std::endl;
+//     }
+//     // 其他設置功能
+// };
 
-public:
-    GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window),
-                                                MenuButton(57, 36, 160, 70, "MENU", font),
-                                                BasicButton(333, 164, 734, 348, "", font),
-                                                AdvanceButton(333, 586, 734, 347, "", font){
-        basictext=sf::Text("BASIC\n3x3", font, 65);
-        basictext.setFillColor(sf::Color(0, 0, 0));
-        basictext.setPosition(722, 262);    
-        
-        advancetext=sf::Text("ADVANCE\n9x9", font, 65);
-        advancetext.setFillColor(sf::Color(0, 0, 0));
-        advancetext.setPosition(722, 683);
-        
-    }
-    Screen render() override {
-        std::cout << "Game Selection Menu: [List of Games]" << std::endl;
-        while(window.isOpen()){
-            window.clear(color);
-
-            
-            window.draw(BasicButton.shape);
-            window.draw(BasicButton.text);
-            window.draw(AdvanceButton.shape);
-            window.draw(AdvanceButton.text);
-            window.draw(MenuButton.shape);
-            window.draw(MenuButton.text);
-            window.draw(basictext);
-            window.draw(advancetext);
-
-            window.display();
-            sf::Event event;
-                while (window.pollEvent(event)) {
-                    if (event.type == sf::Event::Closed)
-                        window.close();
-
-                    // check if buttons are clicked
-                    if (BasicButton.isClicked(event)) {
-                        return Screen::GAME_INTERFACE;
-                    }
-                    if (AdvanceButton.isClicked(event)) {
-                        return Screen::GAME_INTERFACE;
-                    }
-                    if (MenuButton.isClicked(event)) {
-                        return Screen::MAIN_MENU;
-                    }
-                    
-                }
-
-        }
-        return Screen::MAIN_MENU;
-    }
-};
-
-
-// 遊戲介面
-class GameInterface : public UIComponent {
-private:
-    Button MenuButton;
-    Button RestartButton;
-    Button board;//棋盤
-
-public:
-    GameInterface(sf::RenderWindow& window) : UIComponent(window),MenuButton(57, 36, 160, 70, "MENU", font),
-    RestartButton(57, 900, 160, 70, "RESTART", font),board(333, 164, 734, 734, "", font)
-    {
-
-    }
-    Screen render() override {
-        while (window.isOpen()) {
-            window.clear(color);
-            // draw title and buttons
-            window.draw(MenuButton.shape);
-            window.draw(MenuButton.text);
-            window.draw(RestartButton.shape);
-            window.draw(RestartButton.text);
-            window.draw(board.shape);
-            window.draw(board.text);
-            window.display();
-
-            sf::Event event;
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-
-                // check if buttons are clicked
-                if (MenuButton.isClicked(event)) {
-                    return Screen::MAIN_MENU;
-                }
-                if (RestartButton.isClicked(event)) {
-                    return Screen::GAME_INTERFACE;
-                }
-                if(board.isClicked(event)){
-                    //棋盤被點擊
-                    return Screen::GAME_END_SCREEN;
-                }
-            }
-        }
-
-        return Screen::EXIT;
-    }
-    // 其他遊戲功能
-};
+// // 遊戲選擇菜單
+// class GameSelectionMenu : public UIComponent {
+// public:
+//     void render() override {
+//         std::cout << "Game Selection Menu: [List of Games]" << std::endl;
+//     }
+//     // 其他遊戲選擇功能
+// };
 
 //結束畫面
 class GameEndScreen : public UIComponent {
@@ -456,36 +362,13 @@ public:
         currentScreen = mainMenu.render();
     }
     ~UIManager() {}
-    void run() {
-        while (window.isOpen()) {
-            renderScreen();
-        }
+    void addScreen(UIComponent* screen) {
+        screens.push_back(screen);
     }
-    void renderScreen(){
-        switch (currentScreen) {
-            case UIComponent::Screen::MAIN_MENU:
-                currentScreen =mainMenu.render();
-                break;
-            case UIComponent::Screen::SETTINGS_MENU:
-                currentScreen =settingsMenu.render();
-                break;
-            case UIComponent::Screen::GAME_SELECTION_MENU:
-                currentScreen=gameSelectionMenu.render();
-                break;
-            case UIComponent::Screen::GAME_INTERFACE:
-                currentScreen=gameInterface.render();
-                break;
-            case UIComponent::Screen::GAME_END_SCREEN:
-                currentScreen = gameEndScreen.render();
-                break;
-            case UIComponent::Screen::RESULT_SCREEN:
-                currentScreen = resultScreen.render();
-                break;
-            case UIComponent::Screen::EXIT:
-                window.close();
-                break;
-            default:
-                break;
+
+    void renderScreen(int index) {
+        if (index >= 0 && index < screens.size()) {
+            screens[index]->render();
         }
     }
 
