@@ -8,7 +8,7 @@ public:
     Button(float x, float y, float width, float height, std::string buttonText, sf::Font& font) {
         shape.setPosition(sf::Vector2f(x, y));
         shape.setSize(sf::Vector2f(width, height));
-        shape.setOutlineColor(sf::Color(224, 171, 114));
+        shape.setOutlineColor(sf::Color(0, 0, 0));
         shape.setOutlineThickness(2);
         shape.setFillColor(sf::Color(173, 216, 230));
 
@@ -66,11 +66,11 @@ int main() {
     picture.setPosition(540,314);
 
     // create buttons
-    Button illustrateButton(57, 650, 200, 70, "ILLUSTRATE", font);
-    Button settingButton(57, 500, 200, 70, "SETTING", font);
-    Button startGameButton(57, 350, 200, 70, "STARTGAME", font);
-    Button exitGameButton(57, 800, 200, 70, "EXIT", font);
-    Button developerButton(1150, 900, 200, 70, "DEVELOPER", font);
+    Button illustrateButton(57, 650, 160, 70, "ILLUSTRATE", font);
+    Button settingButton(57, 500, 160, 70, "SETTING", font);
+    Button startGameButton(57, 350, 160, 70, "STARTGAME", font);
+    Button exitGameButton(57, 800, 160, 70, "EXIT", font);
+    Button developerButton(1200, 900, 160, 70, "DEVELOPER", font);
 
     sf::Color color(224, 171, 114);
 
