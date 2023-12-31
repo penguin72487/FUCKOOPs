@@ -2,6 +2,17 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
+class UIManager;
+enum Screen {
+    MAIN_MENU,
+    // SETTINGS_MENU,
+    GAME_SELECTION_MENU,
+    // GAME_INTERFACE,
+    // RESULT_SCREEN
+};
+// class SettingsMenu;
+// class GameInterface;
+// class ResultScreen;
 
 class UIComponent {
 public:
@@ -9,8 +20,9 @@ public:
     sf::Font font;
     sf::Color color = sf::Color(79, 126, 146);
     sf::RenderWindow& window;
+    UIManager& uiManager;
 
-    UIComponent(sf::RenderWindow& win) : window(win) {
+    UIComponent(sf::RenderWindow& win,UIManager& manager) : window(win), uiManager(manager) {
         if (!font.loadFromFile("TaipeiSansTCBeta-Regular.ttf")) {
             // handle error
         }
@@ -29,7 +41,7 @@ private:
     Button developerButton;
 
 public:
-    MainMenu(sf::RenderWindow& window) : UIComponent(window), 
+    MainMenu(sf::RenderWindow& window,UIManager& manager) : UIComponent(window,manager), 
                                       illustrateButton(650, 20, 130, 50, "Illustrate", font),
                                       settingButton(650, 90, 130, 50, "Setting", font),
                                       startGameButton(350, 600, 130, 50, "StartGame", font),
@@ -41,29 +53,6 @@ public:
 
     void render() override {
         while (window.isOpen()) {
-                sf::Event event;
-                while (window.pollEvent(event)) {
-                    if (event.type == sf::Event::Closed)
-                        window.close();
-
-                    // check if buttons are clicked
-                    if (illustrateButton.isClicked(event)) {
-                        // do something
-                    }
-                    if (settingButton.isClicked(event)) {
-                        // do something
-                    }
-                    if (startGameButton.isClicked(event)) {
-                        // do something
-                    }
-                    if (exitGameButton.isClicked(event)) {
-                        window.close();
-                    }
-                    if (developerButton.isClicked(event)) {
-                        // do something
-                    }
-                }
-
                 window.clear(color);
                 // draw title and buttons
                 window.draw(title);
@@ -78,6 +67,30 @@ public:
                 window.draw(developerButton.shape);
                 window.draw(developerButton.text);
                 window.display();
+                sf::Event event;
+                while (window.pollEvent(event)) {
+                    if (event.type == sf::Event::Closed)
+                        window.close();
+
+                    // check if buttons are clicked
+                    if (illustrateButton.isClicked(event)) {
+                        // do something
+                    }
+                    if (settingButton.isClicked(event)) {
+                        // do something
+                    }
+                    if (startGameButton.isClicked(event)) {
+                        uiManager.changeScreen(Screen::GAME_SELECTION_MENU);
+                    }
+                    if (exitGameButton.isClicked(event)) {
+                        window.close();
+                    }
+                    if (developerButton.isClicked(event)) {
+                        // do something
+                    }
+                }
+
+
         }
     }
 };
@@ -91,14 +104,18 @@ public:
 //     // 其他設置功能
 // };
 
-// // 遊戲選擇菜單
-// class GameSelectionMenu : public UIComponent {
-// public:
-//     void render() override {
-//         std::cout << "Game Selection Menu: [List of Games]" << std::endl;
-//     }
-//     // 其他遊戲選擇功能
-// };
+// 遊戲選擇菜單
+class GameSelectionMenu : public UIComponent {
+public:
+    GameSelectionMenu(sf::RenderWindow& window,UIManager& manager) : UIComponent(window,manager) {
+
+    }
+
+    void render() override {
+        std::cout << "Game Selection Menu: [List of Games]" << std::endl;
+    }
+    // 其他遊戲選擇功能
+};
 
 // // 遊戲介面
 // class GameInterface : public UIComponent {
@@ -120,38 +137,59 @@ public:
 
 // // UI 管理器
 class UIManager {
+public:
+
 
 private:
     sf::RenderWindow window;
 
     MainMenu mainMenu;
     // SettingsMenu settingsMenu;
-    // GameSelectionMenu gameSelectionMenu;
+    GameSelectionMenu gameSelectionMenu;
     // GameInterface gameInterface;
     // ResultScreen resultScreen;
-    std::vector<UIComponent*> screens;
+    // std::vector<UIComponent*> screens;
+    Screen currentScreen;
+    
 
 
 public:
-    UIManager():window(sf::VideoMode(800, 900), "TIC-TAC-TOC"), mainMenu(window) {
+
+    UIManager():window(sf::VideoMode(800, 900), "TIC-TAC-TOC"), mainMenu(window,*this), gameSelectionMenu(window,*this),currentScreen(MAIN_MENU) {
         // 初始化 UI 管理器
-        sf::RenderWindow window(sf::VideoMode(800, 900), "TIC-TAC-TOC");
-        screens.push_back(&mainMenu);
-        // screens.push_back(&settingsMenu);
-        // screens.push_back(&gameSelectionMenu);
-        // screens.push_back(&gameInterface);
-        // screens.push_back(&resultScreen);
+        // sf::RenderWindow window(sf::VideoMode(800, 900), "TIC-TAC-TOC");
         
     }
     ~UIManager() {}
-    void addScreen(UIComponent* screen) {
-        screens.push_back(screen);
-    }
-
-    void renderScreen(int index) {
-        if (index >= 0 && index < screens.size()) {
-            screens[index]->render();
+    void run() {
+        while (window.isOpen()) {
+            renderScreen();
         }
     }
+    void changeScreen(Screen screen) {
+        currentScreen = screen;
+    }
+    void renderScreen(){
+        switch (currentScreen) {
+            case MAIN_MENU:
+                mainMenu.render();
+                break;
+            // case SETTINGS_MENU:
+            //     settingsMenu.render();
+            //     break;
+            case GAME_SELECTION_MENU:
+                gameSelectionMenu.render();
+                break;
+            // case GAME_INTERFACE:
+            //     gameInterface.render();
+            //     break;
+            // case RESULT_SCREEN:
+            //     resultScreen.render();
+            //     break;
+            default:
+                break;
+        }
+    }
+
     // 其他 UI 管理功能
 };

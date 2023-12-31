@@ -6,8 +6,6 @@
 
 int main() {
     UIManager uiManager;
-
-    uiManager.renderScreen(0);
-
+    uiManager.run();
     return 0;
 }
