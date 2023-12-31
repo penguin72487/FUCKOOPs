@@ -5,6 +5,17 @@
 #include <sstream>
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
+class UIManager;
+enum Screen {
+    MAIN_MENU,
+    // SETTINGS_MENU,
+    GAME_SELECTION_MENU,
+    // GAME_INTERFACE,
+    // RESULT_SCREEN
+};
+// class SettingsMenu;
+// class GameInterface;
+// class ResultScreen;
 
 // UI組件的基類，提供共用的UI功能和屬性
 class UIComponent {
@@ -211,11 +222,11 @@ public:
                                                 MenuButton(57, 36, 160, 70, "MENU", font),
                                                 BasicButton(333, 164, 734, 348, "", font),
                                                 AdvanceButton(333, 586, 734, 347, "", font){
-        basictext=sf::Text("BASIC\n3*3", font, 65);
+        basictext=sf::Text("BASIC\n3x3", font, 65);
         basictext.setFillColor(sf::Color(0, 0, 0));
         basictext.setPosition(722, 262);    
         
-        advancetext=sf::Text("ADVANCE\n9*9", font, 65);
+        advancetext=sf::Text("ADVANCE\n9x9", font, 65);
         advancetext.setFillColor(sf::Color(0, 0, 0));
         advancetext.setPosition(722, 683);
         
@@ -441,6 +452,7 @@ public:
         mainMenu(window), settingsMenu(window), gameSelectionMenu(window), gameInterface(window), gameEndScreen(window), resultScreen(window) {
         // 初始化 UI 管理器
         // sf::RenderWindow window(sf::VideoMode(800, 900), "TIC-TAC-TOC");
+        window.setFramerateLimit(120);
         currentScreen = mainMenu.render();
     }
     ~UIManager() {}
