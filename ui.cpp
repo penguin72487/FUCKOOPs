@@ -8,9 +8,9 @@ public:
     Button(float x, float y, float width, float height, std::string buttonText, sf::Font& font) {
         shape.setPosition(sf::Vector2f(x, y));
         shape.setSize(sf::Vector2f(width, height));
-        shape.setOutlineColor(sf::Color(79, 126, 146));
+        shape.setOutlineColor(sf::Color(0, 0, 0));
         shape.setOutlineThickness(2);
-        shape.setFillColor(sf::Color(145, 163, 176));
+        shape.setFillColor(sf::Color(173, 216, 230));
 
         text.setFont(font);
         text.setString(buttonText);
@@ -35,7 +35,7 @@ public:
 };
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 900), "TIC-TAC-TOC");
+    sf::RenderWindow window(sf::VideoMode(1400, 1024), "TIC-TAC-TOC");
     sf::Font font;
     if (!font.loadFromFile("TaipeiSansTCBeta-Regular.ttf")) {
         // handle error
@@ -51,9 +51,9 @@ int main() {
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // create title
-    sf::Text title("TIC-TAC-TOC", font, 80);
-    title.setFillColor(sf::Color(83, 104, 120));
-    title.setPosition(800 / 2 - title.getGlobalBounds().width / 2, 100);
+    sf::Text title("TIC-TAC-TOC!!!", font, 170);
+    title.setFillColor(sf::Color(255, 255, 255));
+    title.setPosition(57, 57);
 
     sf::Texture pic;
     if (!pic.loadFromFile("OOXX.png")) {
@@ -62,17 +62,17 @@ int main() {
     }
 
     sf::Sprite picture(pic);
-    picture.setScale(0.8,0.8);
-    picture.setPosition(400-picture.getGlobalBounds().width/2, 400-picture.getGlobalBounds().height/2);
+    picture.setScale(1.2,1.2);
+    picture.setPosition(540,314);
 
     // create buttons
-    Button illustrateButton(650, 20, 130, 50, "Illustrate", font);
-    Button settingButton(650, 90, 130, 50, "Setting", font);
-    Button startGameButton(350, 700, 130, 50, "StartGame", font);
-    Button exitGameButton(350, 800, 130, 50, "Exit", font);
-    Button developerButton(650, 830, 130, 50, "Developer", font);
+    Button illustrateButton(57, 650, 160, 70, "ILLUSTRATE", font);
+    Button settingButton(57, 500, 160, 70, "SETTING", font);
+    Button startGameButton(57, 350, 160, 70, "STARTGAME", font);
+    Button exitGameButton(57, 800, 160, 70, "EXIT", font);
+    Button developerButton(1200, 900, 160, 70, "DEVELOPER", font);
 
-    sf::Color color(145, 163, 176);//79,126,146/156,173,206
+    sf::Color color(224, 171, 114);
 
     while (window.isOpen()) {
         sf::Event event;
