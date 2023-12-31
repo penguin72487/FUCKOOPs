@@ -30,9 +30,8 @@ protected:
             std::cout << "Font load failed\n";
         }
         if (!icon.loadFromFile("OOXX.png")) {
-            std::cout << "Icon load failed\n";
+            std::cout << "Texture load failed\n";
         }
-        color = sf::Color(224, 171, 114);
     }
 };
 
