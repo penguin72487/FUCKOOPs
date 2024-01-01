@@ -59,9 +59,10 @@ private:
     // sf::Texture backgroundTexture;siroku 暫存
     // sf::Sprite backgroundSprite;siroku 暫存
     Show show = Show::Picture;
-    sf::Text illustrateText;
-    sf::Text developerText;
-
+    sf::Texture illustratepic;
+    sf::Sprite illustratepicture;
+    sf::Texture developerpic;
+    sf::Sprite developerpicture;
 
 public:
     MainMenu(sf::RenderWindow& window) : UIComponent(window), 
@@ -91,15 +92,20 @@ public:
 
 
         //load illustrate
-        std::wstring illustrateCon= L"終極版圈圈叉叉\n\n遊戲介紹：\n終極版圈圈叉叉是由9個3X3的基礎版圈圈叉叉所構成，其中3X3的棋盤稱作為局部棋盤，\n而由9個3X3棋盤所組成的棋盤稱作為全局棋盤。\n玩家們輪流玩較小的井字棋盤(即3X3圈圈叉叉)，而當任一3X3的棋盤分出勝負後，將該棋盤標記為勝出玩家的符號(O or X)，\n即當玩家佔領此3X3棋盤，直到所有9個3X3的井字棋盤都分出勝負，依據玩家所佔領的井字棋盤多寡分出最終勝負。\n\n遊戲說明：\n遊戲一開始，O可以在81個空格中任選一個位置下棋，例如O選擇下在中間的局部棋盤左上，則接下來，\nX便可以在全局棋盤中左上的局部棋盤再任意選擇一個位置下棋，接著便循環同樣的模式繼續進行遊戲，直到所有局部棋盤都分出勝負。\n值得注意的是，若當玩家該下棋的區域已經分出勝負了，那麼此玩家可在全域棋盤中，任選一個剩餘的空格下棋。\n";
-        illustrateText = sf::Text(illustrateCon, font, 18);
-        illustrateText.setFillColor(sf::Color(255, 255, 255));
-        illustrateText.setPosition(300, 400);
+        if (!illustratepic.loadFromFile("../data/png/ui/illustrate.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        illustratepicture.setTexture(illustratepic);
+        illustratepicture.setScale(0.27, 0.27);
+        illustratepicture.setPosition(325, 300);
+
         //load developer
-        std::wstring developerCon = L"Developer: Credits\nCreated by 企鵝, Siroku, 西瓜, sun thing, isn't from NUK ";
-        developerText = sf::Text(developerCon, font, 30);
-        developerText.setFillColor(sf::Color(255, 255, 255));
-        developerText.setPosition(300, 400);
+        if (!developerpic.loadFromFile("../data/png/ui/developer.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        developerpicture.setTexture(developerpic);
+        developerpicture.setScale(0.4, 0.4);
+        developerpicture.setPosition(400, 500);
     }
 
     Screen render() override {
@@ -123,10 +129,10 @@ public:
                     window.draw(picture);
                     break;
                 case Show::ILLUSTRATE:
-                    window.draw(illustrateText);
+                    window.draw(illustratepicture);
                     break;
                 case Show::DEVELOPER:
-                    window.draw(developerText);
+                    window.draw(developerpicture);
                     break;
             }
             window.display();
@@ -217,6 +223,10 @@ private:
     Button MenuButton;
     Button BasicButton;
     Button AdvanceButton;
+    sf::Texture basicpic;
+    sf::Sprite basicpicture;
+    sf::Texture ultimatepic;
+    sf::Sprite ultimatepicture;
 
 public:
     GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window),
@@ -230,7 +240,20 @@ public:
         advancetext=sf::Text("ADVANCE\n9x9", font, 65);
         advancetext.setFillColor(sf::Color(0, 0, 0));
         advancetext.setPosition(722, 683);
+
+        if (!basicpic.loadFromFile("../data/png/ui/basic.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        basicpicture.setTexture(basicpic);
+        basicpicture.setScale(0.15, 0.15);
+        basicpicture.setPosition(375, 190);
         
+        if (!ultimatepic.loadFromFile("../data/png/ui/ultimate.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        ultimatepicture.setTexture(ultimatepic);
+        ultimatepicture.setScale(0.3, 0.3);
+        ultimatepicture.setPosition(375, 620);
     }
     Screen render() override {
         std::cout << "Game Selection Menu: [List of Games]" << std::endl;
@@ -246,6 +269,8 @@ public:
             window.draw(MenuButton.text);
             window.draw(basictext);
             window.draw(advancetext);
+            window.draw(basicpicture);
+            window.draw(ultimatepicture);
 
             window.display();
             sf::Event event;
