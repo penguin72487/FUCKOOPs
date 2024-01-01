@@ -211,11 +211,11 @@ public:
                                                 MenuButton(57, 36, 160, 70, "MENU", font),
                                                 BasicButton(333, 164, 734, 348, "", font),
                                                 AdvanceButton(333, 586, 734, 347, "", font){
-        basictext=sf::Text("BASIC\n3*3", font, 65);
+        basictext=sf::Text("BASIC\n3x3", font, 65);
         basictext.setFillColor(sf::Color(0, 0, 0));
         basictext.setPosition(722, 262);    
         
-        advancetext=sf::Text("ADVANCE\n9*9", font, 65);
+        advancetext=sf::Text("ADVANCE\n9x9", font, 65);
         advancetext.setFillColor(sf::Color(0, 0, 0));
         advancetext.setPosition(722, 683);
         
