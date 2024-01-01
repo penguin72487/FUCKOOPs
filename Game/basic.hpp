@@ -37,13 +37,20 @@ class Basic : public Game {
 
         //載入格線圖片
         sf::Texture BasicUITexture;
-        BasicUITexture.loadFromFile("images/bassicOOXX-line.png");
+        if(!BasicUITexture.loadFromFile("../data/images/ui/bassicOOXX-line.png")){
+            std::cout << "BasicUITexture load failed\n";
+        }
+        sf::Sprite BasicUISprite;
+        BasicUISprite.setTexture(BasicUITexture);
+        BasicUISprite.setPosition(x, y);
     }
     ~Basic() override{}
 
     std::vector<std::vector<player>> board;
     std::vector<std::vector<Button>> buttons;
     std::vector<sf::RectangleShape> lines;
+    sf::Texture BasicUITexture;
+    sf::Sprite BasicUISprite;
 
     void render() override{
         // 繪製遊戲界面
@@ -56,9 +63,11 @@ class Basic : public Game {
                 window.draw(b.text);
             }
         }
+
         for (auto &line : lines) {
             window.draw(line);
         }
+        window.draw(BasicUISprite);
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
                 if(board[i][j] == player::O){
@@ -69,7 +78,7 @@ class Basic : public Game {
                 }
             }
         }
-
+        window.draw(BasicUISprite);
         // window.display();
         return;
     }
@@ -126,42 +135,31 @@ class Basic : public Game {
     }
 
 
-    void drawO(sf::RenderWindow &window, int row, int col) {
+    void drawO(sf::RenderWindow &window, int row, int col , int color = 1) {
         auto [x,y,w,h] = game_Possition;
-        sf::CircleShape circle(75);  // 放大圓圈的大小
-        circle.setPosition(x + col * (w / 3) + (w / 3 - circle.getRadius() * 2) / 2, y + row * (h / 3) + (h / 3 - circle.getRadius() * 2) / 2);
-        circle.setFillColor(sf::Color::Red);
-        circle.setOutlineColor(sf::Color::White);
-        circle.setOutlineThickness(5);
-        window.draw(circle);
+        sf::Texture OTexture;
+        if(!OTexture.loadFromFile("../data/images/O/O"+ std::to_string(color) +".png")){
+            std::cout << "OTexture load failed\n";
+        }
+        sf::Sprite OSprite;
+        OSprite.setTexture(OTexture);
+        OSprite.setScale(1.8f, 1.8f); // 放大圓圈的大小
+        OSprite.setPosition(x + col * (w / 3) + (w / 3 - OSprite.getTextureRect().width * OSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - OSprite.getTextureRect().height * OSprite.getScale().y) / 2);
+        window.draw(OSprite);
         
         
     }
-    void drawX(sf::RenderWindow &window, int row, int col) {
+    void drawX(sf::RenderWindow &window, int row, int col, int color = 3) {
         auto [x, y, w, h] = game_Possition;
-        sf::RectangleShape line1(sf::Vector2f(150, 10)), line2(sf::Vector2f(150, 10));
-
-        // 计算X的中心位置
-        float centerX = x + col * (w / 3) + (w / 3) / 2;
-        float centerY = y + row * (h / 3) + (h / 3) / 2;
-
-        // 设置第一条线的位置和旋转
-        line1.setPosition(centerX, centerY);
-        line1.setOrigin(150 / 2, 10 / 2);
-        line1.setRotation(45);
-
-        // 设置第二条线的位置和旋转
-        line2.setPosition(centerX, centerY);
-        line2.setOrigin(150 / 2, 10 / 2);
-        line2.setRotation(-45);
-
-        // 设置线的颜色
-        line1.setFillColor(sf::Color::Blue);
-        line2.setFillColor(sf::Color::Blue);
-
-        // 绘制两条线
-        window.draw(line1);
-        window.draw(line2);
+        sf::Texture XTexture;
+        if(!XTexture.loadFromFile("../data/images/X/X" +  std::to_string(color) + ".png")){
+            std::cout << "XTexture load failed\n";
+        }
+        sf::Sprite XSprite;
+        XSprite.setTexture(XTexture);
+        XSprite.setScale(2.0f, 2.0f); // 放大圓圈的大小
+        XSprite.setPosition(x + col * (w / 3) + (w / 3 - XSprite.getTextureRect().width * XSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - XSprite.getTextureRect().height * XSprite.getScale().y) / 2);
+        window.draw(XSprite);
     }
 
         

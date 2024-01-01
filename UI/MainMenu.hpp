@@ -46,7 +46,7 @@ public:
         
         if (!backgroundTexture.loadFromFile("../data/images/bg/Bg1.png")) {
             std::cout << "Texture load failed\n";
-        }//siroku 暫存
+        }
         backgroundSprite.setTexture(backgroundTexture);
 
 
@@ -70,7 +70,7 @@ public:
     Screen render() override {
         while (window.isOpen()) {
             window.clear(color);
-            window.draw(backgroundSprite);//siroku 暫存
+            window.draw(backgroundSprite);
             // Draw title and buttons
             window.draw(title);            
             window.draw(illustrateButton.shape);
