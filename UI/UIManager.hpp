@@ -32,7 +32,7 @@ protected:
         if (!font.loadFromFile("../data/ttf/TaipeiSansTCBeta-Regular.ttf")) {
             std::cout << "Font load failed\n";
         }
-        if (!icon.loadFromFile("../data/png/ui/OOXX.png")) {
+        if (!icon.loadFromFile("../data/png/ui/icon.png")) {
             std::cout << "Texture load failed\n";
         }
     }
