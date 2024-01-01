@@ -5,6 +5,8 @@
 #include <sstream>
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
+#include "../Game//game.hpp"
+#include "../Game/basic.hpp"
 
 // UI組件的基類，提供共用的UI功能和屬性
 class UIComponent {
@@ -13,7 +15,8 @@ public:
         MAIN_MENU,
         SETTINGS_MENU,
         GAME_SELECTION_MENU,
-        GAME_INTERFACE,
+        GAME_BASIC_INTERFACE,
+        GAME_ULTIMATE_INTERFACE,
         GAME_END_SCREEN,
         RESULT_SCREEN,
         EXIT
@@ -243,10 +246,10 @@ public:
 
                     // check if buttons are clicked
                     if (BasicButton.isClicked(event)) {
-                        return Screen::GAME_INTERFACE;
+                        return Screen::GAME_BASIC_INTERFACE;
                     }
                     if (AdvanceButton.isClicked(event)) {
-                        return Screen::GAME_INTERFACE;
+                        return Screen::GAME_ULTIMATE_INTERFACE;
                     }
                     if (MenuButton.isClicked(event)) {
                         return Screen::MAIN_MENU;
@@ -266,6 +269,8 @@ private:
     Button MenuButton;
     Button RestartButton;
     Button board;//棋盤
+    Screen gameMode;
+
 
 public:
     GameInterface(sf::RenderWindow& window) : UIComponent(window),MenuButton(57, 36, 160, 70, "MENU", font),
@@ -274,6 +279,23 @@ public:
 
     }
     Screen render() override {
+        std::cout << "Game Interface: [Gameplay Elements]" << std::endl;
+        return Screen::EXIT;
+    }
+    Screen render(Screen &gamemod) {
+        gameMode = gamemod;
+        Game* game;
+        if(gameMode == Screen::GAME_BASIC_INTERFACE){
+            game = new Basic();
+        }
+        else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
+            game = new Ultimate();
+        }
+        else{
+            std::cout << "Game Interface: [Gameplay Elements]" << std::endl;
+        }
+
+
         while (window.isOpen()) {
             window.clear(color);
             // draw title and buttons
@@ -284,6 +306,7 @@ public:
             window.draw(board.shape);
             window.draw(board.text);
             window.display();
+            
 
             sf::Event event;
             while (window.pollEvent(event)) {
@@ -295,7 +318,7 @@ public:
                     return Screen::MAIN_MENU;
                 }
                 if (RestartButton.isClicked(event)) {
-                    return Screen::GAME_INTERFACE;
+                    return gameMode;
                 }
                 if(board.isClicked(event)){
                     //棋盤被點擊
@@ -334,7 +357,7 @@ public:
 
                 // check if buttons are clicked
                 if (AgainButton.isClicked(event)) {
-                    return Screen::GAME_INTERFACE;
+                    return Screen::GAME_BASIC_INTERFACE;
                 }
                 if(ResultButton.isClicked(event)){
                     return Screen::RESULT_SCREEN;
@@ -461,7 +484,10 @@ public:
             case UIComponent::Screen::GAME_SELECTION_MENU:
                 currentScreen=gameSelectionMenu.render();
                 break;
-            case UIComponent::Screen::GAME_INTERFACE:
+            case UIComponent::Screen::GAME_BASIC_INTERFACE:
+                currentScreen=gameInterface.render();
+                break;
+            case UIComponent::Screen::GAME_ULTIMATE_INTERFACE:
                 currentScreen=gameInterface.render();
                 break;
             case UIComponent::Screen::GAME_END_SCREEN:
