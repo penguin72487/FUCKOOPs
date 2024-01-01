@@ -15,13 +15,13 @@ private:
     Button illustrateButton, settingButton, startGameButton, exitGameButton, developerButton;
     sf::Texture pic;
     sf::Sprite picture;
-    sf::Texture backgroundTexture;//siroku 暫存
-    sf::Sprite backgroundSprite;//siroku 暫存
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
     Show show = Show::Picture;
-    sf::Texture illustratepic;
-    sf::Sprite illustratepicture;
-    sf::Texture developerpic;
-    sf::Sprite developerpicture;
+    sf::Texture IllustratePictureTexture;
+    sf::Sprite IllustratePictureSprite;
+    sf::Texture DeveloperPictureTexture;
+    sf::Sprite DeveloperPictureSprite;
 
 public:
     MainMenu(sf::RenderWindow& window) : UIComponent(window), 
@@ -51,20 +51,20 @@ public:
 
 
         //load illustrate
-        if (!illustratepic.loadFromFile("../data/images/ui/illustrate.png")) {
+        if (!IllustratePictureTexture.loadFromFile("../data/images/ui/illustrate.png")) {
             std::cout << "Texture load failed\n";
         }
-        illustratepicture.setTexture(illustratepic);
-        illustratepicture.setScale(0.27, 0.27);
-        illustratepicture.setPosition(325, 300);
+        IllustratePictureSprite.setTexture(IllustratePictureTexture);
+        IllustratePictureSprite.setScale(0.27, 0.27);
+        IllustratePictureSprite.setPosition(325, 300);
 
         //load developer
-        if (!developerpic.loadFromFile("../data/images/ui/developer.png")) {
+        if (!DeveloperPictureTexture.loadFromFile("../data/images/ui/developer.png")) {
             std::cout << "Texture load failed\n";
         }
-        developerpicture.setTexture(developerpic);
-        developerpicture.setScale(0.4, 0.4);
-        developerpicture.setPosition(400, 500);
+        DeveloperPictureSprite.setTexture(DeveloperPictureTexture);
+        DeveloperPictureSprite.setScale(0.4, 0.4);
+        DeveloperPictureSprite.setPosition(400, 500);
     }
 
     Screen render() override {
@@ -89,10 +89,10 @@ public:
                     window.draw(picture);
                     break;
                 case Show::ILLUSTRATE:
-                    window.draw(illustratepicture);
+                    window.draw(IllustratePictureSprite);
                     break;
                 case Show::DEVELOPER:
-                    window.draw(developerpicture);
+                    window.draw(DeveloperPictureSprite);
                     break;
             }
             window.display();

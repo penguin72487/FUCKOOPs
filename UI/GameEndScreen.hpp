@@ -5,7 +5,7 @@
 #include "Button.hpp"
 class GameEndScreen : public UIComponent {
 private:
-    sf::Text winMessege;
+    sf::Text WinMessage;
     Button AgainButton;
     Button ResultButton;
     Button BackButton;
@@ -13,9 +13,9 @@ public:
     GameEndScreen(sf::RenderWindow& window) : UIComponent(window),AgainButton(560, 512, 280, 85, "Again", font)
     ,ResultButton(560, 687, 280, 85, "Result", font),BackButton(560, 862, 280, 85, "Menu", font) {
         
-        winMessege = sf::Text("Player__ Win!!", font, 80);
-        winMessege.setFillColor(sf::Color(255, 255, 255));
-        winMessege.setPosition(420, 83); 
+        WinMessage = sf::Text("Player__ Win!!", font, 80);
+        WinMessage.setFillColor(sf::Color(255, 255, 255));
+        WinMessage.setPosition(420, 83); 
     }
     Screen render() override {
         // std::cout << "Game End: [Gameplay Elements]" << std::endl;
@@ -39,7 +39,7 @@ public:
 
             window.clear(color);
             // draw title and buttons
-            window.draw(winMessege);
+            window.draw(WinMessage);
             window.draw(AgainButton.shape);
             window.draw(AgainButton.text);
             window.draw(ResultButton.shape);

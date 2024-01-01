@@ -5,42 +5,42 @@
 #include "Button.hpp"
 class GameSelectionMenu : public UIComponent {
 private:
-    sf::Text basictext;
-    sf::Text advancetext;
+    sf::Text BasicText;
+    sf::Text AdvanceText;
     Button MenuButton;
     Button BasicButton;
     Button AdvanceButton;
-    sf::Texture basicpic;
-    sf::Sprite basicpicture;
-    sf::Texture ultimatepic;
-    sf::Sprite ultimatepicture;
+    sf::Texture BasicPictureTexture;
+    sf::Sprite BasicPictureSprite;
+    sf::Texture UltimatePictureTexture;
+    sf::Sprite UltimatePictureSprite;
 
 public:
     GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window),
                                                 MenuButton(57, 36, 160, 70, "MENU", font),
                                                 BasicButton(333, 164, 734, 348, "", font),
                                                 AdvanceButton(333, 586, 734, 347, "", font){
-        basictext=sf::Text("BASIC\n3x3", font, 65);
-        basictext.setFillColor(sf::Color(0, 0, 0));
-        basictext.setPosition(722, 262);    
+        BasicText=sf::Text("BASIC\n3x3", font, 65);
+        BasicText.setFillColor(sf::Color(0, 0, 0));
+        BasicText.setPosition(722, 262);    
         
-        advancetext=sf::Text("ADVANCE\n9x9", font, 65);
-        advancetext.setFillColor(sf::Color(0, 0, 0));
-        advancetext.setPosition(722, 683);
+        AdvanceText=sf::Text("ADVANCE\n9x9", font, 65);
+        AdvanceText.setFillColor(sf::Color(0, 0, 0));
+        AdvanceText.setPosition(722, 683);
 
-        if (!basicpic.loadFromFile("../data/images/ui/basic.png")) {
+        if (!BasicPictureTexture.loadFromFile("../data/images/ui/basic.png")) {
             std::cout << "Texture load failed\n";
         }
-        basicpicture.setTexture(basicpic);
-        basicpicture.setScale(0.15, 0.15);
-        basicpicture.setPosition(375, 190);
+        BasicPictureSprite.setTexture(BasicPictureTexture);
+        BasicPictureSprite.setScale(0.15, 0.15);
+        BasicPictureSprite.setPosition(375, 190);
         
-        if (!ultimatepic.loadFromFile("../data/images/ui/ultimate.png")) {
+        if (!UltimatePictureTexture.loadFromFile("../data/images/ui/ultimate.png")) {
             std::cout << "Texture load failed\n";
         }
-        ultimatepicture.setTexture(ultimatepic);
-        ultimatepicture.setScale(0.3, 0.3);
-        ultimatepicture.setPosition(375, 620);
+        UltimatePictureSprite.setTexture(UltimatePictureTexture);
+        UltimatePictureSprite.setScale(0.3, 0.3);
+        UltimatePictureSprite.setPosition(375, 620);
     }
     Screen render() override {
         std::cout << "Game Selection Menu: [List of Games]" << std::endl;
@@ -54,10 +54,10 @@ public:
             window.draw(AdvanceButton.text);
             window.draw(MenuButton.shape);
             window.draw(MenuButton.text);
-            window.draw(basictext);
-            window.draw(advancetext);
-            window.draw(basicpicture);
-            window.draw(ultimatepicture);
+            window.draw(BasicText);
+            window.draw(AdvanceText);
+            window.draw(BasicPictureSprite);
+            window.draw(UltimatePictureSprite);
 
             window.display();
             sf::Event event;

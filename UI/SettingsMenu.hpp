@@ -6,18 +6,18 @@
 // 設置菜單類
 class SettingsMenu : public UIComponent {
 private:
-    sf::Text colorset;
-    sf::Text timeset;
+    sf::Text ColorSet;
+    sf::Text TimeSet;
     Button MenuButton;
 public:
     SettingsMenu(sf::RenderWindow& window) : UIComponent(window),MenuButton(57, 36, 160, 70, "MENU", font) {
-        colorset = sf::Text("SETTING COLOR", font, 50);
-        colorset.setFillColor(sf::Color(255, 255, 255));
-        colorset.setPosition(50, 377);    
+        ColorSet = sf::Text("SETTING COLOR", font, 50);
+        ColorSet.setFillColor(sf::Color(255, 255, 255));
+        ColorSet.setPosition(50, 377);    
         
-        timeset = sf::Text("SETTING TIME", font, 50);
-        timeset.setFillColor(sf::Color(255, 255, 255));
-        timeset.setPosition(50, 622);
+        TimeSet = sf::Text("SETTING TIME", font, 50);
+        TimeSet.setFillColor(sf::Color(255, 255, 255));
+        TimeSet.setPosition(50, 622);
     }
     Screen render() override {
         std::cout << "Settings Menu: [Settings Options]" << std::endl;
@@ -35,8 +35,8 @@ public:
 
             window.clear(color);
             // draw title and buttons
-            window.draw(colorset);
-            window.draw(timeset);
+            window.draw(ColorSet);
+            window.draw(TimeSet);
             window.draw(MenuButton.shape);
             window.draw(MenuButton.text);
             window.display();
