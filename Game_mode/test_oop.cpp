@@ -51,7 +51,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(400, 200), "UI Example");
 
     sf::Font font;
-    if (!font.loadFromFile("arial.ttf")) {
+    if (!font.loadFromFile("../data/ttf/arial.ttf")) {
         std::cerr << "Error loading font." << std::endl;
         return -1;
     }

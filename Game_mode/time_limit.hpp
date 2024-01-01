@@ -1,7 +1,7 @@
 #include "time_limit.h"
 
 CountdownTimer::CountdownTimer(int seconds) : countdownSeconds(seconds) {
-    if (!font.loadFromFile("arial.ttf")) {
+    if (!font.loadFromFile("../data/ttf/arial.ttf")) {
         std::cerr << "Error loading font" << std::endl;
     }
 
