@@ -34,6 +34,10 @@ class Basic : public Game {
         lines[1].setPosition(x + w / 2 - lineLength / 2, y + 2 * h / 3 - lineWidth / 2);
         lines[2].setPosition(x + w / 3 - lineWidth / 2, y + h / 2 - lineLength / 2);
         lines[3].setPosition(x + 2 * w / 3 - lineWidth / 2, y + h / 2 - lineLength / 2);
+
+        //載入格線圖片
+        sf::Texture BasicUITexture;
+        BasicUITexture.loadFromFile("images/bassicOOXX-line.png");
     }
     ~Basic() override{}
 

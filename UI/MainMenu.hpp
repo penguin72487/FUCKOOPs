@@ -15,8 +15,8 @@ private:
     Button illustrateButton, settingButton, startGameButton, exitGameButton, developerButton;
     sf::Texture pic;
     sf::Sprite picture;
-    // sf::Texture backgroundTexture;siroku 暫存
-    // sf::Sprite backgroundSprite;siroku 暫存
+    sf::Texture backgroundTexture;//siroku 暫存
+    sf::Sprite backgroundSprite;//siroku 暫存
     Show show = Show::Picture;
     sf::Texture illustratepic;
     sf::Sprite illustratepicture;
@@ -37,21 +37,21 @@ public:
 
         window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-        if (!pic.loadFromFile("../data/png/ui/OOXX.png")) {
+        if (!pic.loadFromFile("../data/images/ui/OOXX.png")) {
             std::cout << "Texture load failed\n";
         }
         picture.setTexture(pic);
         picture.setScale(1.2, 1.2);
         picture.setPosition(540, 314);
         
-        // if (!backgroundTexture.loadFromFile("../data/png/bg/Bg1.png")) {
-        //     std::cout << "Texture load failed\n";
-        // }siroku 暫存
-        // backgroundSprite.setTexture(backgroundTexture);
+        if (!backgroundTexture.loadFromFile("../data/images/bg/Bg1.png")) {
+            std::cout << "Texture load failed\n";
+        }//siroku 暫存
+        backgroundSprite.setTexture(backgroundTexture);
 
 
         //load illustrate
-        if (!illustratepic.loadFromFile("../data/png/ui/illustrate.png")) {
+        if (!illustratepic.loadFromFile("../data/images/ui/illustrate.png")) {
             std::cout << "Texture load failed\n";
         }
         illustratepicture.setTexture(illustratepic);
@@ -59,7 +59,7 @@ public:
         illustratepicture.setPosition(325, 300);
 
         //load developer
-        if (!developerpic.loadFromFile("../data/png/ui/developer.png")) {
+        if (!developerpic.loadFromFile("../data/images/ui/developer.png")) {
             std::cout << "Texture load failed\n";
         }
         developerpicture.setTexture(developerpic);
@@ -70,6 +70,7 @@ public:
     Screen render() override {
         while (window.isOpen()) {
             window.clear(color);
+            window.draw(backgroundSprite);//siroku 暫存
             // Draw title and buttons
             window.draw(title);            
             window.draw(illustrateButton.shape);
