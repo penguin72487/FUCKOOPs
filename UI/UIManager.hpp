@@ -6,7 +6,7 @@
 #include <sstream>
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
-// #include "../Game//game.hpp"
+#include "../Game//Game.hpp"
 #include "../Game/basic.hpp"
 // #include "../Game/ultimate.hpp"
 
@@ -328,51 +328,46 @@ public:
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
             std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
-            //game = std::make_unique<Ultimate>(window);
-            
-        }
+                // game = std::make_unique<Ultimate>(window, game_Possition);
+                return Screen::GAME_SELECTION_MENU;
+            }
         else{
             std::cout << "Game Ultimate Interface: [Gameplay Elements]" << std::endl;
         }
 
 
         while (window.isOpen()) {
-
-            window.clear(color);
-            // draw title and buttons
-            window.draw(MenuButton.shape);
-            window.draw(MenuButton.text);
-            window.draw(RestartButton.shape);
-            window.draw(RestartButton.text);
-            // window.display();
-
- 
-
-            sf::Event event;
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                {
-                    // delete game;
-                    return Screen::EXIT;
+                sf::Event event;
+                while (window.pollEvent(event)) {
+                    if (event.type == sf::Event::Closed) {
+                        return Screen::EXIT;
+                    }
+                    if (MenuButton.isClicked(event)) {
+                        return Screen::MAIN_MENU;
+                    }
+                    if (RestartButton.isClicked(event)) {
+                        return gameMode; // 你可能需要重置游戏状态
+                    }
+                    game->click_Event(event); // 处理游戏内的点击事件
                 }
-                game->click_Event();
 
+                // 更新游戏状态
+                // game->update(); // 假设你有一个负责更新游戏逻辑的方法
 
-                // check if buttons are clicked
-                if (MenuButton.isClicked(event)) {
-                    return Screen::MAIN_MENU;
-                }
-                if (RestartButton.isClicked(event)) {
-                    return gameMode;
+                // 渲染游戏和界面
+                window.clear(color);
+                game->render(); // 渲染游戏
+                window.draw(MenuButton.shape);
+                window.draw(MenuButton.text);
+                window.draw(RestartButton.shape);
+                window.draw(RestartButton.text); // 渲染界面元素，例如菜单和重新开始按钮
+                window.display(); // 更新窗口显示
+
+                // 检查游戏是否结束
+                if(game->check_Win() != Game::player::none){
+                    return Screen::GAME_END_SCREEN;
                 }
             }
-            if(game->check_Win() != Game::player::none){
-                return Screen::GAME_END_SCREEN;
-            }
-
-            game->render();
-            window.display();
-        }
 
         return Screen::EXIT;
     }

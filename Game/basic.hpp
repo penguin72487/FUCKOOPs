@@ -1,36 +1,9 @@
 #include<bits/stdc++.h>
 #include <SFML/Graphics.hpp>
-// #include "game.hpp"
+#include "Game.hpp"
 #include "../UI/Button.hpp"
 #ifndef BASIC_HPP
 #define BASIC_HPP
-class Game{
-    public:
-        enum class player {
-            none,
-            O,
-            X,
-            draw
-        };
-        Game(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P): window(win), game_Possition(g_P){
-            currentPlayer = player::O;
-            font.loadFromFile("../TaipeiSansTCBeta-Regular.ttf");
-        };// constructor
-        virtual ~Game(){} // destructor
-        virtual void render() = 0;
-        virtual void click_Event() = 0;
-        // virtual void WhooseTurn() = 0;
-        virtual player check_Win() = 0;
-
-    protected:
-        sf::RenderWindow& window;
-        std::tuple<int, int, int, int> game_Possition;
-        player currentPlayer;// 0:O 1:X
-        sf::Font font;
-        time_t get_Timestamp(){
-            return time(0);
-        }
-};
 
 class Basic : public Game {
     using player = Game::player;
@@ -72,14 +45,15 @@ class Basic : public Game {
         // 繪製遊戲界面
         
         //window.clear(sf::Color::White);
-        for (auto &line : lines) {
-            window.draw(line);
-        }
+
         for (auto &button : buttons){
             for(auto &b : button){
                 window.draw(b.shape);
                 window.draw(b.text);
             }
+        }
+        for (auto &line : lines) {
+            window.draw(line);
         }
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
@@ -95,10 +69,8 @@ class Basic : public Game {
         // window.display();
         return;
     }
-    void click_Event() override{
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            // 事件處理
+    void click_Event(sf::Event &event) override{
+
             if (event.type == sf::Event::Closed)
                 window.close();
 
@@ -107,12 +79,11 @@ class Basic : public Game {
                     if (buttons[i][j].isClicked(event)) {
                         if (board[i][j] == player::none) {
                             board[i][j] = currentPlayer;
-                            currentPlayer = currentPlayer == player::O ? player::draw : player::O;
+                            currentPlayer = currentPlayer == player::O ? player::X :player::O;
                         }
                     }
                 }
             }
-        }
         return;
     }
     player check_Win() override{
@@ -163,14 +134,30 @@ class Basic : public Game {
         
     }
     void drawX(sf::RenderWindow &window, int row, int col) {
-        auto [x,y,w,h] = game_Possition;
-        sf::RectangleShape line(sf::Vector2f(150, 10));  // 放大線的大小
-        line.setPosition(x + col * (w / 3) + (w / 3 - line.getSize().x) / 2, y + row * (h / 3) + (h / 3 - line.getSize().y) / 2);
-        line.setFillColor(sf::Color::Blue);
-        line.rotate(45);
-        window.draw(line);
-        line.rotate(-90);
-        window.draw(line);
+        auto [x, y, w, h] = game_Possition;
+        sf::RectangleShape line1(sf::Vector2f(150, 10)), line2(sf::Vector2f(150, 10));
+
+        // 计算X的中心位置
+        float centerX = x + col * (w / 3) + (w / 3) / 2;
+        float centerY = y + row * (h / 3) + (h / 3) / 2;
+
+        // 设置第一条线的位置和旋转
+        line1.setPosition(centerX, centerY);
+        line1.setOrigin(150 / 2, 10 / 2);
+        line1.setRotation(45);
+
+        // 设置第二条线的位置和旋转
+        line2.setPosition(centerX, centerY);
+        line2.setOrigin(150 / 2, 10 / 2);
+        line2.setRotation(-45);
+
+        // 设置线的颜色
+        line1.setFillColor(sf::Color::Blue);
+        line2.setFillColor(sf::Color::Blue);
+
+        // 绘制两条线
+        window.draw(line1);
+        window.draw(line2);
     }
 
         
