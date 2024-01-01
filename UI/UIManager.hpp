@@ -7,6 +7,7 @@
 #include "Button.hpp"
 #include "../Game//game.hpp"
 #include "../Game/basic.hpp"
+#include "../Game/ultimate.hpp"
 
 // UI組件的基類，提供共用的UI功能和屬性
 class UIComponent {
@@ -284,7 +285,7 @@ public:
     }
     Screen render(Screen &gamemod) {
         gameMode = gamemod;
-        Game* game;
+        Game* game=nullptr;
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
             game = new Basic();
         }
@@ -306,6 +307,7 @@ public:
             window.draw(board.shape);
             window.draw(board.text);
             window.display();
+            game->render(window);
             
 
             sf::Event event;
