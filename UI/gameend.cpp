@@ -9,7 +9,7 @@ int main() {
     }
 
     sf::Image icon;
-    if (!icon.loadFromFile("OOXX.png")) {
+    if (!icon.loadFromFile("icon/OOXX.png")) {
         // ???蝷箄????亙仃???
         return EXIT_FAILURE;
     }

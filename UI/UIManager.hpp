@@ -29,10 +29,10 @@ protected:
 
 
     UIComponent(sf::RenderWindow& win) : window(win), color(sf::Color(224, 171, 114)) {
-        if (!font.loadFromFile("TaipeiSansTCBeta-Regular.ttf")) {
+        if (!font.loadFromFile("../data/ttf/TaipeiSansTCBeta-Regular.ttf")) {
             std::cout << "Font load failed\n";
         }
-        if (!icon.loadFromFile("OOXX.png")) {
+        if (!icon.loadFromFile("../data/png/ui/OOXX.png")) {
             std::cout << "Texture load failed\n";
         }
     }
@@ -70,7 +70,7 @@ public:
 
         window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-        if (!pic.loadFromFile("OOXX.png")) {
+        if (!pic.loadFromFile("../data/png/ui/OOXX.png")) {
             std::cout << "Texture load failed\n";
         }
         picture.setTexture(pic);
