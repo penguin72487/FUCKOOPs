@@ -144,7 +144,7 @@ public:
 
                 // Handle button clicks
                 if (illustrateButton.isClicked(event)) {
-                    if(show==Show::Picture)
+                    if(show==Show::Picture||show==Show::DEVELOPER)
                         show = Show::ILLUSTRATE;
                     else
                         show = Show::Picture;
@@ -159,7 +159,7 @@ public:
                     return Screen::EXIT;
                 }
                 else if (developerButton.isClicked(event)) {
-                    if(show==Show::Picture)
+                    if(show==Show::Picture||show==Show::ILLUSTRATE)
                         show = Show::DEVELOPER;
                     else
                         show = Show::Picture;
@@ -260,9 +260,11 @@ public:
 
                     // check if buttons are clicked
                     if (BasicButton.isClicked(event)) {
+                        std::cout << "select Basic Game: [Gameplay Elements]" << std::endl;
                         return Screen::GAME_BASIC_INTERFACE;
                     }
                     if (AdvanceButton.isClicked(event)) {
+                        std::cout << "select Advance Game: [Gameplay Elements]" << std::endl;
                         return Screen::GAME_ULTIMATE_INTERFACE;
                     }
                     if (MenuButton.isClicked(event)) {
@@ -293,7 +295,7 @@ public:
 
     }
     Screen render() override {
-        std::cout << "Game Interface: [Gameplay Elements]" << std::endl;
+        std::cout << "Game Indiviual Interface: [Gameplay Elements]" << std::endl;
         return Screen::EXIT;
     }
     Screen render(Screen &gamemod) {
@@ -303,10 +305,12 @@ public:
             game = new Basic(window);
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
+            std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
             game = new Ultimate();
+            
         }
         else{
-            std::cout << "Game Interface: [Gameplay Elements]" << std::endl;
+            std::cout << "Game Ultimate Interface: [Gameplay Elements]" << std::endl;
         }
 
 
@@ -327,7 +331,11 @@ public:
             sf::Event event;
             while (window.pollEvent(event)) {
                 if (event.type == sf::Event::Closed)
-                    window.close();
+                {
+                    delete game;
+                    return Screen::EXIT;
+                }
+
 
                 // check if buttons are clicked
                 if (MenuButton.isClicked(event)) {
@@ -338,6 +346,7 @@ public:
                 }
                 if(board.isClicked(event)){
                     //棋盤被點擊
+                    delete game;
                     return Screen::GAME_END_SCREEN;
                 }
             }
@@ -501,10 +510,10 @@ public:
                 currentScreen=gameSelectionMenu.render();
                 break;
             case UIComponent::Screen::GAME_BASIC_INTERFACE:
-                currentScreen=gameInterface.render();
+                currentScreen=gameInterface.render(currentScreen);
                 break;
             case UIComponent::Screen::GAME_ULTIMATE_INTERFACE:
-                currentScreen=gameInterface.render();
+                currentScreen=gameInterface.render(currentScreen);
                 break;
             case UIComponent::Screen::GAME_END_SCREEN:
                 currentScreen = gameEndScreen.render();
