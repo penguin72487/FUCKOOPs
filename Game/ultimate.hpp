@@ -10,11 +10,11 @@ public:
     Ultimate(){};// constructor
     ~Ultimate(){};// destructor
     void init() override{};
-    int gameProcess() override{
-        return 0;
+    player gameProcess() override{
+        return player::none;
     };
-    int victory_Condition() override{
-        return 0;
+    player victory_Condition() override{
+        return player::none;
     };
     void render() override{};
     void update() override{};

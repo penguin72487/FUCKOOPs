@@ -1,13 +1,14 @@
 #include <iostream>
+#include <tuple>
 #include <vector>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
-#include "../Game//game.hpp"
+// #include "../Game//game.hpp"
 #include "../Game/basic.hpp"
-#include "../Game/ultimate.hpp"
+// #include "../Game/ultimate.hpp"
 
 // UI組件的基類，提供共用的UI功能和屬性
 class UIComponent {
@@ -278,13 +279,14 @@ class GameInterface : public UIComponent {
 private:
     Button MenuButton;
     Button RestartButton;
-    Button board;//棋盤
+    // Button board;//棋盤
     Screen gameMode;
+    std::tuple<int,int,int,int> game_Possition = {333, 164, 734, 734};
 
 
 public:
     GameInterface(sf::RenderWindow& window) : UIComponent(window),MenuButton(57, 36, 160, 70, "MENU", font),
-    RestartButton(57, 900, 160, 70, "RESTART", font),board(333, 164, 734, 734, "", font)
+    RestartButton(57, 900, 160, 70, "RESTART", font)
     {
 
     }
@@ -294,13 +296,14 @@ public:
     }
     Screen render(Screen &gamemod) {
         gameMode = gamemod;
-        Game* game=nullptr;
+        std::unique_ptr<Game> game;
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
-            game = new Basic(window);
+            std::cout << "Game Basic new [Gameplay Elements]" << std::endl;
+            game = std::make_unique<Basic>(window, game_Possition);
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
             std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
-            game = new Ultimate();
+            //game = std::make_unique<Ultimate>(window);
             
         }
         else{
@@ -316,19 +319,18 @@ public:
             window.draw(MenuButton.text);
             window.draw(RestartButton.shape);
             window.draw(RestartButton.text);
-            window.draw(board.shape);
-            window.draw(board.text);
-            window.display();
-            game->render();
-            
+            // window.display();
+
+ 
 
             sf::Event event;
             while (window.pollEvent(event)) {
                 if (event.type == sf::Event::Closed)
                 {
-                    delete game;
+                    // delete game;
                     return Screen::EXIT;
                 }
+                game->click_Event();
 
 
                 // check if buttons are clicked
@@ -338,12 +340,13 @@ public:
                 if (RestartButton.isClicked(event)) {
                     return gameMode;
                 }
-                if(board.isClicked(event)){
-                    //棋盤被點擊
-                    delete game;
-                    return Screen::GAME_END_SCREEN;
-                }
             }
+            if(game->check_Win() != Game::player::none){
+                return Screen::GAME_END_SCREEN;
+            }
+
+            game->render();
+            window.display();
         }
 
         return Screen::EXIT;
