@@ -18,39 +18,31 @@ class Basic : public Game {
                 buttons[i].push_back(Button(x + j * (w / 3), y + i * (h / 3), w / 3, h / 3, " ", font));
             }
         }
-        lines = std::vector<sf::RectangleShape>(4, sf::RectangleShape());
-        // 繪製格線
-        float lineLength = w * 0.9;
-        float lineWidth = h * 0.01;
-        lines[0] = sf::RectangleShape(sf::Vector2f(lineLength, lineWidth));
-        lines[1] = sf::RectangleShape(sf::Vector2f(lineLength, lineWidth));
-        lines[2] = sf::RectangleShape(sf::Vector2f(lineWidth, lineLength));
-        lines[3] = sf::RectangleShape(sf::Vector2f(lineWidth, lineLength));
-        for(auto &line : lines){
-            line.setFillColor(sf::Color(128, 128, 128));
-        }
-        // 設定格線位置
-        lines[0].setPosition(x + w / 2 - lineLength / 2, y + h / 3 - lineWidth / 2);
-        lines[1].setPosition(x + w / 2 - lineLength / 2, y + 2 * h / 3 - lineWidth / 2);
-        lines[2].setPosition(x + w / 3 - lineWidth / 2, y + h / 2 - lineLength / 2);
-        lines[3].setPosition(x + 2 * w / 3 - lineWidth / 2, y + h / 2 - lineLength / 2);
+        // lines = std::vector<sf::RectangleShape>(4, sf::RectangleShape());
+        // // 繪製格線
+        // float lineLength = w * 0.9;
+        // float lineWidth = h * 0.01;
+        // lines[0] = sf::RectangleShape(sf::Vector2f(lineLength, lineWidth));
+        // lines[1] = sf::RectangleShape(sf::Vector2f(lineLength, lineWidth));
+        // lines[2] = sf::RectangleShape(sf::Vector2f(lineWidth, lineLength));
+        // lines[3] = sf::RectangleShape(sf::Vector2f(lineWidth, lineLength));
+        // for(auto &line : lines){
+        //     line.setFillColor(sf::Color(128, 128, 128));
+        // }
+        // // 設定格線位置
+        // lines[0].setPosition(x + w / 2 - lineLength / 2, y + h / 3 - lineWidth / 2);
+        // lines[1].setPosition(x + w / 2 - lineLength / 2, y + 2 * h / 3 - lineWidth / 2);
+        // lines[2].setPosition(x + w / 3 - lineWidth / 2, y + h / 2 - lineLength / 2);
+        // lines[3].setPosition(x + 2 * w / 3 - lineWidth / 2, y + h / 2 - lineLength / 2);
 
-        //載入格線圖片
-        sf::Texture BasicUITexture;
-        if(!BasicUITexture.loadFromFile("../data/images/ui/bassicOOXX-line.png")){
-            std::cout << "BasicUITexture load failed\n";
-        }
-        sf::Sprite BasicUISprite;
-        BasicUISprite.setTexture(BasicUITexture);
-        BasicUISprite.setPosition(x, y);
+
     }
     ~Basic() override{}
 
     std::vector<std::vector<player>> board;
     std::vector<std::vector<Button>> buttons;
     std::vector<sf::RectangleShape> lines;
-    sf::Texture BasicUITexture;
-    sf::Sprite BasicUISprite;
+
 
     void render() override{
         // 繪製遊戲界面
@@ -64,10 +56,21 @@ class Basic : public Game {
             }
         }
 
-        for (auto &line : lines) {
-            window.draw(line);
+        // for (auto &line : lines) {
+        //     window.draw(line);
+            
+        // }
+        //載入格線圖片
+        sf::Texture BasicUITexture;
+        if(!BasicUITexture.loadFromFile("../data/images/ui/bassicOOXX-line.png")){
+            std::cout << "BasicUITexture load failed\n";
         }
+        sf::Sprite BasicUISprite;
+        BasicUISprite.setTexture(BasicUITexture);
+        BasicUISprite.setOrigin(BasicUISprite.getTextureRect().width / 2, BasicUISprite.getTextureRect().height / 2); //改變基準點
+        BasicUISprite.setPosition(698, 530);
         window.draw(BasicUISprite);
+
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
                 if(board[i][j] == player::O){
@@ -78,7 +81,6 @@ class Basic : public Game {
                 }
             }
         }
-        window.draw(BasicUISprite);
         // window.display();
         return;
     }
@@ -135,7 +137,8 @@ class Basic : public Game {
     }
 
 
-    void drawO(sf::RenderWindow &window, int row, int col , int color = 1) {
+    void drawO(sf::RenderWindow &window, int row, int col , int color = 10) {
+        if(color < 1 || color > 16) color = 8;
         auto [x,y,w,h] = game_Possition;
         sf::Texture OTexture;
         if(!OTexture.loadFromFile("../data/images/O/O"+ std::to_string(color) +".png")){
@@ -143,13 +146,14 @@ class Basic : public Game {
         }
         sf::Sprite OSprite;
         OSprite.setTexture(OTexture);
-        OSprite.setScale(1.8f, 1.8f); // 放大圓圈的大小
+        OSprite.setScale(1.8f, 1.8f); // 放大
         OSprite.setPosition(x + col * (w / 3) + (w / 3 - OSprite.getTextureRect().width * OSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - OSprite.getTextureRect().height * OSprite.getScale().y) / 2);
         window.draw(OSprite);
         
         
     }
-    void drawX(sf::RenderWindow &window, int row, int col, int color = 3) {
+    void drawX(sf::RenderWindow &window, int row, int col, int color = 8) {
+        if(color < 1 || color > 16) color = 8;
         auto [x, y, w, h] = game_Possition;
         sf::Texture XTexture;
         if(!XTexture.loadFromFile("../data/images/X/X" +  std::to_string(color) + ".png")){
@@ -157,7 +161,7 @@ class Basic : public Game {
         }
         sf::Sprite XSprite;
         XSprite.setTexture(XTexture);
-        XSprite.setScale(2.0f, 2.0f); // 放大圓圈的大小
+        XSprite.setScale(2.0f, 2.0f); // 放大
         XSprite.setPosition(x + col * (w / 3) + (w / 3 - XSprite.getTextureRect().width * XSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - XSprite.getTextureRect().height * XSprite.getScale().y) / 2);
         window.draw(XSprite);
     }
