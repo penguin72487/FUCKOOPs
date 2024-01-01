@@ -6,13 +6,11 @@
 
 class Basic : public Game {
     public:
-        Basic(){
+        Basic(sf::RenderWindow& win): window(win), windowSize(win.getSize()){
             currentPlayer = 0;
             timeLimit = -1;
             interfaceColor = "white";
             board = std::vector<std::vector<int>>(3, std::vector<int>(3, 0));
-            window.create(sf::VideoMode(1024, 1024), "Tic-Tac-Toe", sf::Style::Close | sf::Style::Titlebar);
-            windowSize = window.getSize();
         }
         ~Basic(){}
         void init() override{
@@ -150,7 +148,7 @@ class Basic : public Game {
         }
 
     private:
-        sf::RenderWindow window;
+        sf::RenderWindow& window;
         sf::Vector2u windowSize;
         sf::RectangleShape lines[4];
 };

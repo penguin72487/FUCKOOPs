@@ -294,7 +294,7 @@ public:
         gameMode = gamemod;
         Game* game=nullptr;
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
-            game = new Basic();
+            game = new Basic(window);
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
             game = new Ultimate();
@@ -315,7 +315,7 @@ public:
             window.draw(board.shape);
             window.draw(board.text);
             window.display();
-            game->render(window);
+            game->render();
             
 
             sf::Event event;
