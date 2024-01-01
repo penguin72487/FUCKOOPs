@@ -13,8 +13,8 @@ private:
     };
     sf::Text title;
     Button illustrateButton, settingButton, startGameButton, exitGameButton, developerButton;
-    sf::Texture pic;
-    sf::Sprite picture;
+    sf::Texture PictureTexture;
+    sf::Sprite PictureSprite;
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
     Show show = Show::Picture;
@@ -37,12 +37,12 @@ public:
 
         window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-        if (!pic.loadFromFile("../data/images/ui/OOXX.png")) {
+        if (!PictureTexture.loadFromFile("../data/images/ui/OOXX.png")) {
             std::cout << "Texture load failed\n";
         }
-        picture.setTexture(pic);
-        picture.setScale(1.2, 1.2);
-        picture.setPosition(540, 314);
+        PictureSprite.setTexture(PictureTexture);
+        PictureSprite.setScale(1.2, 1.2);
+        PictureSprite.setPosition(540, 314);
         
         if (!backgroundTexture.loadFromFile("../data/images/bg/Bg1.png")) {
             std::cout << "Texture load failed\n";
@@ -86,7 +86,7 @@ public:
             
             switch(show){
                 case Show::Picture:
-                    window.draw(picture);
+                    window.draw(PictureSprite);
                     break;
                 case Show::ILLUSTRATE:
                     window.draw(IllustratePictureSprite);
