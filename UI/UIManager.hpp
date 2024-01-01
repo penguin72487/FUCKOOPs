@@ -370,7 +370,7 @@ private:
     Button BackButton;
 public:
     ResultScreen(sf::RenderWindow& window) : UIComponent(window),BackButton(490, 914, 420, 85, "menu", font){
-        playerCongratulationText = sf::Text ("Congratuation Player__!!", font, 80);
+        playerCongratulationText = sf::Text ("Congratulation Player__!!", font, 80);
         playerCongratulationText.setFillColor(sf::Color(255, 255, 255));
         playerCongratulationText.setPosition(234, 60); 
 
