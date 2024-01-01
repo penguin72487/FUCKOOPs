@@ -39,7 +39,7 @@ protected:
         if (!icon.loadFromFile("../data/png/ui/icon.png")) {
             std::cout << "Texture load failed\n";
         }
-    }
+    } 
 };
 
 // 主菜單類
@@ -55,6 +55,8 @@ private:
     Button illustrateButton, settingButton, startGameButton, exitGameButton, developerButton;
     sf::Texture pic;
     sf::Sprite picture;
+    // sf::Texture backgroundTexture;siroku 暫存
+    // sf::Sprite backgroundSprite;siroku 暫存
     Show show = Show::Picture;
     sf::Text illustrateText;
     sf::Text developerText;
@@ -81,7 +83,12 @@ public:
         picture.setScale(1.2, 1.2);
         picture.setPosition(540, 314);
         
-        
+        // if (!backgroundTexture.loadFromFile("../data/png/bg/Bg1.png")) {
+        //     std::cout << "Texture load failed\n";
+        // }siroku 暫存
+        // backgroundSprite.setTexture(backgroundTexture);
+
+
         //load illustrate
         std::wstring illustrateCon= L"終極版圈圈叉叉\n\n遊戲介紹：\n終極版圈圈叉叉是由9個3X3的基礎版圈圈叉叉所構成，其中3X3的棋盤稱作為局部棋盤，\n而由9個3X3棋盤所組成的棋盤稱作為全局棋盤。\n玩家們輪流玩較小的井字棋盤(即3X3圈圈叉叉)，而當任一3X3的棋盤分出勝負後，將該棋盤標記為勝出玩家的符號(O or X)，\n即當玩家佔領此3X3棋盤，直到所有9個3X3的井字棋盤都分出勝負，依據玩家所佔領的井字棋盤多寡分出最終勝負。\n\n遊戲說明：\n遊戲一開始，O可以在81個空格中任選一個位置下棋，例如O選擇下在中間的局部棋盤左上，則接下來，\nX便可以在全局棋盤中左上的局部棋盤再任意選擇一個位置下棋，接著便循環同樣的模式繼續進行遊戲，直到所有局部棋盤都分出勝負。\n值得注意的是，若當玩家該下棋的區域已經分出勝負了，那麼此玩家可在全域棋盤中，任選一個剩餘的空格下棋。\n";
         illustrateText = sf::Text(illustrateCon, font, 18);
@@ -298,6 +305,7 @@ public:
 
 
         while (window.isOpen()) {
+
             window.clear(color);
             // draw title and buttons
             window.draw(MenuButton.shape);
