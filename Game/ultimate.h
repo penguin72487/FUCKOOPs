@@ -1,14 +1,33 @@
-#ifndef PRO
-#defined PRO
-#include "basicOOXX.h"
+#ifndef ULTIMATE_H
+#define ULTIMATE_H
+#include "game.hpp"
 #include <vector>
 
-class ultimate{
+class Ultimate : public Game{
 public:
     void rule();
     int count_win();
+    Ultimate(){};// constructor
+    ~Ultimate(){};// destructor
+    void init() override{};
+    int gameProcess() override{
+        return 0;
+    };
+    int victory_Condition() override{
+        return 0;
+    };
+    void render() override{};
+    void update() override{};
+    // void draw() override;
+    // void end() override;
+    void click_Event() override{};
+    void restart() override{};
+    void settimeLimit(int) override{};
+    void setinterfaceColor(std::string) override{};
+    void whooseTurn() override{};
+
 private:
-    vector<vector<basic>> tic_tac_toe(3, 3);
+    // vector<vector<basic>> tic_tac_toe(3, 3);
     
 };
 
