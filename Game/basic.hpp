@@ -152,7 +152,7 @@ class Basic : public Game {
         
         
     }
-    void drawX(sf::RenderWindow &window, int row, int col, int color = 8) {
+    void drawX(sf::RenderWindow &window, int row, int col, int color = 9) {
         if(color < 1 || color > 16) color = 8;
         auto [x, y, w, h] = game_Possition;
         sf::Texture XTexture;
