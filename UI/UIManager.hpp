@@ -41,7 +41,6 @@ public:
     UIManager():window(sf::VideoMode(1400, 1024), "TIC-TAC-TOC"), 
         mainMenu(window), settingsMenu(window), gameSelectionMenu(window), gameInterface(window), gameEndScreen(window), resultScreen(window) {
         // 初始化 UI 管理器
-        // sf::RenderWindow window(sf::VideoMode(800, 900), "TIC-TAC-TOC");
         window.setFramerateLimit(60);
         currentScreen = mainMenu.render();
     }
