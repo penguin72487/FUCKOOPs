@@ -33,6 +33,7 @@ private:
     // std::vector<UIComponent*> screens;
 
     UIComponent::Screen currentScreen;
+    Game* currentGame;
     
 
 
@@ -43,6 +44,7 @@ public:
         // 初始化 UI 管理器
         window.setFramerateLimit(60);
         currentScreen = mainMenu.render();
+        currentGame = nullptr;
     }
     ~UIManager() {}
     void run() {
@@ -51,35 +53,40 @@ public:
         }
     }
     void renderScreen(){
-        switch (currentScreen) {
-            case UIComponent::Screen::MAIN_MENU:
-                currentScreen =mainMenu.render();
-                break;
-            case UIComponent::Screen::SETTINGS_MENU:
-                currentScreen =settingsMenu.render();
-                break;
-            case UIComponent::Screen::GAME_SELECTION_MENU:
-                currentScreen=gameSelectionMenu.render();
-                break;
-            case UIComponent::Screen::GAME_BASIC_INTERFACE:
-                currentScreen=gameInterface.render(currentScreen);
-                break;
-            case UIComponent::Screen::GAME_ULTIMATE_INTERFACE:
-                currentScreen=gameInterface.render(currentScreen);
-                break;
-            case UIComponent::Screen::GAME_END_SCREEN:
-                currentScreen = gameEndScreen.render();
-                break;
-            case UIComponent::Screen::RESULT_SCREEN:
-                currentScreen = resultScreen.render();
-                break;
-            case UIComponent::Screen::EXIT:
-                window.close();
-                break;
-            default:
-                break;
-        }
+    std::tuple<UIComponent::Screen, Game*> renderResult;
+    switch (currentScreen) {
+        case UIComponent::Screen::MAIN_MENU:
+            currentScreen = mainMenu.render();
+            break;
+        case UIComponent::Screen::SETTINGS_MENU:
+            currentScreen = settingsMenu.render();
+            break;
+        case UIComponent::Screen::GAME_SELECTION_MENU:
+            currentScreen = gameSelectionMenu.render();
+            break;
+        case UIComponent::Screen::GAME_BASIC_INTERFACE:
+            renderResult = gameInterface.render(currentScreen);
+            currentScreen = std::get<0>(renderResult);
+            currentGame = std::get<1>(renderResult);
+            break;
+        case UIComponent::Screen::GAME_ULTIMATE_INTERFACE:
+            renderResult = gameInterface.render(currentScreen);
+            currentScreen = std::get<0>(renderResult);
+            currentGame= std::get<1>(renderResult);
+            break;
+        case UIComponent::Screen::GAME_END_SCREEN:
+            currentScreen = gameEndScreen.render(currentGame);
+            break;
+        case UIComponent::Screen::RESULT_SCREEN:
+            currentScreen = resultScreen.render();
+            break;
+        case UIComponent::Screen::EXIT:
+            window.close();
+            break;
+        default:
+            break;
     }
+}
 
     // 其他 UI 管理功能
 };
