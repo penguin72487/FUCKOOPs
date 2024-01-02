@@ -59,17 +59,29 @@ class Ultimate : public Game{
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
-                // auto [x,y] = sf::Mouse::getPosition(window);
-                for(int i = 0; i < 3; i++){
-                    for(int j = 0; j < 3; j++){
-                        auto[r,c]=basics[i][j].click_Event(event, currentPlayer);
-                        if(r!=-2&&c!=-2){
-                            currentPlayer = currentPlayer == player::O ? player::X : player::O;
+                auto [x,y] = valid_Board;
+                if(valid_Board==std::make_tuple(-1,-1)){
+                    for(int i = 0; i < 3; i++){
+                        for(int j = 0; j < 3; j++){
+                            auto [r,c] = basics[i][j].click_Event(event,currentPlayer);
+                            if(r!=-2&&c!=-2){
+                                currentPlayer = currentPlayer == player::O ? player::X : player::O;
+                                valid_Board = {r, c};
+                                break;
+                            }
                         }
+                    }
+                }
+                else{
+                    auto [r,c] = basics[x][y].click_Event(event,currentPlayer);
+                    if(r!=-2&&c!=-2){
+                        currentPlayer = currentPlayer == player::O ? player::X : player::O;
+                        valid_Board = {r, c};
                     }
                 }
             }
         }
+        return;
     }
     player WhoseTurn() override{
         return player::none;
