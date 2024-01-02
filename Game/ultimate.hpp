@@ -23,8 +23,8 @@ public:
     void click_Event() override{};
     void restart() override{};
     void settimeLimit(int) override{};
-    void setinterfaceColor(std::string) override{};
-    void whooseTurn() override{};
+    void SetInterfaceColor(std::string) override{};
+    void WhoseTurn() override{};
 
 private:
     // vector<vector<basic>> tic_tac_toe(3, 3);

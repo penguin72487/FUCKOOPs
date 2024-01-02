@@ -11,7 +11,7 @@ class Game{
             X,
             draw
         };
-        Game(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P): window(win), game_Possition(g_P){
+        Game(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P): window(win),GamePosition(g_P){
             currentPlayer = player::O;
             font.loadFromFile("data/ttf/TaipeiSansTCBeta-Regular.ttf");
         };// constructor
@@ -23,7 +23,7 @@ class Game{
 
     protected:
         sf::RenderWindow& window;
-        std::tuple<int, int, int, int> game_Possition;
+        std::tuple<int, int, int, int> GamePosition;
         player currentPlayer;// 0:O 1:X
         sf::Font font;
         time_t get_Timestamp(){

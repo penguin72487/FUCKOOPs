@@ -111,7 +111,7 @@ class Basic : public Game {
 
     void drawO(sf::RenderWindow &window, int row, int col , int color = 10) {
         if(color < 1 || color > 16) color = 8;
-        auto [x,y,w,h] = game_Possition;
+        auto [x,y,w,h] = GamePosition;
         sf::Texture OTexture;
         if(!OTexture.loadFromFile("data/images/O/O"+ std::to_string(color) +".png")){
             std::cout << "OTexture load failed\n";
@@ -126,7 +126,7 @@ class Basic : public Game {
     }
     void drawX(sf::RenderWindow &window, int row, int col, int color = 9) {
         if(color < 1 || color > 16) color = 8;
-        auto [x, y, w, h] = game_Possition;
+        auto [x, y, w, h] = GamePosition;
         sf::Texture XTexture;
         if(!XTexture.loadFromFile("data/images/X/X" +  std::to_string(color) + ".png")){
             std::cout << "XTexture load failed\n";
