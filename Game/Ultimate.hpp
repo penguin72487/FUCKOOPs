@@ -36,7 +36,7 @@ class Ultimate : public Game{
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
-                auto [x,y] = sf::Mouse::getPosition(window);
+                // auto [x,y] = sf::Mouse::getPosition(window);
                 for(int i = 0; i < 3; i++){
                     for(int j = 0; j < 3; j++){
                             basics[i][j].click_Event(event);
