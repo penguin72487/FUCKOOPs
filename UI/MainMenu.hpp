@@ -32,7 +32,7 @@ public:
         developerButton(1150, 900, 200, 70, "DEVELOPER", font) {
 
         title = sf::Text("TIC-TAC-TOC", font, 170);
-        title.setFillColor(sf::Color::White);
+        title.setFillColor(sf::Color::Black);
         title.setPosition(57, 57);
 
         window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
@@ -44,7 +44,7 @@ public:
         PictureSprite.setScale(1.2, 1.2);
         PictureSprite.setPosition(540, 314);
         
-        if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
+        if (!backgroundTexture.loadFromFile("data/images/bg/LobbyBG.png")) {
             std::cout << "Texture load failed\n";
         }
         backgroundSprite.setTexture(backgroundTexture);
