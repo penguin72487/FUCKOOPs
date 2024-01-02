@@ -51,7 +51,7 @@ public:
         }
         return Screen::MAIN_MENU;
     }
-    Screen render(Game* game) {
+    Screen render(std::shared_ptr<Game> game) {
         // std::cout << "Game End: [Gameplay Elements]" << std::endl;
         std::string player;
         if(game->check_Win() == Game::player::O){

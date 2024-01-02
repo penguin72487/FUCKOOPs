@@ -27,7 +27,7 @@ public:
         std::cout << "Game Invidual Interface: [Gameplay Elements]" << std::endl;
         return Screen::EXIT;
     }
-    std::tuple<Screen,Game*> render(Screen &GameMod) {
+    std::tuple<Screen,std::shared_ptr<Game>> render(Screen &GameMod) {
         gameMode = GameMod;
 
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
@@ -74,7 +74,7 @@ public:
                 // 检查游戏是否结束
                 auto win_Player=game->check_Win();
                 if(win_Player != Game::player::none){
-                    return {Screen::GAME_END_SCREEN,game.get()};
+                    return {Screen::GAME_END_SCREEN,game};
                 }
             }
 

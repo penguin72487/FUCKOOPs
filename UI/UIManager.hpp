@@ -33,7 +33,7 @@ private:
     // std::vector<UIComponent*> screens;
 
     UIComponent::Screen currentScreen;
-    Game* currentGame;
+    std::shared_ptr<Game> currentGame;
     
 
 
@@ -53,7 +53,7 @@ public:
         }
     }
     void renderScreen(){
-    std::tuple<UIComponent::Screen, Game*> renderResult;
+    std::tuple<UIComponent::Screen, std::shared_ptr<Game>> renderResult;
     switch (currentScreen) {
         case UIComponent::Screen::MAIN_MENU:
             currentScreen = mainMenu.render();
