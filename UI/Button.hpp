@@ -16,7 +16,7 @@ public:
     void setupShape(float x, float y, float width, float height) {
         shape.setPosition(sf::Vector2f(x, y));
         shape.setSize(sf::Vector2f(width, height));
-        shape.setOutlineColor(sf::Color(224, 171, 114));
+        shape.setOutlineColor(sf::Color(173, 216, 230));
         shape.setOutlineThickness(2);
         shape.setFillColor(sf::Color(173, 216, 230));
     }
