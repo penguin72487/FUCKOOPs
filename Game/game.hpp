@@ -18,7 +18,7 @@ class Game{
         virtual ~Game(){} // destructor
         virtual void render() = 0;
         virtual void click_Event(sf::Event &ev) = 0;
-        // virtual void WhooseTurn() = 0;
+        virtual void WhoseTurn() = 0;
         virtual player check_Win() = 0;
 
     protected:
