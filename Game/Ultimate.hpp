@@ -10,27 +10,34 @@ class Ultimate : public Game{
 
     using player = Game::player;
     public:
-    Ultimate(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P ): Game(win, g_P){
-        auto [x,y,w,h] = g_P;
-        basics.resize(3);
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                basics[i].push_back(Basic(window, {x + j * (w / 3), y + i * (h / 3), w / 3, h / 3}));
-            }
-        }
-        board = std::vector<std::vector<player>>(3, std::vector<player>(3, player::none));
-        lines.resize(4);
-        for(int i = 0; i < 4; i++){
-            lines[i].setSize(sf::Vector2f(10, h));
-            lines[i].setFillColor(sf::Color::Black);
-        }
-        lines[0].setPosition(x + w / 3, y);
-        lines[1].setPosition(x + w / 3 * 2, y);
-        lines[2].setPosition(x+w, y + h / 3);
-        lines[3].setPosition(x+w, y + h / 3 * 2);
+        std::tuple<int, int> valid_Board;
 
-        lines[2].rotate (90);
-        lines[3].rotate (90);
+        Ultimate(sf::RenderWindow &win, std::tuple<int, int, int, int> g_P) : Game(win, g_P)
+        {
+            valid_Board = {-1, -1};
+            auto [x, y, w, h] = g_P;
+            basics.resize(3);
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    basics[i].push_back(Basic(window, {x + j * (w / 3), y + i * (h / 3), w / 3, h / 3}));
+                }
+            }
+            board = std::vector<std::vector<player>>(3, std::vector<player>(3, player::none));
+            lines.resize(4);
+            for (int i = 0; i < 4; i++)
+            {
+                lines[i].setSize(sf::Vector2f(10, h));
+                lines[i].setFillColor(sf::Color::Black);
+            }
+            lines[0].setPosition(x + w / 3, y);
+            lines[1].setPosition(x + w / 3 * 2, y);
+            lines[2].setPosition(x + w, y + h / 3);
+            lines[3].setPosition(x + w, y + h / 3 * 2);
+
+            lines[2].rotate(90);
+            lines[3].rotate(90);
 
                    
     }
@@ -52,14 +59,29 @@ class Ultimate : public Game{
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
-                // auto [x,y] = sf::Mouse::getPosition(window);
-                for(int i = 0; i < 3; i++){
-                    for(int j = 0; j < 3; j++){
-                            basics[i][j].click_Event(event);
+                auto [x,y] = valid_Board;
+                if(valid_Board==std::make_tuple(-1,-1)){
+                    for(int i = 0; i < 3; i++){
+                        for(int j = 0; j < 3; j++){
+                            auto [r,c] = basics[i][j].click_Event(event,currentPlayer);
+                            if(r!=-2&&c!=-2){
+                                currentPlayer = currentPlayer == player::O ? player::X : player::O;
+                                valid_Board = {r, c};
+                                break;
+                            }
+                        }
+                    }
+                }
+                else{
+                    auto [r,c] = basics[x][y].click_Event(event,currentPlayer);
+                    if(r!=-2&&c!=-2){
+                        currentPlayer = currentPlayer == player::O ? player::X : player::O;
+                        valid_Board = {r, c};
                     }
                 }
             }
         }
+        return;
     }
     player WhoseTurn() override{
         return player::none;
