@@ -34,7 +34,6 @@ public:
     }
 
     bool isClicked(sf::RenderWindow& window, sf::Event event) {
-        bool state=false;
         static bool PreBehRel = false;
 
         // 創建一個新的 FloatRect 對象，它的位置和大小與按鈕的形狀相同，但是寬度和高度都稍微小一些
@@ -49,10 +48,8 @@ public:
             if(event.type==sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && PreBehRel)
             {
                 PreBehRel = false;
-                state = true;
+                return true;
             }
-            else
-                state = false;
             if(event.type==sf::Event::MouseButtonPressed && event.mouseButton.button==sf::Mouse::Left)
             {
                 shape.setFillColor(sf::Color(89, 147, 166));
@@ -64,7 +61,7 @@ public:
         else
             shape.setFillColor(sf::Color(173,216,230));
 
-        return state;
+        return false;
     }
 };
 
