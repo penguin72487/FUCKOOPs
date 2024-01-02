@@ -13,7 +13,7 @@ private:
     Button RestartButton;
     // Button board;//棋盤
     Screen gameMode;
-    std::tuple<int,int,int,int> using player = Game::player; = {333, 164, 734, 734};
+    std::tuple<int,int,int,int> GamePosition = {333, 164, 734, 734};
 
 
 public:
@@ -23,23 +23,23 @@ public:
 
     }
     Screen render() override {
-        std::cout << "Game Individual Interface: [GamePlay Elements]" << std::endl;
+        std::cout << "Game Indiviual Interface: [Gameplay Elements]" << std::endl;
         return Screen::EXIT;
     }
     Screen render(Screen &GameMod) {
         gameMode = GameMod;
         std::unique_ptr<Game> game;
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
-            std::cout << "Game Basic new [GamePlay Elements]" << std::endl;
-            game = std::make_unique<Basic>(window, using player = Game::player;);
+            std::cout << "Game Basic new [Gameplay Elements]" << std::endl;
+            game = std::make_unique<Basic>(window, GamePosition);
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
-            std::cout << "Game Ultimate new [GamePlay Elements]" << std::endl;
-                // game = std::make_unique<Ultimate>(window, using player = Game::player;);
+            std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
+                // game = std::make_unique<Ultimate>(window, GamePosition);
                 return Screen::GAME_SELECTION_MENU;
             }
         else{
-            std::cout << "Game Ultimate Interface: [GamePlay Elements]" << std::endl;
+            std::cout << "Game Ultimate Interface: [Gameplay Elements]" << std::endl;
         }
 
 
