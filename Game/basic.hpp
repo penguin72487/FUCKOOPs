@@ -18,24 +18,6 @@ class Basic : public Game {
                 buttons[i].push_back(Button(x + j * (w / 3), y + i * (h / 3), w / 3, h / 3, " ", font));
             }
         }
-        // lines = std::vector<sf::RectangleShape>(4, sf::RectangleShape());
-        // // 繪製格線
-        // float lineLength = w * 0.9;
-        // float lineWidth = h * 0.01;
-        // lines[0] = sf::RectangleShape(sf::Vector2f(lineLength, lineWidth));
-        // lines[1] = sf::RectangleShape(sf::Vector2f(lineLength, lineWidth));
-        // lines[2] = sf::RectangleShape(sf::Vector2f(lineWidth, lineLength));
-        // lines[3] = sf::RectangleShape(sf::Vector2f(lineWidth, lineLength));
-        // for(auto &line : lines){
-        //     line.setFillColor(sf::Color(128, 128, 128));
-        // }
-        // // 設定格線位置
-        // lines[0].setPosition(x + w / 2 - lineLength / 2, y + h / 3 - lineWidth / 2);
-        // lines[1].setPosition(x + w / 2 - lineLength / 2, y + 2 * h / 3 - lineWidth / 2);
-        // lines[2].setPosition(x + w / 3 - lineWidth / 2, y + h / 2 - lineLength / 2);
-        // lines[3].setPosition(x + 2 * w / 3 - lineWidth / 2, y + h / 2 - lineLength / 2);
-
-
     }
     ~Basic() override{}
 
@@ -46,20 +28,12 @@ class Basic : public Game {
 
     void render() override{
         // 繪製遊戲界面
-        
-        //window.clear(sf::Color::White);
-
         for (auto &button : buttons){
             for(auto &b : button){
                 window.draw(b.shape);
                 window.draw(b.text);
             }
         }
-
-        // for (auto &line : lines) {
-        //     window.draw(line);
-            
-        // }
         //載入格線圖片
         sf::Texture BasicUITexture;
         if(!BasicUITexture.loadFromFile("data/images/ui/bassicOOXX-line.png")){
@@ -81,7 +55,6 @@ class Basic : public Game {
                 }
             }
         }
-        // window.display();
         return;
     }
     void click_Event(sf::Event &event) override{
@@ -136,7 +109,6 @@ class Basic : public Game {
         return c1 != player::none && c1 == c2 && c2 == c3;
     }
 
-
     void drawO(sf::RenderWindow &window, int row, int col , int color = 10) {
         if(color < 1 || color > 16) color = 8;
         auto [x,y,w,h] = game_Possition;
@@ -165,11 +137,6 @@ class Basic : public Game {
         XSprite.setPosition(x + col * (w / 3) + (w / 3 - XSprite.getTextureRect().width * XSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - XSprite.getTextureRect().height * XSprite.getScale().y) / 2);
         window.draw(XSprite);
     }
-
-        
-
-    
-
 };
 
 #endif
