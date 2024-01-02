@@ -11,8 +11,8 @@ private:
     Button ResultButton;
     Button BackButton;
 public:
-    GameEndScreen(sf::RenderWindow& window) : UIComponent(window),AgainButton(110, 819, 280, 85, "Again", font)
-    ,ResultButton(1010, 819, 280, 85, "Result", font),BackButton(560, 819, 280, 85, "Menu", font) {
+    GameEndScreen(sf::RenderWindow& window) : UIComponent(window),AgainButton(110,913, 280, 85, "Again", font)
+    ,ResultButton(1010,913, 280, 85, "Result", font),BackButton(560,913, 280, 85, "Menu", font) {
         
         WinMessage = sf::Text("Player__ Win!!", font, 80);
         WinMessage.setFillColor(sf::Color(255, 255, 255));
@@ -65,12 +65,12 @@ public:
         }
 
         if(player == "Draw"){
-            WinMessage.setPosition(420, 83); 
+            WinMessage.setPosition(420, 10); 
             WinMessage.setString("Draw!!");
         }
         else{
             WinMessage.setString("Player " + player + " Win!!");
-            WinMessage.setPosition(320, 83); 
+            WinMessage.setPosition(320, 10); 
         }
         while (window.isOpen()) {
             sf::Event event;
@@ -99,6 +99,7 @@ public:
             window.draw(ResultButton.text);
             window.draw(BackButton.shape);
             window.draw(BackButton.text);
+            game->render();
             window.display();
         }
         return Screen::MAIN_MENU;

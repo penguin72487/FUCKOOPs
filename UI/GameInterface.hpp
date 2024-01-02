@@ -13,6 +13,7 @@ private:
     Button RestartButton;
     // Button board;//棋盤
     Screen gameMode;
+    std::shared_ptr<Game> game;
     std::tuple<int,int,int,int> GamePosition = {333, 164, 734, 734};
 
 
@@ -28,10 +29,10 @@ public:
     }
     std::tuple<Screen,Game*> render(Screen &GameMod) {
         gameMode = GameMod;
-        std::unique_ptr<Game> game;
+
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
             std::cout << "Game Basic new [Gameplay Elements]" << std::endl;
-            game = std::make_unique<Basic>(window, GamePosition);
+            game = std::make_shared<Basic>(window, GamePosition);
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
             std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
@@ -72,21 +73,6 @@ public:
 
                 // 检查游戏是否结束
                 auto win_Player=game->check_Win();
-                switch (win_Player)
-                {
-                case Game::player::O:
-                    std::cout << "O win" << std::endl;
-                    break;
-                case Game::player::X:
-                    std::cout << "X win" << std::endl;
-                    break;
-                case Game::player::draw:    
-                    std::cout << "draw" << std::endl;
-                    break;
-                default:
-                    std::cout << "no one win" << std::endl;
-                    break;
-                }
                 if(win_Player != Game::player::none){
                     return {Screen::GAME_END_SCREEN,game.get()};
                 }

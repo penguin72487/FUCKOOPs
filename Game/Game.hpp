@@ -20,7 +20,6 @@ class Game{
         virtual void click_Event(sf::Event &ev) = 0;
         virtual player WhoseTurn() = 0;
         virtual player check_Win() = 0;
-        virtual Game* get_Game() = 0;
 
     protected:
         sf::RenderWindow& window;

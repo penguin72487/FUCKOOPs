@@ -85,9 +85,6 @@ class Basic : public Game {
         }
         return winner;
     }
-    Game* get_Game() override{
-        return this;
-    }
     player WhoseTurn() override{
         return currentPlayer;
     }

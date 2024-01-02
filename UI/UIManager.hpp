@@ -66,6 +66,7 @@ public:
             break;
         case UIComponent::Screen::GAME_BASIC_INTERFACE:
             renderResult = gameInterface.render(currentScreen);
+            std::cout << "Game Basic Interface: [Gameplay Elements]" << std::endl;
             currentScreen = std::get<0>(renderResult);
             currentGame = std::get<1>(renderResult);
             break;
