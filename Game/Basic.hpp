@@ -44,7 +44,9 @@ class Basic : public Game {
         sf::Sprite BasicUISprite;
         BasicUISprite.setTexture(BasicUITexture);
         BasicUISprite.setOrigin(BasicUISprite.getTextureRect().width / 2, BasicUISprite.getTextureRect().height / 2); //改變基準點
-        BasicUISprite.setPosition(698, 530);
+        auto [x,y,w,h] = GamePosition;
+        BasicUISprite.setPosition(x + w/2, y + h/2); //設定位置
+        BasicUISprite.setScale(static_cast<double>(w)/733,static_cast<double>(h)/733); // 放大
         window.draw(BasicUISprite);
 
         for(int i=0;i<3;i++){

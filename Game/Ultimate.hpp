@@ -19,7 +19,20 @@ class Ultimate : public Game{
             }
         }
         board = std::vector<std::vector<player>>(3, std::vector<player>(3, player::none));
-       
+        lines.resize(4);
+        for(int i = 0; i < 4; i++){
+            lines[i].setSize(sf::Vector2f(10, h));
+            lines[i].setFillColor(sf::Color::Black);
+        }
+        lines[0].setPosition(x + w / 3, y);
+        lines[1].setPosition(x + w / 3 * 2, y);
+        lines[2].setPosition(x+w, y + h / 3);
+        lines[3].setPosition(x+w, y + h / 3 * 2);
+
+        lines[2].rotate (90);
+        lines[3].rotate (90);
+
+                   
     }
     ~Ultimate() override{}
     void render() override{
@@ -27,6 +40,9 @@ class Ultimate : public Game{
             for(int j = 0; j < 3; j++){
                 basics[i][j].render();
             }
+        }
+        for(auto &line : lines){
+            window.draw(line);
         }
         return;
     }
@@ -49,7 +65,32 @@ class Ultimate : public Game{
         return player::none;
     }
     player check_Win() override{
-        return player::O;
+        int count_PlayerO = 0;
+        int count_PlayerX = 0;
+        for(auto &i : board){
+            for(auto &j : i){
+                if(j == player::O){
+                    count_PlayerO++;
+                }
+                else if(j == player::X){
+                    count_PlayerX++;
+                }
+            }
+        }
+        if(count_PlayerO+count_PlayerX == 9||abs(count_PlayerO-count_PlayerX)>=5){
+            if(count_PlayerO > count_PlayerX){
+                return player::O;
+            }
+            else if(count_PlayerO < count_PlayerX){
+                return player::X;
+            }
+            else{
+                return player::draw;
+            }
+        }
+        else{
+            return player::none;
+        }
     }
     UIComponent::Screen getGameMode() override{
         return UIComponent::Screen::GAME_ULTIMATE_INTERFACE;
@@ -57,6 +98,7 @@ class Ultimate : public Game{
     private:
     std::vector<std::vector<player>> board;
     std::vector<std::vector<Basic>> basics;
+    std::vector<sf::RectangleShape> lines;
 };
 
 #endif

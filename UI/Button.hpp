@@ -39,7 +39,17 @@ public:
         if (event.mouseButton.button != sf::Mouse::Left) {
             return false;
         }
-        if (shape.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+
+        // 創建一個新的 FloatRect 對象，它的位置和大小與按鈕的形狀相同，但是寬度和高度都稍微小一些
+        sf::FloatRect innerBounds = shape.getGlobalBounds();
+        float padding = 5.0f; // 設定邊框的寬度
+        innerBounds.left += padding;
+        innerBounds.top += padding;
+        innerBounds.width -= 2 * padding;
+        innerBounds.height -= 2 * padding;
+
+        // 檢查點擊的位置是否在 innerBounds 內
+        if (innerBounds.contains(event.mouseButton.x, event.mouseButton.y)) {
             return true;
         }
         return false;
