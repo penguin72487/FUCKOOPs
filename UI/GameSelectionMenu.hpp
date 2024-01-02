@@ -28,14 +28,14 @@ public:
         AdvanceText.setFillColor(sf::Color(0, 0, 0));
         AdvanceText.setPosition(722, 683);
 
-        if (!BasicPictureTexture.loadFromFile("../data/images/ui/basic.png")) {
+        if (!BasicPictureTexture.loadFromFile("data/images/ui/basic.png")) {
             std::cout << "Texture load failed\n";
         }
         BasicPictureSprite.setTexture(BasicPictureTexture);
         BasicPictureSprite.setScale(0.15, 0.15);
         BasicPictureSprite.setPosition(375, 190);
         
-        if (!UltimatePictureTexture.loadFromFile("../data/images/ui/ultimate.png")) {
+        if (!UltimatePictureTexture.loadFromFile("data/images/ui/ultimate.png")) {
             std::cout << "Texture load failed\n";
         }
         UltimatePictureSprite.setTexture(UltimatePictureTexture);

@@ -13,7 +13,7 @@ class Game{
         };
         Game(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P): window(win), game_Possition(g_P){
             currentPlayer = player::O;
-            font.loadFromFile("../data/ttf/TaipeiSansTCBeta-Regular.ttf");
+            font.loadFromFile("data/ttf/TaipeiSansTCBeta-Regular.ttf");
         };// constructor
         virtual ~Game(){} // destructor
         virtual void render() = 0;

@@ -37,21 +37,21 @@ public:
 
         window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-        if (!PictureTexture.loadFromFile("../data/images/ui/OOXX.png")) {
+        if (!PictureTexture.loadFromFile("data/images/ui/OOXX.png")) {
             std::cout << "Texture load failed\n";
         }
         PictureSprite.setTexture(PictureTexture);
         PictureSprite.setScale(1.2, 1.2);
         PictureSprite.setPosition(540, 314);
         
-        if (!backgroundTexture.loadFromFile("../data/images/bg/Bg1.png")) {
+        if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
             std::cout << "Texture load failed\n";
         }
         backgroundSprite.setTexture(backgroundTexture);
 
 
         //load illustrate
-        if (!IllustratePictureTexture.loadFromFile("../data/images/ui/illustrate.png")) {
+        if (!IllustratePictureTexture.loadFromFile("data/images/ui/illustrate.png")) {
             std::cout << "Texture load failed\n";
         }
         IllustratePictureSprite.setTexture(IllustratePictureTexture);
@@ -59,7 +59,7 @@ public:
         IllustratePictureSprite.setPosition(325, 300);
 
         //load developer
-        if (!DeveloperPictureTexture.loadFromFile("../data/images/ui/developer.png")) {
+        if (!DeveloperPictureTexture.loadFromFile("data/images/ui/developer.png")) {
             std::cout << "Texture load failed\n";
         }
         DeveloperPictureSprite.setTexture(DeveloperPictureTexture);

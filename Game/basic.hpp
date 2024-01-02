@@ -62,7 +62,7 @@ class Basic : public Game {
         // }
         //載入格線圖片
         sf::Texture BasicUITexture;
-        if(!BasicUITexture.loadFromFile("../data/images/ui/bassicOOXX-line.png")){
+        if(!BasicUITexture.loadFromFile("data/images/ui/bassicOOXX-line.png")){
             std::cout << "BasicUITexture load failed\n";
         }
         sf::Sprite BasicUISprite;
@@ -141,7 +141,7 @@ class Basic : public Game {
         if(color < 1 || color > 16) color = 8;
         auto [x,y,w,h] = game_Possition;
         sf::Texture OTexture;
-        if(!OTexture.loadFromFile("../data/images/O/O"+ std::to_string(color) +".png")){
+        if(!OTexture.loadFromFile("data/images/O/O"+ std::to_string(color) +".png")){
             std::cout << "OTexture load failed\n";
         }
         sf::Sprite OSprite;
@@ -156,7 +156,7 @@ class Basic : public Game {
         if(color < 1 || color > 16) color = 8;
         auto [x, y, w, h] = game_Possition;
         sf::Texture XTexture;
-        if(!XTexture.loadFromFile("../data/images/X/X" +  std::to_string(color) + ".png")){
+        if(!XTexture.loadFromFile("data/images/X/X" +  std::to_string(color) + ".png")){
             std::cout << "XTexture load failed\n";
         }
         sf::Sprite XSprite;

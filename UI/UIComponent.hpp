@@ -25,10 +25,10 @@ protected:
 
 
     UIComponent(sf::RenderWindow& win) : window(win), color(sf::Color(224, 171, 114)) {
-        if (!font.loadFromFile("../data/ttf/TaipeiSansTCBeta-Regular.ttf")) {
+        if (!font.loadFromFile("data/ttf/TaipeiSansTCBeta-Regular.ttf")) {
             std::cout << "Font load failed\n";
         }
-        if (!icon.loadFromFile("../data/images/ui/icon.png")) {
+        if (!icon.loadFromFile("data/images/ui/icon.png")) {
             std::cout << "Texture load failed\n";
         }
     } 
