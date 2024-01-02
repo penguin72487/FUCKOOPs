@@ -50,10 +50,10 @@ public:
                     if (event.type == sf::Event::Closed) {
                         return {Screen::EXIT,nullptr};
                     }
-                    if (MenuButton.isClicked(event)) {
+                    if (MenuButton.isClicked(window,event)) {
                         return {Screen::GAME_SELECTION_MENU,nullptr};
                     }
-                    if (RestartButton.isClicked(event)) {
+                    if (RestartButton.isClicked(window,event)) {
                         return {gameMode,nullptr};
                     }
                     game->click_Event(event); // 处理游戏内的点击事件

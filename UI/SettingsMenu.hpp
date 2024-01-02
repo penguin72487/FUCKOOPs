@@ -28,7 +28,7 @@ public:
                     window.close();
 
                 // check if buttons are clicked
-                if (MenuButton.isClicked(event)) {
+                if (MenuButton.isClicked(window,event)) {
                     return Screen::MAIN_MENU;
                 }
             }

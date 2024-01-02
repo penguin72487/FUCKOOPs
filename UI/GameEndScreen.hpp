@@ -28,13 +28,13 @@ public:
                     window.close();
 
                 // check if buttons are clicked
-                if (AgainButton.isClicked(event)) {
+                if (AgainButton.isClicked(window,event)) {
                     return Screen::GAME_BASIC_INTERFACE;
                 }
-                if(ResultButton.isClicked(event)){
+                if(ResultButton.isClicked(window,event)){
                     return Screen::RESULT_SCREEN;
                 }
-                if (BackButton.isClicked(event)) {
+                if (BackButton.isClicked(window,event)) {
                     return Screen::MAIN_MENU;
                 }
             }
@@ -83,7 +83,7 @@ public:
                     window.close();
 
                 // check if buttons are clicked
-                if (AgainButton.isClicked(event)) {
+                if (AgainButton.isClicked(window,event)) {
 
                     if(game->getGameMode() == Screen::GAME_BASIC_INTERFACE){
                         return Screen::GAME_BASIC_INTERFACE;
@@ -96,10 +96,10 @@ public:
                     }
 
                 }
-                if(ResultButton.isClicked(event)){
+                if(ResultButton.isClicked(window,event)){
                     return Screen::RESULT_SCREEN;
                 }
-                if (BackButton.isClicked(event)) {
+                if (BackButton.isClicked(window,event)) {
                     return Screen::MAIN_MENU;
                 }
             }

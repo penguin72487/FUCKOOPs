@@ -68,7 +68,7 @@ class Basic : public Game {
 
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
-                    if (buttons[i][j].isClicked(event)) {
+                    if (buttons[i][j].isClicked(window,event)) {
                         if (board[i][j] == player::none) {
                             board[i][j] = currentPlayer;
                             currentPlayer = currentPlayer == player::O ? player::X :player::O;
