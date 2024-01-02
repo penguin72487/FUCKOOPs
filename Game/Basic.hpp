@@ -25,13 +25,15 @@ class Basic : public Game {
     std::vector<std::vector<Button>> buttons;
     std::vector<sf::RectangleShape> lines;
 
-
+    UIComponent::Screen getGameMode() override{
+        return UIComponent::Screen::GAME_BASIC_INTERFACE;
+    }
     void render() override{
         // 繪製遊戲界面
         for (auto &button : buttons){
             for(auto &b : button){
                 window.draw(b.shape);
-                window.draw(b.text);
+                // window.draw(b.text);
             }
         }
         //載入格線圖片

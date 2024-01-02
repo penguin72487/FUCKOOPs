@@ -84,7 +84,17 @@ public:
 
                 // check if buttons are clicked
                 if (AgainButton.isClicked(event)) {
-                    return Screen::GAME_BASIC_INTERFACE;
+
+                    if(game->getGameMode() == Screen::GAME_BASIC_INTERFACE){
+                        return Screen::GAME_BASIC_INTERFACE;
+                    }
+                    else if(game->getGameMode() == Screen::GAME_ULTIMATE_INTERFACE){
+                        return Screen::GAME_ULTIMATE_INTERFACE;
+                    }
+                    else{
+                        return Screen::EXIT;
+                    }
+
                 }
                 if(ResultButton.isClicked(event)){
                     return Screen::RESULT_SCREEN;

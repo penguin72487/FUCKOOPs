@@ -1,7 +1,9 @@
 #include<bits/stdc++.h>
 #include <SFML/Graphics.hpp>
+#include "../UI/UIComponent.hpp"
 # ifndef GAME_HPP
 # define GAME_HPP
+
 
 class Game{
     public:
@@ -20,15 +22,14 @@ class Game{
         virtual void click_Event(sf::Event &ev) = 0;
         virtual player WhoseTurn() = 0;
         virtual player check_Win() = 0;
+        virtual UIComponent::Screen getGameMode() = 0;
+
 
     protected:
         sf::RenderWindow& window;
         std::tuple<int, int, int, int> GamePosition;
         player currentPlayer;// 0:O 1:X
         sf::Font font;
-        time_t get_Timestamp(){
-            return time(0);
-        }
 };
 
 

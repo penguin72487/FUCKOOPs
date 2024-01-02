@@ -5,7 +5,7 @@
 #include "Button.hpp"
 #include "../Game/Game.hpp"
 #include "../Game/Basic.hpp"
-// #include "../Game/Ultimate.hpp"
+#include "../Game/Ultimate.hpp"
 
 class GameInterface : public UIComponent {
 private:
@@ -35,9 +35,9 @@ public:
             game = std::make_shared<Basic>(window, GamePosition);
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
-            std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
-                // game = std::make_unique<Ultimate>(window, game_Possition);
-                return {Screen::GAME_SELECTION_MENU,nullptr};
+            //std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
+                game = std::make_shared<Ultimate>(window, GamePosition);
+                // return {Screen::GAME_SELECTION_MENU,nullptr};
             }
         else{
             std::cout << "Game Ultimate Interface: [Gameplay Elements]" << std::endl;
@@ -54,7 +54,7 @@ public:
                         return {Screen::GAME_SELECTION_MENU,nullptr};
                     }
                     if (RestartButton.isClicked(event)) {
-                        return {Screen::GAME_BASIC_INTERFACE,nullptr};
+                        return {gameMode,nullptr};
                     }
                     game->click_Event(event); // 处理游戏内的点击事件
                 }
