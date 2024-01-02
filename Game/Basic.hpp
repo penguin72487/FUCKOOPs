@@ -59,6 +59,25 @@ class Basic : public Game {
                 }
             }
         }
+        if(check_Win() != player::none){
+            // 創建一個半透明的矩形
+            sf::RectangleShape rectangle;
+            rectangle.setPosition(x, y);
+            rectangle.setSize(sf::Vector2f(w, h));
+            rectangle.setFillColor(sf::Color(255, 255, 255, 128)); // RGBA，最後一個參數是透明度，範圍是0-255
+
+            // 繪製大圈圈或大叉叉
+            if (check_Win() == player::O) {
+                // 繪製大圈圈
+                drawO(window, 1, 1, 733, 733); // 你需要根據需要調整這些參數
+            } else if (check_Win() == player::X) {
+                // 繪製大叉叉
+                drawX(window, 1, 1, 733, 733); // 你需要根據需要調整這些參數
+            }
+
+            // 在視窗上繪製半透明的矩形
+            window.draw(rectangle);
+        }
         return;
     }
     void setCurrentPlayer(player p){
@@ -86,6 +105,9 @@ class Basic : public Game {
             if (event.type == sf::Event::Closed)
                 window.close();
             setCurrentPlayer(p);
+            if(check_Win() != player::none){
+                return {-1,-1};
+            }
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     if (buttons[i][j].isClicked(event)) {
@@ -104,7 +126,7 @@ class Basic : public Game {
         player winner = victory_Condition();
         if (winner != player::none) {
             std::string resultMessage = winner == player::O ? "O wins!\n" : (winner == player::X ? "X wins!\n" : "Draw!\n");
-            std::cout << resultMessage;
+            // std::cout << resultMessage;
             // return winner;
             // resetGame();
         }
@@ -157,6 +179,26 @@ class Basic : public Game {
         
         
     }
+    void drawO(sf::RenderWindow &window, int row, int col ,int W,int H,int color = 10) {
+        if(color < 1 || color > 16) color = 8;
+        auto [x,y,w,h] = GamePosition;
+        double w_Scale = static_cast<double>(W)/110;
+        double h_Scale = static_cast<double>(H)/110;
+
+        sf::Texture OTexture;
+        if(!OTexture.loadFromFile("data/images/O/O"+ std::to_string(color) +".png")){
+            std::cout << "OTexture load failed\n";
+        }
+        sf::Sprite OSprite;
+        OSprite.setTexture(OTexture);
+        //根據W h 調整大小
+        OSprite.setScale(w_Scale,h_Scale); // 放大
+        // OSprite.setScale(1.8f, 1.8f); // 放大
+        OSprite.setPosition(x + col * (W) + (W - OSprite.getTextureRect().width * OSprite.getScale().x) / 2, y + row * (H) + (H - OSprite.getTextureRect().height * OSprite.getScale().y) / 2);
+        window.draw(OSprite);
+        
+        
+    }
     void drawX(sf::RenderWindow &window, int row, int col, int color = 9) {
         if(color < 1 || color > 16) color = 8;
         auto [x, y, w, h] = GamePosition;
@@ -171,6 +213,22 @@ class Basic : public Game {
         XSprite.setTexture(XTexture);
         XSprite.setScale(w_Scale,h_Scale); // 放大
         XSprite.setPosition(x + col * (w / 3) + (w / 3 - XSprite.getTextureRect().width * XSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - XSprite.getTextureRect().height * XSprite.getScale().y) / 2);
+        window.draw(XSprite);
+    }
+    void drawX(sf::RenderWindow &window, int row, int col, int W, int H, int color = 9) {
+        if(color < 1 || color > 16) color = 8;
+        auto [x, y, w, h] = GamePosition;
+        double w_Scale = static_cast<double>(W)/110;
+        double h_Scale = static_cast<double>(H)/110;
+
+        sf::Texture XTexture;
+        if(!XTexture.loadFromFile("data/images/X/X" +  std::to_string(color) + ".png")){
+            std::cout << "XTexture load failed\n";
+        }
+        sf::Sprite XSprite;
+        XSprite.setTexture(XTexture);
+        XSprite.setScale(w_Scale,h_Scale); // 放大
+        XSprite.setPosition(x + col * (W) + (W - XSprite.getTextureRect().width * XSprite.getScale().x) / 2, y + row * (H) + (H - XSprite.getTextureRect().height * XSprite.getScale().y) / 2);
         window.draw(XSprite);
     }
 };

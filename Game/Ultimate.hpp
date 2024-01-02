@@ -81,10 +81,21 @@ class Ultimate : public Game{
                 }
             }
         }
+        check_Board();
         return;
     }
     player WhoseTurn() override{
-        return player::none;
+        return currentPlayer;
+    }
+    void check_Board(){
+        auto [x,y] = valid_Board;
+        if(x==-1&&y==-1){
+            return;
+        }
+        if(board[x][y] != player::none){
+            valid_Board = {-1, -1};
+        }
+        return;
     }
     player check_Win() override{
         int count_PlayerO = 0;
