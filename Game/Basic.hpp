@@ -36,7 +36,7 @@ class Basic : public Game {
         }
         //載入格線圖片
         sf::Texture BasicUITexture;
-        if(!BasicUITexture.loadFromFile("data/images/ui/bassicOOXX-line.png")){
+        if(!BasicUITexture.loadFromFile("data/images/ui/basicOOXX-line.png")){
             std::cout << "BasicUITexture load failed\n";
         }
         sf::Sprite BasicUISprite;
@@ -85,6 +85,9 @@ class Basic : public Game {
         }
         return winner;
     }
+    player WhoseTurn() override{
+        return currentPlayer;
+    }
     player victory_Condition() {
         // 檢查所有行和列
         for (int i = 0; i < 3; i++) {
@@ -118,7 +121,9 @@ class Basic : public Game {
         }
         sf::Sprite OSprite;
         OSprite.setTexture(OTexture);
-        OSprite.setScale(1.8f, 1.8f); // 放大
+        //根據W h 調整大小
+        OSprite.setScale(1.5f, 1.5f); // 放大
+        // OSprite.setScale(1.8f, 1.8f); // 放大
         OSprite.setPosition(x + col * (w / 3) + (w / 3 - OSprite.getTextureRect().width * OSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - OSprite.getTextureRect().height * OSprite.getScale().y) / 2);
         window.draw(OSprite);
         

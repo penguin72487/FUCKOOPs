@@ -23,10 +23,10 @@ public:
 
     }
     Screen render() override {
-        std::cout << "Game Indiviual Interface: [Gameplay Elements]" << std::endl;
+        std::cout << "Game Invidual Interface: [Gameplay Elements]" << std::endl;
         return Screen::EXIT;
     }
-    Screen render(Screen &gamemod) {
+    std::tuple<Screen,Game::player> render(Screen &gamemod) {
         gameMode = gamemod;
         std::unique_ptr<Game> game;
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
@@ -36,7 +36,7 @@ public:
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
             std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
                 // game = std::make_unique<Ultimate>(window, game_Possition);
-                return Screen::GAME_SELECTION_MENU;
+                return {Screen::GAME_SELECTION_MENU,Game::player::none};
             }
         else{
             std::cout << "Game Ultimate Interface: [Gameplay Elements]" << std::endl;
@@ -47,13 +47,13 @@ public:
                 sf::Event event;
                 while (window.pollEvent(event)) {
                     if (event.type == sf::Event::Closed) {
-                        return Screen::EXIT;
+                        return {Screen::EXIT,Game::player::none};
                     }
                     if (MenuButton.isClicked(event)) {
-                        return Screen::MAIN_MENU;
+                        return {Screen::GAME_SELECTION_MENU,Game::player::none};
                     }
                     if (RestartButton.isClicked(event)) {
-                        return gameMode; // 你可能需要重置游戏状态
+                        return {Screen::GAME_BASIC_INTERFACE,Game::player::none};
                     }
                     game->click_Event(event); // 处理游戏内的点击事件
                 }
@@ -71,12 +71,13 @@ public:
                 window.display(); // 更新窗口显示
 
                 // 检查游戏是否结束
-                if(game->check_Win() != Game::player::none){
-                    return Screen::GAME_END_SCREEN;
+                auto win_Player=game->check_Win();
+                if(win_Player != Game::player::none){
+                    return {Screen::GAME_END_SCREEN,win_Player};
                 }
             }
 
-        return Screen::EXIT;
+        return {Screen::EXIT,Game::player::none};
     }
     // 其他遊戲功能
 };

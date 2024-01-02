@@ -1,34 +1,25 @@
 #ifndef ULTIMATE_H
 #define ULTIMATE_H
 #include "Game.hpp"
+#include <SFML/Graphics.hpp>
+#include "../UI/Button.hpp"
+#include "Basic.hpp"
 #include <vector>
 
 class Ultimate : public Game{
-public:
-    void rule();
-    int count_win();
-    Ultimate(){};// constructor
-    ~Ultimate(){};// destructor
-    void init() override{};
-    player gameProcess() override{
-        return player::none;
-    };
-    player victory_Condition() override{
-        return player::none;
-    };
-    void render() override{};
-    void update() override{};
-    // void draw() override;
-    // void end() override;
-    void click_Event() override{};
-    void restart() override{};
-    void settimeLimit(int) override{};
-    void SetInterfaceColor(std::string) override{};
-    void WhoseTurn() override{};
 
-private:
-    // vector<vector<basic>> tic_tac_toe(3, 3);
-    
+    using player = Game::player;
+    public:
+    Ultimate(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P ): Game(win, g_P){
+        auto [x,y,w,h] = g_P;
+        board = std::vector<std::vector<player>>(3, std::vector<player>(3, player::none));
+        
+    }
+    ~Ultimate() override{}
+
+    std::vector<std::vector<player>> board;
+    std::vector<std::vector<Basic>> basics;
+    std::vector<sf::RectangleShape> lines;
 };
 
 #endif
