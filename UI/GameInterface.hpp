@@ -13,7 +13,7 @@ private:
     Button RestartButton;
     // Button board;//棋盤
     Screen gameMode;
-    std::tuple<int,int,int,int> game_Possition = {333, 164, 734, 734};
+    std::tuple<int,int,int,int> GamePosition = {333, 164, 734, 734};
 
 
 public:
@@ -26,12 +26,12 @@ public:
         std::cout << "Game Invidual Interface: [Gameplay Elements]" << std::endl;
         return Screen::EXIT;
     }
-    std::tuple<Screen,Game::player> render(Screen &gamemod) {
-        gameMode = gamemod;
+    std::tuple<Screen,Game::player> render(Screen &GameMod) {
+        gameMode = GameMod;
         std::unique_ptr<Game> game;
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
             std::cout << "Game Basic new [Gameplay Elements]" << std::endl;
-            game = std::make_unique<Basic>(window, game_Possition);
+            game = std::make_unique<Basic>(window, GamePosition);
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
             std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;

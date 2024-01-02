@@ -10,8 +10,8 @@ private:
     Button ResultButton;
     Button BackButton;
 public:
-    GameEndScreen(sf::RenderWindow& window) : UIComponent(window),AgainButton(560, 512, 280, 85, "Again", font)
-    ,ResultButton(560, 687, 280, 85, "Result", font),BackButton(560, 862, 280, 85, "Menu", font) {
+    GameEndScreen(sf::RenderWindow& window) : UIComponent(window),AgainButton(110, 819, 280, 85, "Again", font)
+    ,ResultButton(1010, 819, 280, 85, "Result", font),BackButton(560, 819, 280, 85, "Menu", font) {
         
         WinMessage = sf::Text("Player__ Win!!", font, 80);
         WinMessage.setFillColor(sf::Color(255, 255, 255));
