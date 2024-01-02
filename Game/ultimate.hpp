@@ -1,6 +1,6 @@
 #ifndef ULTIMATE_H
 #define ULTIMATE_H
-#include "game.hpp"
+#include "Game.hpp"
 #include <vector>
 
 class Ultimate : public Game{
