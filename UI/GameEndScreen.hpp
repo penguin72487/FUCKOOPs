@@ -7,6 +7,7 @@
 class GameEndScreen : public UIComponent {
 private:
     sf::Text WinMessage;
+    // sf::RenderWindow window;
     Button AgainButton;
     Button ResultButton;
     Button BackButton;
@@ -16,7 +17,7 @@ public:
         
         WinMessage = sf::Text("Player__ Win!!", font, 80);
         WinMessage.setFillColor(sf::Color(255, 255, 255));
-        WinMessage.setPosition(420, 83); 
+        WinMessage.setPosition(700, 83); 
     }
     Screen render() override {
         // std::cout << "Game End: [Gameplay Elements]" << std::endl;
@@ -65,13 +66,16 @@ public:
         }
 
         if(player == "Draw"){
-            WinMessage.setPosition(420, 10); 
+            
             WinMessage.setString("Draw!!");
         }
         else{
             WinMessage.setString("Player " + player + " Win!!");
-            WinMessage.setPosition(320, 10); 
         }
+        sf::FloatRect WinMessageRect = WinMessage.getLocalBounds();//獲取文字的長寬
+        WinMessage.setOrigin(WinMessageRect.left + WinMessageRect.width/2.0f, WinMessageRect.top  + WinMessageRect.height/2.0f);//設置中心點
+        WinMessage.setPosition(sf::Vector2f(window.getSize().x/2.0f, 82.0f));
+
         while (window.isOpen()) {
             sf::Event event;
             while (window.pollEvent(event)) {
