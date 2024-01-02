@@ -32,7 +32,7 @@ public:
         developerButton(1150, 900, 200, 70, "DEVELOPER", font) {
 
         title = sf::Text("TIC-TAC-TOC", font, 170);
-        title.setFillColor(sf::Color::Black);
+        title.setFillColor(sf::Color::White);
         title.setPosition(57, 57);
 
         window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
@@ -44,7 +44,7 @@ public:
         PictureSprite.setScale(1.2, 1.2);
         PictureSprite.setPosition(540, 314);
         
-        if (!backgroundTexture.loadFromFile("data/images/bg/LobbyBG.png")) {
+        if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
             std::cout << "Texture load failed\n";
         }
         backgroundSprite.setTexture(backgroundTexture);
@@ -104,22 +104,22 @@ public:
                     window.close();
 
                 // Handle button clicks
-                if (illustrateButton.isClicked(event)) {
+                if (illustrateButton.isClicked(window,event)) {
                     if(show==Show::Picture||show==Show::DEVELOPER)
                         show = Show::ILLUSTRATE;
                     else
                         show = Show::Picture;
                 }
-                else if (settingButton.isClicked(event)) {
+                else if (settingButton.isClicked(window,event)) {
                     return Screen::SETTINGS_MENU;
                 }
-                else if (startGameButton.isClicked(event)) {
+                else if (startGameButton.isClicked(window,event)) {
                     return Screen::GAME_SELECTION_MENU;
                 }
-                else if (exitGameButton.isClicked(event)) {
+                else if (exitGameButton.isClicked(window,event)) {
                     return Screen::EXIT;
                 }
-                else if (developerButton.isClicked(event)) {
+                else if (developerButton.isClicked(window,event)) {
                     if(show==Show::Picture||show==Show::ILLUSTRATE)
                         show = Show::DEVELOPER;
                     else

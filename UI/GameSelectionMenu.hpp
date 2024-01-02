@@ -66,15 +66,15 @@ public:
                         window.close();
 
                     // check if buttons are clicked
-                    if (BasicButton.isClicked(event)) {
+                    if (BasicButton.isClicked(window,event)) {
                         std::cout << "select Basic Game: [Gameplay Elements]" << std::endl;
                         return Screen::GAME_BASIC_INTERFACE;
                     }
-                    if (AdvanceButton.isClicked(event)) {
+                    if (AdvanceButton.isClicked(window,event)) {
                         std::cout << "select Advance Game: [Gameplay Elements]" << std::endl;
                         return Screen::GAME_ULTIMATE_INTERFACE;
                     }
-                    if (MenuButton.isClicked(event)) {
+                    if (MenuButton.isClicked(window,event)) {
                         return Screen::MAIN_MENU;
                     }
                     
