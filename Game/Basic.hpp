@@ -118,6 +118,9 @@ class Basic : public Game {
     void drawO(sf::RenderWindow &window, int row, int col , int color = 10) {
         if(color < 1 || color > 16) color = 8;
         auto [x,y,w,h] = GamePosition;
+        double w_Scale = static_cast<double>(w)/330;
+        double h_Scale = static_cast<double>(h)/330;
+
         sf::Texture OTexture;
         if(!OTexture.loadFromFile("data/images/O/O"+ std::to_string(color) +".png")){
             std::cout << "OTexture load failed\n";
@@ -125,7 +128,7 @@ class Basic : public Game {
         sf::Sprite OSprite;
         OSprite.setTexture(OTexture);
         //根據W h 調整大小
-        OSprite.setScale(1.5f, 1.5f); // 放大
+        OSprite.setScale(w_Scale,h_Scale); // 放大
         // OSprite.setScale(1.8f, 1.8f); // 放大
         OSprite.setPosition(x + col * (w / 3) + (w / 3 - OSprite.getTextureRect().width * OSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - OSprite.getTextureRect().height * OSprite.getScale().y) / 2);
         window.draw(OSprite);
@@ -135,13 +138,16 @@ class Basic : public Game {
     void drawX(sf::RenderWindow &window, int row, int col, int color = 9) {
         if(color < 1 || color > 16) color = 8;
         auto [x, y, w, h] = GamePosition;
+        double w_Scale = static_cast<double>(w)/330;
+        double h_Scale = static_cast<double>(h)/330;
+
         sf::Texture XTexture;
         if(!XTexture.loadFromFile("data/images/X/X" +  std::to_string(color) + ".png")){
             std::cout << "XTexture load failed\n";
         }
         sf::Sprite XSprite;
         XSprite.setTexture(XTexture);
-        XSprite.setScale(2.0f, 2.0f); // 放大
+        XSprite.setScale(w_Scale,h_Scale); // 放大
         XSprite.setPosition(x + col * (w / 3) + (w / 3 - XSprite.getTextureRect().width * XSprite.getScale().x) / 2, y + row * (h / 3) + (h / 3 - XSprite.getTextureRect().height * XSprite.getScale().y) / 2);
         window.draw(XSprite);
     }
