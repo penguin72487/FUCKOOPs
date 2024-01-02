@@ -72,6 +72,21 @@ public:
 
                 // 检查游戏是否结束
                 auto win_Player=game->check_Win();
+                switch (win_Player)
+                {
+                case Game::player::O:
+                    std::cout << "O win" << std::endl;
+                    break;
+                case Game::player::X:
+                    std::cout << "X win" << std::endl;
+                    break;
+                case Game::player::draw:    
+                    std::cout << "draw" << std::endl;
+                    break;
+                default:
+                    std::cout << "no one win" << std::endl;
+                    break;
+                }
                 if(win_Player != Game::player::none){
                     return {Screen::GAME_END_SCREEN,game.get()};
                 }
