@@ -9,6 +9,8 @@ private:
     sf::Text ColorSet;
     sf::Text TimeSet;
     Button MenuButton;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 public:
     SettingsMenu(sf::RenderWindow& window) : UIComponent(window),MenuButton(57, 36, 160, 70, "MENU", font) {
         ColorSet = sf::Text("SETTING COLOR", font, 50);
@@ -32,8 +34,13 @@ public:
                     return Screen::MAIN_MENU;
                 }
             }
+            if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
+                std::cout << "Texture load failed\n";
+            }
+            backgroundSprite.setTexture(backgroundTexture);
 
             window.clear(color);
+            window.draw(backgroundSprite);
             // draw title and buttons
             window.draw(ColorSet);
             window.draw(TimeSet);
