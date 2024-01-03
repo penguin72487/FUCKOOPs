@@ -52,6 +52,7 @@ class Basic : public Game {
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
                 if(board[i][j] == player::O){
+                    // std::cout << "drawO\n";
                     drawO(window, i, j);
                 }
                 else if(board[i][j] == player::X){
@@ -106,6 +107,7 @@ class Basic : public Game {
                 window.close();
             setCurrentPlayer(p);
             if(check_Win() != player::none){
+                // std::cout << "also invalid board\n";
                 return {-1,-1};
             }
             for(int i = 0; i < 3; i++){
@@ -113,6 +115,7 @@ class Basic : public Game {
                     if (buttons[i][j].isClicked(window,event)) {
                         if (board[i][j] == player::none) {
                             board[i][j] = currentPlayer;
+                            // std::cout << "board"<<i<<" "<<j<<"isClicked\n";
                             currentPlayer = currentPlayer == player::O ? player::X :player::O;
                             return {i,j};
                         }

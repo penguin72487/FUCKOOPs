@@ -57,28 +57,27 @@ class Ultimate : public Game{
         if (event.type == sf::Event::Closed) {
             window.close();
         }
-        if (event.type == sf::Event::MouseButtonPressed) {
-            if (event.mouseButton.button == sf::Mouse::Left) {
-                auto [x,y] = valid_Board;
-                if(valid_Board==std::make_tuple(-1,-1)){
-                    for(int i = 0; i < 3; i++){
-                        for(int j = 0; j < 3; j++){
-                            auto [r,c] = basics[i][j].click_Event(event,currentPlayer);
-                            if(r!=-2&&c!=-2){
-                                currentPlayer = currentPlayer == player::O ? player::X : player::O;
-                                valid_Board = {r, c};
-                                break;
-                            }
-                        }
-                    }
-                }
-                else{
-                    auto [r,c] = basics[x][y].click_Event(event,currentPlayer);
+
+
+        auto [x,y] = valid_Board;
+        if(valid_Board==std::make_tuple(-1,-1)){
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    auto [r,c] = basics[i][j].click_Event(event,currentPlayer);
                     if(r!=-2&&c!=-2){
                         currentPlayer = currentPlayer == player::O ? player::X : player::O;
                         valid_Board = {r, c};
+                        break;
                     }
                 }
+            }
+        }
+        else{
+            auto [r,c] = basics[x][y].click_Event(event,currentPlayer);
+            if(r!=-2&&c!=-2){
+                currentPlayer = currentPlayer == player::O ? player::X : player::O;
+                std::cout << "valid board<<"<<r<<" "<<c<<"\n";
+                valid_Board = {r, c};
             }
         }
         check_Board();
@@ -92,8 +91,10 @@ class Ultimate : public Game{
         if(x==-1&&y==-1){
             return;
         }
+        board[x][y] = basics[x][y].check_Win();
         if(board[x][y] != player::none){
             valid_Board = {-1, -1};
+            std::cout << "valid board<<"<<x<<" "<<y<<"is full\n";
         }
         return;
     }
