@@ -13,6 +13,8 @@
 #include "GameInterface.hpp"
 #include "GameEndScreen.hpp"
 #include "ResultScreen.hpp"
+#include "gitVersion.hpp"
+
 // #include "../Game/basic.hpp"
 // #include "../Game/ultimate.hpp"
 
@@ -39,7 +41,7 @@ private:
 
 public:
 
-    UIManager():window(sf::VideoMode(1400, 1024), "TIC-TAC-TOC"), 
+    UIManager():window(sf::VideoMode(1400, 1024), std::string("TIC-TAC-TOC  ")+ get_git_version()), 
         mainMenu(window), settingsMenu(window), gameSelectionMenu(window), gameInterface(window), gameEndScreen(window), resultScreen(window) {
         // 初始化 UI 管理器
         window.setFramerateLimit(60);
@@ -89,5 +91,4 @@ public:
     }
 }
 
-    // 其他 UI 管理功能
 };
