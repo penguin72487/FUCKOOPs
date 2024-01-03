@@ -63,6 +63,9 @@ class Ultimate : public Game{
         if(valid_Board==std::make_tuple(-1,-1)){
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
+                    if(basics[i][j].check_Win()!=player::none){
+                        continue;
+                    }
                     auto [r,c] = basics[i][j].click_Event(event,currentPlayer);
                     if(r!=-2&&c!=-2){
                         currentPlayer = currentPlayer == player::O ? player::X : player::O;
