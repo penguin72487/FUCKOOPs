@@ -101,33 +101,68 @@ class Ultimate : public Game{
         }
         return;
     }
-    player check_Win() override{
-        int count_PlayerO = 0;
-        int count_PlayerX = 0;
-        for(auto &i : board){
-            for(auto &j : i){
-                if(j == player::O){
-                    count_PlayerO++;
+    // player check_Win() override{
+    //     int count_PlayerO = 0;
+    //     int count_PlayerX = 0;
+    //     for(auto &i : board){
+    //         for(auto &j : i){
+    //             if(j == player::O){
+    //                 count_PlayerO++;
+    //             }
+    //             else if(j == player::X){
+    //                 count_PlayerX++;
+    //             }
+    //         }
+    //     }
+    //     if(count_PlayerO+count_PlayerX == 9||abs(count_PlayerO-count_PlayerX)>=5){
+    //         if(count_PlayerO > count_PlayerX){
+    //             return player::O;
+    //         }
+    //         else if(count_PlayerO < count_PlayerX){
+    //             return player::X;
+    //         }
+    //         else{
+    //             return player::draw;
+    //         }
+    //     }
+    //     else{
+    //         return player::none;
+    //     }
+    // }
+    player check_Win() override {
+        // 檢查每一行
+        for (int i = 0; i < 3; ++i) {
+            if (board[i][0] != player::none && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
+                return board[i][0];
+            }
+        }
+
+        // 檢查每一列
+        for (int i = 0; i < 3; ++i) {
+            if (board[0][i] != player::none && board[0][i] == board[1][i] && board[0][i] == board[2][i]) {
+                return board[0][i];
+            }
+        }
+
+        // 檢查對角線
+        if (board[0][0] != player::none && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
+            return board[0][0];
+        }
+        if (board[0][2] != player::none && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
+            return board[0][2];
+        }
+
+        // 檢查是否還有空格，如果有，則遊戲還未結束
+        for (auto &i : board) {
+            for (auto &j : i) {
+                if (j == player::none) {
+                    return player::none;
                 }
-                else if(j == player::X){
-                    count_PlayerX++;
-                }
             }
         }
-        if(count_PlayerO+count_PlayerX == 9||abs(count_PlayerO-count_PlayerX)>=5){
-            if(count_PlayerO > count_PlayerX){
-                return player::O;
-            }
-            else if(count_PlayerO < count_PlayerX){
-                return player::X;
-            }
-            else{
-                return player::draw;
-            }
-        }
-        else{
-            return player::none;
-        }
+
+        // 如果棋盤已滿且沒有玩家獲勝，則為平局
+        return player::draw;
     }
     UIComponent::Screen getGameMode() override{
         return UIComponent::Screen::GAME_ULTIMATE_INTERFACE;
