@@ -15,6 +15,8 @@ private:
     Screen gameMode;
     std::shared_ptr<Game> game;
     std::tuple<int,int,int,int> GamePosition = {333, 164, 734, 734};
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 
 
 public:
@@ -58,12 +60,16 @@ public:
                     }
                     game->click_Event(event); // 处理游戏内的点击事件
                 }
-
+        if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        backgroundSprite.setTexture(backgroundTexture);
                 // 更新游戏状态
                 // game->update(); // 假设你有一个负责更新游戏逻辑的方法
 
                 // 渲染游戏和界面
                 window.clear(color);
+                window.draw(backgroundSprite);
                 game->render(); // 渲染游戏
                 window.draw(MenuButton.shape);
                 window.draw(MenuButton.text);

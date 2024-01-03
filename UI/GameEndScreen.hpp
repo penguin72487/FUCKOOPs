@@ -11,6 +11,8 @@ private:
     Button AgainButton;
     Button ResultButton;
     Button BackButton;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 public:
     GameEndScreen(sf::RenderWindow& window) : UIComponent(window),AgainButton(110,913, 280, 85, "Again", font)
     ,ResultButton(1010,913, 280, 85, "Result", font),BackButton(560,913, 280, 85, "Menu", font) {
@@ -18,6 +20,10 @@ public:
         WinMessage = sf::Text("Player__ Win!!", font, 80);
         WinMessage.setFillColor(sf::Color(255, 255, 255));
         WinMessage.setPosition(700, 83); 
+        if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        backgroundSprite.setTexture(backgroundTexture);
     }
     Screen render() override {
         // std::cout << "Game End: [Gameplay Elements]" << std::endl;
@@ -40,6 +46,7 @@ public:
             }
 
             window.clear(color);
+            window.draw(backgroundSprite);
             // draw title and buttons
             window.draw(WinMessage);
             window.draw(AgainButton.shape);
