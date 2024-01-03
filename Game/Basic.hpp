@@ -67,14 +67,14 @@ class Basic : public Game {
             rectangle.setSize(sf::Vector2f(w, h));
             rectangle.setFillColor(sf::Color(255, 255, 255, 128)); // RGBA，最後一個參數是透明度，範圍是0-255
 
-            // 繪製大圈圈或大叉叉
-            if (check_Win() == player::O) {
-                // 繪製大圈圈
-                drawO(window, 1, 1, 733, 733); // 你需要根據需要調整這些參數
-            } else if (check_Win() == player::X) {
-                // 繪製大叉叉
-                drawX(window, 1, 1, 733, 733); // 你需要根據需要調整這些參數
-            }
+            // // 繪製大圈圈或大叉叉
+            // if (check_Win() == player::O) {
+            //     // 繪製大圈圈
+            //     drawO(window, 1, 1, 733, 733); // 你需要根據需要調整這些參數
+            // } else if (check_Win() == player::X) {
+            //     // 繪製大叉叉
+            //     drawX(window, 1, 1, 733, 733); // 你需要根據需要調整這些參數
+            // }
 
             // 在視窗上繪製半透明的矩形
             window.draw(rectangle);
@@ -106,10 +106,10 @@ class Basic : public Game {
             if (event.type == sf::Event::Closed)
                 window.close();
             setCurrentPlayer(p);
-            if(check_Win() != player::none){
-                // std::cout << "also invalid board\n";
-                return {-1,-1};
-            }
+            // if(check_Win() != player::none){
+            //     // std::cout << "also invalid board\n";
+            //     return {-1,-1};
+            // }
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     if (buttons[i][j].isClicked(window,event)) {

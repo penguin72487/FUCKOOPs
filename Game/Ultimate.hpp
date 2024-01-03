@@ -31,10 +31,10 @@ class Ultimate : public Game{
                 lines[i].setSize(sf::Vector2f(10, h));
                 lines[i].setFillColor(sf::Color::Black);
             }
-            lines[0].setPosition(x + w / 3, y);
-            lines[1].setPosition(x + w / 3 * 2, y);
-            lines[2].setPosition(x + w, y + h / 3);
-            lines[3].setPosition(x + w, y + h / 3 * 2);
+            lines[0].setPosition(x + w / 3-2.5, y);
+            lines[1].setPosition(x + w / 3 * 2-2.5, y);
+            lines[2].setPosition(x + w, y + h / 3-2.5);
+            lines[3].setPosition(x + w, y + h / 3 * 2-2.5);
 
             lines[2].rotate(90);
             lines[3].rotate(90);
@@ -76,7 +76,7 @@ class Ultimate : public Game{
             auto [r,c] = basics[x][y].click_Event(event,currentPlayer);
             if(r!=-2&&c!=-2){
                 currentPlayer = currentPlayer == player::O ? player::X : player::O;
-                std::cout << "valid board<<"<<r<<" "<<c<<"\n";
+                std::cout << "valid board <<"<<r<<" "<<c<<"\n";
                 valid_Board = {r, c};
             }
         }
@@ -94,7 +94,7 @@ class Ultimate : public Game{
         board[x][y] = basics[x][y].check_Win();
         if(board[x][y] != player::none){
             valid_Board = {-1, -1};
-            std::cout << "valid board<<"<<x<<" "<<y<<"is full\n";
+            std::cout << "valid board "<<x<<" "<<y<<"is full\n";
         }
         return;
     }
