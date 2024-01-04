@@ -11,6 +11,8 @@ private:
     sf::Text player1StatsText;
     sf::Text player2StatsText;
     Button BackButton;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 public:
     ResultScreen(sf::RenderWindow& window) : UIComponent(window),BackButton(490, 914, 420, 85, "menu", font){
         playerCongratulationText = sf::Text ("Congratulation Player__!!", font, 80);
@@ -38,12 +40,18 @@ public:
                     window.close();
 
                 // check if buttons are clicked
-                if (BackButton.isClicked(event)) {
+                if (BackButton.isClicked(window,event)) {
                     return Screen::MAIN_MENU;
                 }
             }
+        if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        backgroundSprite.setTexture(backgroundTexture);
+
 
             window.clear(color);
+            window.draw(backgroundSprite);
             // draw title and buttons
             window.draw(playerCongratulationText);
             window.draw(gamePlayedText);

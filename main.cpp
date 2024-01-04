@@ -1,5 +1,4 @@
 #include "UI/UIManager.hpp"
-
 int main() {
     UIManager uiManager;
     uiManager.run();

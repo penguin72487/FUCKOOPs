@@ -1,4 +1,4 @@
-# FUCKOOPs
+# Tic-Tac-Toe
 oop final project
 
 # quick start

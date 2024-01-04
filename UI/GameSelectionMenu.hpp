@@ -14,6 +14,8 @@ private:
     sf::Sprite BasicPictureSprite;
     sf::Texture UltimatePictureTexture;
     sf::Sprite UltimatePictureSprite;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 
 public:
     GameSelectionMenu(sf::RenderWindow& window) : UIComponent(window),
@@ -41,12 +43,17 @@ public:
         UltimatePictureSprite.setTexture(UltimatePictureTexture);
         UltimatePictureSprite.setScale(0.3, 0.3);
         UltimatePictureSprite.setPosition(375, 620);
+
+        if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
+            std::cout << "Texture load failed\n";
+        }
+        backgroundSprite.setTexture(backgroundTexture);
     }
     Screen render() override {
         std::cout << "Game Selection Menu: [List of Games]" << std::endl;
         while(window.isOpen()){
             window.clear(color);
-
+            window.draw(backgroundSprite);
             
             window.draw(BasicButton.shape);
             window.draw(BasicButton.text);
@@ -66,15 +73,15 @@ public:
                         window.close();
 
                     // check if buttons are clicked
-                    if (BasicButton.isClicked(event)) {
+                    if (BasicButton.isClicked(window,event)) {
                         std::cout << "select Basic Game: [Gameplay Elements]" << std::endl;
                         return Screen::GAME_BASIC_INTERFACE;
                     }
-                    if (AdvanceButton.isClicked(event)) {
+                    if (AdvanceButton.isClicked(window,event)) {
                         std::cout << "select Advance Game: [Gameplay Elements]" << std::endl;
                         return Screen::GAME_ULTIMATE_INTERFACE;
                     }
-                    if (MenuButton.isClicked(event)) {
+                    if (MenuButton.isClicked(window,event)) {
                         return Screen::MAIN_MENU;
                     }
                     

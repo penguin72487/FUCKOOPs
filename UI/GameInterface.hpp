@@ -5,7 +5,7 @@
 #include "Button.hpp"
 #include "../Game/Game.hpp"
 #include "../Game/Basic.hpp"
-// #include "../Game/Ultimate.hpp"
+#include "../Game/Ultimate.hpp"
 
 class GameInterface : public UIComponent {
 private:
@@ -13,7 +13,10 @@ private:
     Button RestartButton;
     // Button board;//棋盤
     Screen gameMode;
-    std::tuple<int,int,int,int> game_Possition = {333, 164, 734, 734};
+    std::shared_ptr<Game> game;
+    std::tuple<int,int,int,int> GamePosition = {333, 164, 734, 734};
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 
 
 public:
@@ -23,20 +26,21 @@ public:
 
     }
     Screen render() override {
-        std::cout << "Game Indiviual Interface: [Gameplay Elements]" << std::endl;
+        // Render the game interface including buttons and game elements
+        std::cout << "Game Invidual Interface: [Gameplay Elements]" << std::endl;
         return Screen::EXIT;
     }
-    Screen render(Screen &gamemod) {
-        gameMode = gamemod;
-        std::unique_ptr<Game> game;
+    std::tuple<Screen,std::shared_ptr<Game>> render(Screen &GameMod) {
+        gameMode = GameMod;
+
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
             std::cout << "Game Basic new [Gameplay Elements]" << std::endl;
-            game = std::make_unique<Basic>(window, game_Possition);
+            game = std::make_shared<Basic>(window, GamePosition);
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
-            std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
-                // game = std::make_unique<Ultimate>(window, game_Possition);
-                return Screen::GAME_SELECTION_MENU;
+            //std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
+                game = std::make_shared<Ultimate>(window, GamePosition);
+                // return {Screen::GAME_SELECTION_MENU,nullptr};
             }
         else{
             std::cout << "Game Ultimate Interface: [Gameplay Elements]" << std::endl;
@@ -47,22 +51,28 @@ public:
                 sf::Event event;
                 while (window.pollEvent(event)) {
                     if (event.type == sf::Event::Closed) {
-                        return Screen::EXIT;
+                        return {Screen::EXIT,nullptr};
                     }
-                    if (MenuButton.isClicked(event)) {
-                        return Screen::MAIN_MENU;
+                    if (MenuButton.isClicked(window,event)) {
+                        return {Screen::GAME_SELECTION_MENU,nullptr};
                     }
-                    if (RestartButton.isClicked(event)) {
-                        return gameMode; // 你可能需要重置游戏状态
+                    if (RestartButton.isClicked(window,event)) {
+                        return {gameMode,nullptr};
                     }
                     game->click_Event(event); // 处理游戏内的点击事件
                 }
-
+        
+        if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
+            std::cerr << "Error: Texture load failed\n";
+            //return {Screen::ERROR_SCREEN, nullptr}; // Assuming there's an error screen or similar handling
+        }
+        backgroundSprite.setTexture(backgroundTexture);
                 // 更新游戏状态
                 // game->update(); // 假设你有一个负责更新游戏逻辑的方法
 
                 // 渲染游戏和界面
                 window.clear(color);
+                window.draw(backgroundSprite);
                 game->render(); // 渲染游戏
                 window.draw(MenuButton.shape);
                 window.draw(MenuButton.text);
@@ -71,12 +81,13 @@ public:
                 window.display(); // 更新窗口显示
 
                 // 检查游戏是否结束
-                if(game->check_Win() != Game::player::none){
-                    return Screen::GAME_END_SCREEN;
+                Game::player win_Player=game->check_Win();
+                if(win_Player != Game::player::none){
+                    return {Screen::GAME_END_SCREEN,game};
                 }
             }
 
-        return Screen::EXIT;
+        return {Screen::EXIT,nullptr};
     }
     // 其他遊戲功能
 };

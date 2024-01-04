@@ -104,22 +104,22 @@ public:
                     window.close();
 
                 // Handle button clicks
-                if (illustrateButton.isClicked(event)) {
+                if (illustrateButton.isClicked(window,event)) {
                     if(show==Show::Picture||show==Show::DEVELOPER)
                         show = Show::ILLUSTRATE;
                     else
                         show = Show::Picture;
                 }
-                else if (settingButton.isClicked(event)) {
+                else if (settingButton.isClicked(window,event)) {
                     return Screen::SETTINGS_MENU;
                 }
-                else if (startGameButton.isClicked(event)) {
+                else if (startGameButton.isClicked(window,event)) {
                     return Screen::GAME_SELECTION_MENU;
                 }
-                else if (exitGameButton.isClicked(event)) {
+                else if (exitGameButton.isClicked(window,event)) {
                     return Screen::EXIT;
                 }
-                else if (developerButton.isClicked(event)) {
+                else if (developerButton.isClicked(window,event)) {
                     if(show==Show::Picture||show==Show::ILLUSTRATE)
                         show = Show::DEVELOPER;
                     else
