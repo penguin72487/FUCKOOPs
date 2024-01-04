@@ -78,7 +78,19 @@ public:
                 window.display(); // 更新窗口显示
 
                 // 检查游戏是否结束
-                auto win_Player=game->check_Win();
+                Game::player win_Player=game->check_Win();
+                if(win_Player == Game::player::O){
+                    std::cout << "O win\n";
+                    return {Screen::GAME_END_SCREEN,game};
+                }
+                else if(win_Player == Game::player::X){
+                    std::cout << "X win\n";
+                    return {Screen::GAME_END_SCREEN,game};
+                }
+                else if(win_Player == Game::player::draw){
+                    std::cout << "draw\n";
+                    return {Screen::GAME_END_SCREEN,game};
+                }
                 if(win_Player != Game::player::none){
                     return {Screen::GAME_END_SCREEN,game};
                 }

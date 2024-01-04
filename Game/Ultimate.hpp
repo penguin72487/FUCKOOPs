@@ -9,7 +9,7 @@
 
 class Ultimate : public Game{
 
-    using player = Game::player;
+    // using player = Game::player;
     public:
         std::tuple<int, int> valid_Board;
 
@@ -132,10 +132,23 @@ class Ultimate : public Game{
     // }
     player check_Win() override {
         // 檢查每一行
-        for (int i = 0; i < 3; i++) {
-            if (isLineWin(board[i][0], board[i][1], board[i][2])) 
-                return board[i][0];
+
+        for (int i = 0;i<3;i++)
+        {
+            for (int j = 0;j<3;j++)
+            {
+                if (basics[i][j].check_Win() != player::none)
+                {
+                    board[i][j] = basics[i][j].check_Win();
+                }
+            }
         }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (isLineWin(board[i][0], board[i][1], board[i][2]))
+                    return board[i][0];
+            }
 
         // 檢查每一列
         for (int i = 0; i < 3; i++) {
