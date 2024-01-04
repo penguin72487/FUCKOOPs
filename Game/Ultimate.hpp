@@ -135,17 +135,21 @@ class Ultimate : public Game{
     player check_Win() override {
         // 檢查每一行
         for (int i = 0; i < 3; i++) {
-            if (isLineWin(board[i][0], board[i][1], board[i][2])) return board[i][0];
+            if (isLineWin(board[i][0], board[i][1], board[i][2])) 
+                return board[i][0];
         }
 
         // 檢查每一列
         for (int i = 0; i < 3; i++) {
-            if (isLineWin(board[0][i], board[1][i], board[2][i])) return board[0][i];
+            if (isLineWin(board[0][i], board[1][i], board[2][i])) 
+                return board[0][i];
         }
 
         // 檢查對角線
-        if (isLineWin(board[0][0], board[1][1], board[2][2])) return board[0][0];
-        if (isLineWin(board[0][2], board[1][1], board[2][0])) return board[0][2];
+        if (isLineWin(board[0][0], board[1][1], board[2][2])) 
+            return board[0][0];
+        if (isLineWin(board[0][2], board[1][1], board[2][0]))
+            return board[0][2];
 
         // 檢查平手
         for (auto &row : board) {
