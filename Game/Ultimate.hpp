@@ -39,8 +39,6 @@ class Ultimate : public Game{
 
             lines[2].rotate(90);
             lines[3].rotate(90);
-
-                   
     }
     ~Ultimate() override{}
     void render() override{
