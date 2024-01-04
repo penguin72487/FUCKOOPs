@@ -9,9 +9,6 @@
 
 class Ultimate : public Game{
 
-    static constexpr int BOARD_SIZE = 3;
-
-
     // using player = Game::player;
     public:
         std::tuple<int, int> valid_Board;

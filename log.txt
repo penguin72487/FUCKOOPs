@@ -1,0 +1,46 @@
+Game Selection Menu: [List of Games]
+select Advance Game: [Gameplay Elements]
+valid board <<1 1
+valid board <<2 1
+valid board <<1 1
+valid board <<2 2
+valid board <<1 1
+valid board 1 1is full
+valid board <<2 2
+valid board <<2 2
+valid board <<1 0
+valid board <<1 0
+valid board <<1 1
+valid board 1 1is full
+valid board <<2 2
+valid board <<0 2
+valid board <<0 2
+valid board <<1 1
+valid board 1 1is full
+valid board <<0 1
+valid board <<0 2
+valid board <<1 2
+valid board <<1 2
+valid board <<1 1
+valid board 1 1is full
+valid board <<1 0
+valid board <<0 1
+valid board <<2 0
+valid board <<0 1
+valid board <<1 0
+valid board <<2 1
+valid board 2 1is full
+valid board <<2 0
+valid board <<2 1
+valid board 2 1is full
+valid board 1 0is full
+valid board 1 1is full
+valid board 0 1is full
+valid board 1 2is full
+valid board 0 0is full
+valid board 1 2is full
+valid board 1 0is full
+valid board <<0 0
+valid board 0 0is full
+valid board 2 2is full
+Game Selection Menu: [List of Games]
