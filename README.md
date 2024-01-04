@@ -38,8 +38,7 @@ c++
 設置 .vscode 資料夾
 
 .vscode.sample把.sample去掉
-檢查環境是否可用，不可用就除錯
-
+然後去code running的擴充設定，進去工作區點setting.json，使用工作區的.json而不是全域的
 
 
 
