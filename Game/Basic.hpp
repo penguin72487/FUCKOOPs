@@ -6,13 +6,15 @@
 #define BASIC_HPP
 
 class Basic : public Game {
+    // Basic game class inheriting from Game
+    // It represents a basic version of the game with a grid and interactive buttons
 
     public:
     using player = Game::player;
     // Button button;
-    Basic(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P ): Game(win, g_P){
-        auto [x,y,w,h] = g_P;
-        board = std::vector<std::vector<player>>(3, std::vector<player>(3, player::none));
+    Basic(sf::RenderWindow& win,std::tuple<int,int,int,int>game_Position ): Game(win,game_Position){
+        auto [x,y,w,h] =game_Position;
+        board = {{player::none, player::none, player::none}, {player::none, player::none, player::none}, {player::none, player::none, player::none}};
         buttons.resize(3);
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){

@@ -5,11 +5,12 @@
 class Basic4U : public Basic{
     using player = Game::player;
     public:
-    Basic4U(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P ): Basic(win, g_P){
+    Basic4U(sf::RenderWindow& win,std::tuple<int,int,int,int> gameParams ): Basic(win, gameParams){
 
     }
     ~Basic4U() override{}
     void click_Event(sf::Event &event) override{
+        // TODO: Refactor duplicated logic in click_Event methods into a private method
         if (event.type == sf::Event::Closed) {
             window.close();
         }
@@ -18,8 +19,7 @@ class Basic4U : public Basic{
                 if (buttons[i][j].isClicked(window,event)) {
                     if (board[i][j] == player::none) {
                         board[i][j] = currentPlayer;
-                        // std::cout << "board"<<i<<" "<<j<<"isClicked\n";
-                        currentPlayer = currentPlayer == player::O ? player::X :player::O;
+                                                currentPlayer = currentPlayer == player::O ? player::X :player::O;
                         return;
                     }
                 }
@@ -32,16 +32,14 @@ class Basic4U : public Basic{
                 window.close();
             setCurrentPlayer(p);
             // if(check_Win() != player::none){
-            //     // std::cout << "also invalid board\n";
-            //     return {-1,-1};
+            //                 //     return {-1,-1};
             // }
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     if (buttons[i][j].isClicked(window,event)) {
                         if (board[i][j] == player::none) {
                             board[i][j] = currentPlayer;
-                            // std::cout << "board"<<i<<" "<<j<<"isClicked\n";
-                            currentPlayer = currentPlayer == player::O ? player::X :player::O;
+                                                        currentPlayer = currentPlayer == player::O ? player::X :player::O;
                             return {i,j};
                         }
                     }

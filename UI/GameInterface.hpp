@@ -26,6 +26,7 @@ public:
 
     }
     Screen render() override {
+        // Render the game interface including buttons and game elements
         std::cout << "Game Invidual Interface: [Gameplay Elements]" << std::endl;
         return Screen::EXIT;
     }
@@ -60,8 +61,10 @@ public:
                     }
                     game->click_Event(event); // 处理游戏内的点击事件
                 }
+        
         if (!backgroundTexture.loadFromFile("data/images/bg/Bg1.png")) {
-            std::cout << "Texture load failed\n";
+            std::cerr << "Error: Texture load failed\n";
+            //return {Screen::ERROR_SCREEN, nullptr}; // Assuming there's an error screen or similar handling
         }
         backgroundSprite.setTexture(backgroundTexture);
                 // 更新游戏状态

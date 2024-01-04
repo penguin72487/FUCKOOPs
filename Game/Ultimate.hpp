@@ -9,6 +9,9 @@
 
 class Ultimate : public Game{
 
+    static constexpr int BOARD_SIZE = 3;
+
+
     // using player = Game::player;
     public:
         std::tuple<int, int> valid_Board;
@@ -52,6 +55,18 @@ class Ultimate : public Game{
         }
         return;
     }
+    
+    void handlePlayerChange() {
+        currentPlayer = currentPlayer == player::O ? player::X : player::O;
+    }
+
+    void handleValidBoardUpdate(int r, int c) {
+        if (r != -2 && c != -2) {
+            handlePlayerChange();
+            valid_Board = {r, c};
+        }
+    }
+
     void click_Event(sf::Event &event) override{
         if (event.type == sf::Event::Closed) {
             window.close();
@@ -88,6 +103,18 @@ class Ultimate : public Game{
     player WhoseTurn() override{
         return currentPlayer;
     }
+    
+    void updateValidBoardStatus() {
+        auto [x, y] = valid_Board;
+        if (x == -1 && y == -1) return;
+
+        player result = basics[x][y].check_Win();
+        if (result != player::none) {
+            board[x][y] = result;
+            valid_Board = {-1, -1};
+        }
+    }
+
     void check_Board(){
         auto [x,y] = valid_Board;
         if(x==-1&&y==-1){
@@ -130,6 +157,19 @@ class Ultimate : public Game{
     //         return player::draw;
     //     }
     // }
+    
+    bool checkRowWin(int row) {
+        return isLineWin(board[row][0], board[row][1], board[row][2]);
+    }
+    bool checkColumnWin(int col) {
+        return isLineWin(board[0][col], board[1][col], board[2][col]);
+    }
+
+
+    bool checkDiagonalWin() {
+        return isLineWin(board[0][0], board[1][1], board[2][2]) || isLineWin(board[0][2], board[1][1], board[2][0]);
+    }
+
     player check_Win() override {
         // 檢查每一行
 

@@ -13,7 +13,7 @@ class Game{
             X,
             draw
         };
-        Game(sf::RenderWindow& win,std::tuple<int,int,int,int> g_P): window(win),GamePosition(g_P){
+        Game(sf::RenderWindow& win,std::tuple<int,int,int,int> gamePositionParams): window(win),GamePosition(gamePositionParams){
             currentPlayer = player::O;
             font.loadFromFile("data/ttf/TaipeiSansTCBeta-Regular.ttf");
         };// constructor
