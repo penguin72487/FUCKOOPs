@@ -1,4 +1,4 @@
-# FUCKOOPs
+# Tic-Tac-Toe
 oop final project
 
 # quick start
@@ -11,8 +11,8 @@ pacman -Syu
 pacman -Sy
 pacman -S mingw-w64-x86_64-toolchain
 pacman -S mingw-w64-x86_64-sfml
-pacman -Syu
 pacman -Sy
+pacman -Syu
 ```
 
 加入系統變數  
