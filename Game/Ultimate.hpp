@@ -209,7 +209,7 @@ class Ultimate : public Game{
         return player::draw;
     }
     bool isLineWin(player c1, player c2, player c3) {
-        return c1 != player::none && c1 == c2 && c2 == c3;
+        return c1 != player::none && c1!= player::draw && c1 == c2 && c2 == c3;
     }
     UIComponent::Screen getGameMode() override{
         return UIComponent::Screen::GAME_ULTIMATE_INTERFACE;
