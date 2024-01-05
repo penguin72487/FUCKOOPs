@@ -14,17 +14,18 @@ https://www.canva.com/design/DAF4VraFUoo/tIMCwhm__TCUUqJHkyjXZA/edit?utm_content
 ## 企鵝
 我來補充一點技術細節，我在game的多型使用了智慧指標，因為如果要維持可讀性，在哪裡new一個指標就要在哪裡delete，但是我們會把game指標傳入endscreem，直接使用game的render顯示最終結果，使用智慧指標就不用管了，哈哈哈哈。
 
-# quick start
-[git](https://git-scm.com/)  
-[VSCODEE](https://code.visualstudio.com/)  
-[MSYS2](https://www.msys2.org/)
-
 ## 劉沛辰
 這次做專題，從發想主題，討論了很久該如何實現封裝繼承多型，確定主題，畫usercase，站在使用者角度設計按鍵，設計UI、顏色、區塊，然後再畫uml，
 設計封裝多形繼承，再到實現uml，程式碼。
 
 過程遇到許多困難，SFML的環境建構，git共同協作，github的branch推動，再來到SFML實作UI，多形繼承UI Component，PlayerO X實作，check的繼承，
 把上課學到的理論變成實作才讓我更熟悉OOP
+
+# quick start
+[git](https://git-scm.com/)  
+[VSCODEE](https://code.visualstudio.com/)  
+[MSYS2](https://www.msys2.org/)
+
 
 打開MSYS2的終端機
 ```shell
