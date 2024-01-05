@@ -5,7 +5,7 @@ oop final project
 ![image (2)](https://github.com/penguin72487/Tic-Tac-Toe/assets/70788551/f389986c-d840-4238-b7d3-c99afda8b576)
 
 # UML
-
+![image (3)](Tic-Tac-Toe (2).svg)
 # PPT
 
 
