@@ -11,12 +11,15 @@ oop final project
 
 # 開發者心得
 
+## 企鵝
+我來補充一點技術細節，我在game的多型使用了智慧指標
 
 # quick start
 [git](https://git-scm.com/)  
 [VSCODEE](https://code.visualstudio.com/)  
 [MSYS2](https://www.msys2.org/)
 
+打開MSYS2的終端機
 ```shell
 pacman -Syu
 pacman -Sy
