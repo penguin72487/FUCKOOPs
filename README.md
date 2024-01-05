@@ -11,7 +11,7 @@ https://www.canva.com/design/DAF4VraFUoo/tIMCwhm__TCUUqJHkyjXZA/edit?utm_content
 
 # 開發者心得
 
-## SiroKu
+## 劉柏均(Siroku)
 
 這次的期末專題，我們選擇了井字遊戲，但因為不是只有簡單的井字遊戲，我們還加入了一些特殊的規則，我們找到了SFML來開發我們的期末專題，我主要是做UI設計，除了物件導向以外，我還學到了如何讓整個UI看起來比較順眼，還有學到到了如何使用繪圖軟體，在未來跨領域結合受益良多。
 
