@@ -5,14 +5,14 @@ oop final project
 ![image (2)](https://github.com/penguin72487/Tic-Tac-Toe/assets/70788551/f389986c-d840-4238-b7d3-c99afda8b576)
 
 # UML
-![http-bw]https://github.com/penguin72487/Tic-Tac-Toe/blob/beta/Tic-Tac-Toe%20(2).svg
+![http-bw](https://raw.githubusercontent.com/penguin72487/Tic-Tac-Toe/9cacbc84bcb720e6ac0a413a78910128a6aa37d3/Tic-Tac-Toe%20(2).svg)
 # PPT
 
 
 # 開發者心得
 
 ## 企鵝
-我來補充一點技術細節，我在game的多型使用了智慧指標
+我來補充一點技術細節，我在game的多型使用了智慧指標，因為如果要維持可讀性，在哪裡new一個指標就要在哪裡delete，但是我們會把game指標傳入endscreem，直接使用game的render顯示最終結果，使用智慧指標就不用管了，哈哈哈哈。
 
 # quick start
 [git](https://git-scm.com/)  
