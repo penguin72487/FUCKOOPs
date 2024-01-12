@@ -35,7 +35,7 @@ public:
 
         if(gameMode == Screen::GAME_BASIC_INTERFACE){
             std::cout << "Game Basic new [Gameplay Elements]" << std::endl;
-            game = std::make_shared<Basic>(window, GamePosition);
+            game = std::make_shared<Basic>(window, GamePosition);  // 使用智能指標，動態連結game
         }
         else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
             //std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;

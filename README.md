@@ -25,6 +25,163 @@ https://www.canva.com/design/DAF4VraFUoo/24xRElypjWjon1NsYDWfPA/view?utm_content
 過程遇到許多困難，SFML的環境建構，git共同協作，github的branch推動，再來到SFML實作UI，多形繼承UI Component，PlayerO X實作，check的繼承，
 把上課學到的理論變成實作才讓我更熟悉OOP
 
+
+
+# 程式碼高光時刻
+
+在UImanerger，存了很多UI介面，要怎麼通知換畫面呢?
+```cpp
+class UIComponent {
+public:
+    enum class Screen {//定義畫面的所有狀態
+        MAIN_MENU,
+        SETTINGS_MENU,
+        GAME_SELECTION_MENU,
+        GAME_BASIC_INTERFACE,
+        GAME_ULTIMATE_INTERFACE,
+        GAME_END_SCREEN,
+        RESULT_SCREEN,
+        EXIT
+    };
+    virtual Screen render() = 0;//這裡我讓所有渲染完的時候要回傳下一幀要渲染哪個螢幕狀態。
+    //.....
+};
+```
+在UIManager currentScreen 存現在的螢幕狀態。  
+而進階版跟基本版都用同一個GameInterface，這樣才能凸顯動態連結的多型多好玩。  
+他們的render要傳入currentScreen，確保要選染哪種遊戲，而且回傳整個遊戲的動態指標，讓GameEndScreen渲染遊戲最後的結果。  
+
+```cpp
+// // UI 管理器
+class UIManager {
+public:
+    //....
+    UIComponent::Screen currentScreen;
+    std::shared_ptr<Game> currentGame;
+    //...
+    void renderScreen(){
+    std::tuple<UIComponent::Screen, std::shared_ptr<Game>> renderResult;
+    switch (currentScreen) {
+        case UIComponent::Screen::MAIN_MENU:
+            currentScreen = mainMenu.render();//回傳時改現在的畫面就可以改下一幀選染啥囉
+            break;
+        case UIComponent::Screen::SETTINGS_MENU:
+            currentScreen = settingsMenu.render();
+            break;
+        case UIComponent::Screen::GAME_SELECTION_MENU:
+            currentScreen = gameSelectionMenu.render();
+            break;
+        case UIComponent::Screen::GAME_BASIC_INTERFACE:
+            renderResult = gameInterface.render(currentScreen);
+            std::cout << "Game Basic Interface: [Gameplay Elements]" << std::endl;
+            currentScreen = std::get<0>(renderResult);
+            currentGame = std::get<1>(renderResult);
+            break;
+        case UIComponent::Screen::GAME_ULTIMATE_INTERFACE:
+            renderResult = gameInterface.render(currentScreen);
+            currentScreen = std::get<0>(renderResult);
+            currentGame= std::get<1>(renderResult);
+            break;
+        case UIComponent::Screen::GAME_END_SCREEN:
+            currentScreen = gameEndScreen.render(currentGame);
+            break;
+        case UIComponent::Screen::RESULT_SCREEN:
+            currentScreen = resultScreen.render();
+            break;
+        case UIComponent::Screen::EXIT:
+            window.close();
+            break;
+        default:
+            break;
+    }
+}
+};
+```
+進階版以及基本版都用一樣的渲染框架，很好的表示多型的玩法。
+```cpp
+class GameInterface : public UIComponent {
+//...
+    Screen render() override {
+        // Render the game interface including buttons and game elements
+        std::cout << "Game Invidual Interface: [Gameplay Elements]" << std::endl;//用原本的方式進來是不合法的喔
+        return Screen::EXIT;
+    }
+    std::tuple<Screen,std::shared_ptr<Game>> render(Screen &GameMod) {
+        gameMode = GameMod;
+
+        if(gameMode == Screen::GAME_BASIC_INTERFACE){
+            std::cout << "Game Basic new [Gameplay Elements]" << std::endl;
+            game = std::make_shared<Basic>(window, GamePosition);  // 使用智能指標，動態連結game
+        }
+        else if(gameMode == Screen::GAME_ULTIMATE_INTERFACE){
+            //std::cout << "Game Ultimate new [Gameplay Elements]" << std::endl;
+                game = std::make_shared<Ultimate>(window, GamePosition);
+                // return {Screen::GAME_SELECTION_MENU,nullptr};
+            }
+        else{
+            std::cout << "Game Ultimate Interface: [Gameplay Elements]" << std::endl;
+        }
+//...
+        backgroundSprite.setTexture(backgroundTexture);
+                // 更新游戏状态
+                // 渲染游戏和界面
+                window.clear(color);
+                window.draw(backgroundSprite);
+                game->render(); // 渲染游戏
+                window.draw(MenuButton.shape);
+                window.draw(MenuButton.text);
+                window.draw(RestartButton.shape);
+                window.draw(RestartButton.text); // 渲染界面元素，例如菜单和重新开始按钮
+                window.display(); // 更新窗口显示
+
+                // 检查游戏是否结束
+                Game::player win_Player=game->check_Win();
+                if(win_Player != Game::player::none){
+                    return {Screen::GAME_END_SCREEN,game};
+                }
+            }
+        return {Screen::EXIT,nullptr};
+    }
+    // 其他遊戲功能
+```
+Basic4U唸法是 Basic for Ultimate，繼承basic增加回傳被按九宮格的哪個位子，使用tuple傳回Ultimate，以實現在大棋盤的對應位子下OX。
+還有要增加現在換誰，現在換誰是basic本來就會控制的，會影響渲染的OX順序，但是主導權要在Ultimate，所以有一個setcurrentplayer
+
+```cpp
+class Basic4U : public Basic{
+    std::tuple<int,int> click_Event(sf::Event &event, player p) {
+
+            if (event.type == sf::Event::Closed)
+                window.close();
+            setCurrentPlayer(p);
+            // if(check_Win() != player::none){
+            //                 //     return {-1,-1};
+            // }
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    if (buttons[i][j].isClicked(window,event)) {
+                        if (board[i][j] == player::none) {
+                            board[i][j] = currentPlayer;
+                                                        currentPlayer = currentPlayer == player::O ? player::X :player::O;
+                            return {i,j};
+                        }
+                    }
+                }
+            }
+        return {-2,-2};
+    }
+    void setCurrentPlayer(player p){
+        currentPlayer = p;
+    }
+};
+```
+以上大部分的代碼細節就分享完成了
+
+
+
+
+
+
 ---
 
 # quick start
