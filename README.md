@@ -23,7 +23,7 @@ https://www.canva.com/design/DAF4VraFUoo/tIMCwhm__TCUUqJHkyjXZA/edit?utm_content
 
 <<<<<<< HEAD
 ## 孫健淳
-這大概是寫程式已寫過最大的專案，
+    這大概是寫程式已寫過最大的專案，
 =======
 ## 黃羿禎
 在這次的專題中，我從同儕之間學到了更多關於程式的知識，像是如何使用git等，也第一次從頭與別人協同合作撰寫程式碼，除了更加熟悉OOP三大特性外，也學會了該如何與他人合作、溝通。
