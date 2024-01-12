@@ -21,8 +21,17 @@ https://www.canva.com/design/DAF4VraFUoo/tIMCwhm__TCUUqJHkyjXZA/edit?utm_content
 過程遇到許多困難，SFML的環境建構，git共同協作，github的branch推動，再來到SFML實作UI，多形繼承UI Component，PlayerO X實作，check的繼承，
 把上課學到的理論變成實作才讓我更熟悉OOP
 
+<<<<<<< HEAD
 ## 孫健淳
 這大概是寫程式已寫過最大的專案，
+=======
+## 黃羿禎
+在這次的專題中，我從同儕之間學到了更多關於程式的知識，像是如何使用git等，也第一次從頭與別人協同合作撰寫程式碼，除了更加熟悉OOP三大特性外，也學會了該如何與他人合作、溝通。
+在過程中我覺得最為困難的點是學會如何以物件導向程式語言的思維去撰寫程式碼，以往都是撰寫程序性程式語言為主，所以一開始要開始理解、撰寫程式碼非常困難，在這部分我非常感謝並佩服我們組長--企鵝，程式碼幾乎都是由他所完成的，透過觀摩他的程式碼才讓我更加對物件導向語言有更加清晰的了解，漸漸熟悉撰寫物件導向程式語言。
+
+---
+
+>>>>>>> 4efb886a22faf2262b56815889a50b3db86852ca
 # quick start
 [git](https://git-scm.com/)  
 [VSCODEE](https://code.visualstudio.com/)  
